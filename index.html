@@ -329,9 +329,10 @@
 
   /* ===== TEMPLATE 1: Local Standard (Cambodia-style, photo top-right) ===== */
   #resume.t1{font-family:-apple-system,sans-serif;}
-  #resume.t1 .head-block{justify-content:space-between;align-items:flex-start;}
-  #resume.t1 .photo-wrap{order:2;}
-  #resume.t1 .head-text{order:1;}
+  #resume.t1 .head-block{display:block;}
+  #resume.t1 .photo-wrap{float:right;margin-left:calc(18px * var(--scale));}
+  #resume.t1 .head-text{display:block;}
+  #resume.t1 section.block{clear:both;}
   #resume.t1 .name{color:#173a5c;font-size:calc(25px * var(--scale));font-weight:700;}
   #resume.t1 .title{color:var(--muted);font-style:normal;}
   #resume.t1 .photo{width:3.6cm;height:4.8cm;border-radius:2px;border:3px solid #1d4d7a;object-fit:cover;}
