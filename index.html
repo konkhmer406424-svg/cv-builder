@@ -280,7 +280,7 @@
     margin-top:calc(10px * var(--scale));
     display:flex;flex-wrap:wrap;gap:calc(4px * var(--scale)) calc(14px * var(--scale));
   }
-  #resume .summary{margin:calc(18px * var(--scale)) 0 0;font-size:calc(13px * var(--scale));line-height:1.6;}
+  #resume .summary{margin:calc(18px * var(--scale)) 0 0;font-size:calc(13px * var(--scale));line-height:1.6;text-align:justify;}
   #resume section.block{margin-top:calc(24px * var(--scale));}
   #resume .block h3{
     font-family:-apple-system,sans-serif;
@@ -298,6 +298,8 @@
   #resume .item-sub{font-size:calc(12.5px * var(--scale));color:var(--muted);font-style:italic;}
   #resume .item-date{font-family:-apple-system,sans-serif;font-size:calc(11px * var(--scale));color:var(--muted);white-space:nowrap;}
   #resume .item-desc{font-size:calc(12.5px * var(--scale));line-height:1.55;margin-top:calc(3px * var(--scale));white-space:pre-line;}
+  #resume .item-desc-list{margin:calc(3px * var(--scale)) 0 0;padding-left:calc(16px * var(--scale));font-size:calc(12.5px * var(--scale));line-height:1.55;}
+  #resume .item-desc-list li{margin-bottom:calc(2px * var(--scale));text-align:justify;}
   #resume .skills-list{display:flex;flex-wrap:wrap;gap:calc(7px * var(--scale));}
   #resume .skill-tag{
     font-family:-apple-system,sans-serif;
@@ -404,15 +406,17 @@
   #resume.t5 .skill-tag{background:#eaf1f7;color:#173a5c;border-radius:4px;}
 
   @media print{
-    body *{visibility:hidden;}
-    #resume, #resume *{visibility:visible;}
+    .no-print{display:none !important;}
+    .app{display:block;}
+    .preview-wrap{padding:0;display:block;max-height:none;overflow:visible;}
     #resume{
-      position:absolute; left:0; right:0; top:0;
-      box-shadow:none; width:auto; min-height:calc(297mm - 30mm);
+      box-shadow:none; width:auto; min-height:0;
       margin:0; padding:0 !important;
     }
-    #resume.t2, #resume.t3{ min-height:calc(297mm - 30mm); }
-    @page{size:A4; margin:15mm;}
+    @page{
+      size:A4; margin:15mm;
+      @bottom-right{ content:"Page " counter(page) "/" counter(pages); font-family:-apple-system,sans-serif; font-size:9px; color:#7a756a; }
+    }
   }
   @media (max-width:900px){
     .app{grid-template-columns:1fr;}
@@ -577,7 +581,7 @@ let state = {
   scale: 1,
   photo: null,
   fullName:'', jobTitle:'', email:'', phone:'', location:'', linkedin:'', summary:'',
-  exp: [{role:'',company:'',dates:'',desc:''}],
+  exp: [{role:'',company:'',startDate:'',endDate:'',current:false,desc:''}],
   edu: [{degree:'',school:'',dates:''}],
   skills: '',
   languages: '',
@@ -666,22 +670,35 @@ function renderExpForm(){
       ${state.exp.length>1 ? `<button class="entry-remove" data-i="${i}" data-type="exp">×</button>` : ''}
       <label>Role</label>
       <input type="text" data-field="role" data-i="${i}" value="${escapeAttr(item.role)}" placeholder="Media Executive">
+      <label>Company</label>
+      <input type="text" data-field="company" data-i="${i}" value="${escapeAttr(item.company)}" placeholder="FCB & Prakit">
       <div class="row2">
-        <div><label>Company</label>
-          <input type="text" data-field="company" data-i="${i}" value="${escapeAttr(item.company)}" placeholder="FCB & Prakit"></div>
-        <div><label>Dates</label>
-          <input type="text" data-field="dates" data-i="${i}" value="${escapeAttr(item.dates)}" placeholder="2023 – Present"></div>
+        <div><label>Start Date</label>
+          <input type="month" data-field="startDate" data-i="${i}" value="${escapeAttr(item.startDate)}"></div>
+        <div><label>End Date</label>
+          <input type="month" data-field="endDate" data-i="${i}" value="${escapeAttr(item.endDate)}" ${item.current ? 'disabled' : ''}></div>
       </div>
+      <label style="display:flex;align-items:center;gap:6px;margin-top:8px;">
+        <input type="checkbox" data-field="current" data-i="${i}" data-type="checkbox" style="width:auto;" ${item.current ? 'checked' : ''}>
+        <span style="margin:0;">Currently working here</span>
+      </label>
       <label>Description</label>
-      <textarea data-field="desc" data-i="${i}" placeholder="Key responsibilities and achievements...">${escapeHtml(item.desc)}</textarea>
+      <textarea data-field="desc" data-i="${i}" placeholder="One achievement per line — each line becomes a bullet point">${escapeHtml(item.desc)}</textarea>
     `;
     wrap.appendChild(div);
   });
-  wrap.querySelectorAll('input,textarea').forEach(el=>{
+  wrap.querySelectorAll('input[type=text],input[type=month],textarea').forEach(el=>{
     el.addEventListener('input', e=>{
       const i = e.target.dataset.i, field = e.target.dataset.field;
       state.exp[i][field] = e.target.value;
       render();
+    });
+  });
+  wrap.querySelectorAll('input[type=checkbox]').forEach(el=>{
+    el.addEventListener('change', e=>{
+      const i = e.target.dataset.i, field = e.target.dataset.field;
+      state.exp[i][field] = e.target.checked;
+      renderExpForm(); render();
     });
   });
   wrap.querySelectorAll('.entry-remove').forEach(btn=>{
@@ -692,7 +709,7 @@ function renderExpForm(){
   });
 }
 $('addExp').addEventListener('click', ()=>{
-  state.exp.push({role:'',company:'',dates:'',desc:''});
+  state.exp.push({role:'',company:'',startDate:'',endDate:'',current:false,desc:''});
   renderExpForm(); render();
 });
 
@@ -810,6 +827,43 @@ $('addCustom').addEventListener('click', ()=>{
 function escapeHtml(s){ return (s||'').replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
 function escapeAttr(s){ return escapeHtml(s).replace(/"/g,'&quot;'); }
 
+const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function formatMonthYear(ym){
+  if(!ym) return '';
+  const parts = ym.split('-');
+  const y = parseInt(parts[0],10), m = parseInt(parts[1],10);
+  if(!y || !m) return '';
+  return `${MONTH_NAMES[m-1]} ${y}`;
+}
+function currentYm(){
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+}
+function monthsBetween(startYm, endYm){
+  const [sy,sm] = startYm.split('-').map(Number);
+  const [ey,em] = endYm.split('-').map(Number);
+  return (ey - sy) * 12 + (em - sm) + 1;
+}
+function formatDuration(totalMonths){
+  if(totalMonths < 1) return '';
+  const yrs = Math.floor(totalMonths / 12);
+  const mos = totalMonths % 12;
+  const parts = [];
+  if(yrs > 0) parts.push(`${yrs} yr${yrs > 1 ? 's' : ''}`);
+  if(mos > 0) parts.push(`${mos} mo${mos > 1 ? 's' : ''}`);
+  if(parts.length === 0) parts.push('< 1 mo');
+  return parts.join(' ');
+}
+function formatExpDateRange(item){
+  const startLabel = formatMonthYear(item.startDate);
+  if(!startLabel) return '';
+  const endYm = item.current ? currentYm() : item.endDate;
+  const endLabel = item.current ? 'Present' : formatMonthYear(item.endDate);
+  if(!endLabel) return startLabel;
+  const dur = formatDuration(monthsBetween(item.startDate, endYm));
+  return dur ? `${startLabel} – ${endLabel} (${dur})` : `${startLabel} – ${endLabel}`;
+}
+
 function render(){
   const r = $('resume');
   r.className = state.tpl;
@@ -841,10 +895,10 @@ function render(){
         <div class="item">
           <div class="item-top">
             <span class="item-role">${escapeHtml(x.role)}</span>
-            <span class="item-date">${escapeHtml(x.dates)}</span>
+            <span class="item-date">${formatExpDateRange(x)}</span>
           </div>
           <div class="item-sub">${escapeHtml(x.company)}</div>
-          ${x.desc ? `<div class="item-desc">${escapeHtml(x.desc)}</div>` : ''}
+          ${x.desc ? `<ul class="item-desc-list">${x.desc.split('\n').map(l=>l.trim()).filter(Boolean).map(l=>`<li>${escapeHtml(l)}</li>`).join('')}</ul>` : ''}
         </div>
       `).join('')}
     </section>` : '';
