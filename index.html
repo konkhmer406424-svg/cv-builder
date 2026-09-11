@@ -407,11 +407,12 @@
     body *{visibility:hidden;}
     #resume, #resume *{visibility:visible;}
     #resume{
-      position:absolute; left:0; top:0;
-      box-shadow:none; width:210mm; min-height:297mm;
-      margin:0;
+      position:absolute; left:0; right:0; top:0;
+      box-shadow:none; width:auto; min-height:calc(297mm - 30mm);
+      margin:0; padding:0 !important;
     }
-    @page{size:A4; margin:0;}
+    #resume.t2, #resume.t3{ min-height:calc(297mm - 30mm); }
+    @page{size:A4; margin:15mm;}
   }
   @media (max-width:900px){
     .app{grid-template-columns:1fr;}
@@ -428,6 +429,27 @@
   <div class="editor no-print">
     <div class="brand">BUNLAI MEDIA</div>
     <h1>CV Builder</h1>
+
+    <div class="tpl-section">
+      <div class="tpl-label">Template</div>
+      <div class="templates" id="templatePicker">
+        <div class="tpl-swatch t1 active" data-tpl="t1"><div class="dot"></div>Local</div>
+        <div class="tpl-swatch t2" data-tpl="t2"><div class="dot"></div>Modern</div>
+        <div class="tpl-swatch t3" data-tpl="t3"><div class="dot"></div>Corporate</div>
+        <div class="tpl-swatch t4" data-tpl="t4"><div class="dot"></div>Bold</div>
+        <div class="tpl-swatch t5" data-tpl="t5"><div class="dot"></div>Simple</div>
+      </div>
+    </div>
+
+    <div class="tpl-section">
+      <div class="tpl-label">Text &amp; Spacing Scale</div>
+      <div class="scale-picker" id="scalePicker">
+        <div class="scale-btn" data-scale="0.85">Small</div>
+        <div class="scale-btn active" data-scale="1">Medium</div>
+        <div class="scale-btn" data-scale="1.18">Large</div>
+      </div>
+      <div class="hint">Use "Large" to fill the page when you have little content, or "Small" to fit more onto one page.</div>
+    </div>
 
     <div class="acc-item" data-acc="photo">
       <button type="button" class="acc-header"><span>Photo (optional)</span><span class="acc-caret">▾</span></button>
@@ -515,33 +537,21 @@
       </div>
     </div>
 
+    <div class="acc-item" data-acc="custom">
+      <button type="button" class="acc-header"><span>Custom Sections (optional)</span><span class="acc-caret">▾</span></button>
+      <div class="acc-body">
+        <div id="customList"></div>
+        <button class="add-btn" id="addCustom" type="button">+ Add custom section</button>
+        <div class="hint">Add your own section for anything not listed above — e.g. Height, Weight, Marital Status, Religion, Hobbies.</div>
+      </div>
+    </div>
+
     <div class="acc-item" data-acc="refs">
       <button type="button" class="acc-header"><span>References (optional)</span><span class="acc-caret">▾</span></button>
       <div class="acc-body">
         <div id="refList"></div>
         <button class="add-btn" id="addRef" type="button">+ Add reference</button>
       </div>
-    </div>
-
-    <div class="tpl-section">
-      <div class="tpl-label">Template</div>
-      <div class="templates" id="templatePicker">
-        <div class="tpl-swatch t1 active" data-tpl="t1"><div class="dot"></div>Local</div>
-        <div class="tpl-swatch t2" data-tpl="t2"><div class="dot"></div>Modern</div>
-        <div class="tpl-swatch t3" data-tpl="t3"><div class="dot"></div>Corporate</div>
-        <div class="tpl-swatch t4" data-tpl="t4"><div class="dot"></div>Bold</div>
-        <div class="tpl-swatch t5" data-tpl="t5"><div class="dot"></div>Simple</div>
-      </div>
-    </div>
-
-    <div class="tpl-section">
-      <div class="tpl-label">Text &amp; Spacing Scale</div>
-      <div class="scale-picker" id="scalePicker">
-        <div class="scale-btn" data-scale="0.85">Small</div>
-        <div class="scale-btn active" data-scale="1">Medium</div>
-        <div class="scale-btn" data-scale="1.18">Large</div>
-      </div>
-      <div class="hint">Use "Large" to fill the page when you have little content, or "Small" to fit more onto one page.</div>
     </div>
 
     <button class="print-btn" id="printBtn" type="button">Download as PDF</button>
@@ -573,7 +583,8 @@ let state = {
   languages: '',
   certifications: '',
   interests: '',
-  refs: [{name:'',role:'',contact:''}]
+  refs: [{name:'',role:'',contact:''}],
+  custom: []
 };
 
 const $ = id => document.getElementById(id);
@@ -761,6 +772,41 @@ $('addRef').addEventListener('click', ()=>{
   renderRefForm(); render();
 });
 
+// ---- Custom sections ----
+function renderCustomForm(){
+  const wrap = $('customList');
+  wrap.innerHTML = '';
+  state.custom.forEach((item, i)=>{
+    const div = document.createElement('div');
+    div.className = 'entry';
+    div.innerHTML = `
+      <button class="entry-remove" data-i="${i}" data-type="custom">×</button>
+      <label>Section Title</label>
+      <input type="text" data-field="title" data-i="${i}" value="${escapeAttr(item.title)}" placeholder="Height, Weight, Hobby...">
+      <label>Comma-separated list</label>
+      <input type="text" data-field="content" data-i="${i}" value="${escapeAttr(item.content)}" placeholder="170cm, 60kg">
+    `;
+    wrap.appendChild(div);
+  });
+  wrap.querySelectorAll('input').forEach(el=>{
+    el.addEventListener('input', e=>{
+      const i = e.target.dataset.i, field = e.target.dataset.field;
+      state.custom[i][field] = e.target.value;
+      render();
+    });
+  });
+  wrap.querySelectorAll('.entry-remove').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      state.custom.splice(Number(e.target.dataset.i),1);
+      renderCustomForm(); render();
+    });
+  });
+}
+$('addCustom').addEventListener('click', ()=>{
+  state.custom.push({title:'',content:''});
+  renderCustomForm(); render();
+});
+
 function escapeHtml(s){ return (s||'').replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
 function escapeAttr(s){ return escapeHtml(s).replace(/"/g,'&quot;'); }
 
@@ -856,7 +902,17 @@ function render(){
       `).join('')}
     </section>` : '';
 
-  const extrasHtml = languagesHtml + certHtml + interestsHtml + refsHtml;
+  const customArr = state.custom.filter(c=>c.title && c.content);
+  const customHtml = customArr.map(c=>{
+    const items = c.content.split(',').map(s=>s.trim()).filter(Boolean);
+    return `
+    <section class="block">
+      <h3>${escapeHtml(c.title)}</h3>
+      <div class="skills-list">${items.map(s=>`<span class="skill-tag">${escapeHtml(s)}</span>`).join('')}</div>
+    </section>`;
+  }).join('');
+
+  const extrasHtml = languagesHtml + certHtml + interestsHtml + customHtml + refsHtml;
 
   if (state.tpl === 't2' || state.tpl === 't3'){
     r.innerHTML = `
@@ -865,6 +921,7 @@ function render(){
         ${skillsHtml}
         ${languagesHtml}
         ${interestsHtml}
+        ${customHtml}
       </div>
       <div class="main">
         ${summaryHtml}
@@ -902,6 +959,7 @@ $('printBtn').addEventListener('click', ()=> window.print());
 renderExpForm();
 renderEduForm();
 renderRefForm();
+renderCustomForm();
 render();
 </script>
 </body>
