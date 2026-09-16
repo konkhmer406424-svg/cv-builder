@@ -130,6 +130,11 @@
   .t13 .dot{background:#ffffff;border:1px solid #999;}
   .t14 .dot{background:#f5f5f2;border-radius:50%;}
   .t15 .dot{background:linear-gradient(90deg,#ffe8a3 40%,#ffffff 40%);}
+  .t16 .dot{background:linear-gradient(90deg,#0b3d91 60%,#a01d26 60%);}
+  .t17 .dot{background:#0b2a5b;border-bottom:3px solid #d4af37;}
+  .t18 .dot{background:linear-gradient(90deg,#5c1420,#a97b2f);}
+  .t19 .dot{background:#0d3b2e;border:1px solid #d4af37;}
+  .t20 .dot{background:linear-gradient(120deg,#7a1f2b,#c9932f);}
   .tpl-swatch.extra{display:none;}
   .templates.show-all .tpl-swatch.extra{display:block;}
   .show-more-btn{
@@ -502,7 +507,7 @@
   #resume.t5 .plain-list{color:var(--ink);}
   #resume.t5 .skill-tag{background:#eaf1f7;color:#173a5c;border-radius:4px;}
   #resume.t2 .main .summary, #resume.t3 .main .summary{margin-top:0;}
-  #resume.t7 .summary, #resume.t4 .summary, #resume.t5 .summary, #resume.t6 .summary, #resume.t9 .summary, #resume.t10 .summary, #resume.t11 .summary, #resume.t14 .summary{margin-top:-5px;}
+  #resume.t7 .summary, #resume.t4 .summary, #resume.t5 .summary, #resume.t6 .summary, #resume.t9 .summary, #resume.t10 .summary, #resume.t11 .summary, #resume.t14 .summary, #resume.t17 .summary, #resume.t20 .summary{margin-top:-5px;}
 
   /* ===== TEMPLATE 6: Minimal ATS (pure black & white, ATS-safe) ===== */
   #resume.t6{font-family:Georgia,'Times New Roman',serif;}
@@ -650,6 +655,86 @@
   #resume.t15 .main{padding:34px 30px;}
   #resume.t15 .main h3{color:#3a2e05;}
   #resume.t15 .main .summary{margin-top:0;}
+
+  /* ===== TEMPLATE 16: Official Khmer Blue (label-row government-form style) ===== */
+  #resume.t16{font-family:'Khmer OS Siemreap','Khmer OS Battambang','Noto Sans Khmer',Georgia,'Times New Roman',serif;}
+  #resume.t16 .head-block{display:block;}
+  #resume.t16 .photo-wrap{float:right;margin-left:calc(18px * var(--scale));margin-top:4px;}
+  #resume.t16 .head-text{display:block;text-align:left;border-bottom:2px solid #0b3d91;padding-bottom:calc(10px * var(--scale));margin-bottom:calc(8px * var(--scale));}
+  #resume.t16 .name{color:#0b3d91;font-weight:700;text-transform:uppercase;letter-spacing:.03em;}
+  #resume.t16 .title{color:#a01d26;font-style:normal;font-weight:600;}
+  #resume.t16 .contact-line{color:#333;}
+  #resume.t16 .photo{width:3cm;height:4cm;border-radius:0;border:2px solid #0b3d91;object-fit:cover;}
+  #resume.t16 .photo-placeholder{width:3cm;height:4cm;border-radius:0;border:2px solid #0b3d91;color:#0b3d91;font-size:10px;}
+  #resume.t16 .block h3{color:#fff;background:#0b3d91;text-align:left;padding:calc(5px * var(--scale)) calc(10px * var(--scale));border-bottom:3px solid #a01d26;letter-spacing:.04em;}
+  #resume.t16 .skill-tag{background:#eaf0fb;color:#0b3d91;border-radius:3px;border:1px solid #c3d3ee;}
+  #resume.t16 .item-role, #resume.t16 .item-sub{color:#1c1b19;}
+
+  /* ===== TEMPLATE 17: Royal Government Banner (formal Kingdom-style header) ===== */
+  #resume.t17{padding:0;font-family:'Khmer OS Siemreap','Khmer OS Battambang','Noto Sans Khmer',Georgia,'Times New Roman',serif;}
+  #resume.t17 .head{background:#0b2a5b;color:#fff;padding:calc(30px * var(--scale)) 40px calc(22px * var(--scale));border-bottom:4px solid #d4af37;position:relative;}
+  #resume.t17 .head::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#a01d26,#d4af37,#0b2a5b);}
+  #resume.t17 .head-text{display:block;text-align:center;}
+  #resume.t17 .head .name{color:#fff;text-transform:uppercase;letter-spacing:.05em;}
+  #resume.t17 .head .title{color:#d4af37;font-style:normal;font-weight:600;}
+  #resume.t17 .head .contact-line{color:#dbe4f5;justify-content:center;}
+  #resume.t17 .photo{width:calc(100px * var(--scale));height:calc(100px * var(--scale));border-radius:4px;border:3px solid #d4af37;}
+  #resume.t17 .photo-placeholder{border-radius:4px;border-color:#d4af37;color:#d4af37;}
+  #resume.t17 .body{padding:26px 40px 40px;}
+  #resume.t17 .block h3{color:#0b2a5b;border-bottom:2px solid #d4af37;text-align:left;}
+  #resume.t17 .skill-tag{background:#f3ecd8;color:#7a611f;border-radius:2px;}
+
+  /* ===== TEMPLATE 18: Khmer Classic (warm maroon & gold, elegant serif) ===== */
+  #resume.t18{font-family:'Khmer OS Siemreap','Khmer OS Battambang','Noto Sans Khmer',Georgia,serif;}
+  #resume.t18 .head-text{border-top:3px double #8a1c2e;padding-top:calc(10px * var(--scale));}
+  #resume.t18 .name{color:#5c1420;font-weight:700;}
+  #resume.t18 .title{color:#a97b2f;font-style:normal;}
+  #resume.t18 .photo{width:calc(108px * var(--scale));height:calc(108px * var(--scale));border-radius:6px;border:3px solid #a97b2f;}
+  #resume.t18 .photo-placeholder{border-radius:6px;border-color:#a97b2f;color:#a97b2f;}
+  #resume.t18 .block h3{color:#5c1420;border-bottom:2px solid #a97b2f;}
+  #resume.t18 .skill-tag{background:#f6ece0;color:#5c1420;border-radius:12px;}
+
+  /* ===== TEMPLATE 19: Khmer Fresh Green (sidebar, Khmer labels, fresh-graduate friendly) ===== */
+  #resume.t19{padding:0;display:grid;grid-template-columns:230px 1fr;font-family:'Khmer OS Siemreap','Noto Sans Khmer',-apple-system,sans-serif;}
+  #resume.t19 .side{background:#0d3b2e;color:#eaf4ef;padding:34px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;}
+  #resume.t19 .side .head-block{flex-direction:column;align-items:center;gap:calc(14px * var(--scale));}
+  #resume.t19 .side .name{color:#fff;font-size:calc(20px * var(--scale));}
+  #resume.t19 .side .title{color:#d4af37;font-style:normal;}
+  #resume.t19 .side .contact-line{flex-direction:column;align-items:center;color:#cfe3da;gap:calc(6px * var(--scale));margin-top:calc(14px * var(--scale));}
+  #resume.t19 .side h3{color:#d4af37;border-bottom:1px solid #1e5a46;}
+  #resume.t19 .side .skill-tag{background:#144a3a;color:#eaf4ef;}
+  #resume.t19 .side .skills-list{justify-content:center;}
+  #resume.t19 .side section.block{width:100%;}
+  #resume.t19 .side .photo{width:calc(96px * var(--scale));height:calc(96px * var(--scale));border:3px solid #d4af37;}
+  #resume.t19 .side .photo-placeholder{border-color:#d4af37;color:#cfe3da;}
+  #resume.t19 .main{padding:34px 30px;}
+  #resume.t19 .main h3{color:#0d3b2e;}
+  #resume.t19 .main .summary{margin-top:0;}
+
+  /* ===== TEMPLATE 20: Khmer Silk (silk-weave gradient header, elegant) ===== */
+  #resume.t20{padding:0;font-family:'Khmer OS Siemreap','Noto Sans Khmer',Georgia,serif;}
+  #resume.t20 .head{background:linear-gradient(120deg,#7a1f2b 0%,#a9502b 55%,#c9932f 100%);color:#fff;padding:34px 40px 26px;position:relative;}
+  #resume.t20 .head::after{content:'';position:absolute;left:0;right:0;bottom:0;height:6px;background:repeating-linear-gradient(90deg,#d4af37 0 10px,#7a1f2b 10px 20px);}
+  #resume.t20 .head-text{display:block;text-align:center;}
+  #resume.t20 .head .name{color:#fff;}
+  #resume.t20 .head .title{color:#ffe6c2;font-style:normal;}
+  #resume.t20 .head .contact-line{color:#ffe6c2;justify-content:center;}
+  #resume.t20 .photo{width:calc(96px * var(--scale));height:calc(96px * var(--scale));border-radius:50%;border:4px solid #ffe6c2;}
+  #resume.t20 .photo-placeholder{border-radius:50%;border-color:#ffe6c2;color:#ffe6c2;}
+  #resume.t20 .body{padding:26px 40px 40px;}
+  #resume.t20 .block h3{color:#7a1f2b;border-bottom:2px solid #d4af37;}
+  #resume.t20 .skill-tag{background:#fbeee0;color:#7a1f2b;border-radius:20px;}
+
+  /* ===== Khmer-language templates (t16–t20): heading sizing ===== */
+  #resume.t16 .block h3,
+  #resume.t17 .block h3,
+  #resume.t18 .block h3,
+  #resume.t19 .block h3,
+  #resume.t20 .block h3{
+    font-size:calc(16px * var(--scale));
+    letter-spacing:.01em;
+    text-transform:none;
+  }
   @media print{
     body{background:#fff;}
     .no-print{display:none !important;}
@@ -665,19 +750,20 @@
        extra pages too. Letting .side be exactly as tall as its own content is the only
        approach that paginates reliably. Trade-off: the sidebar's background color only
        extends as far as its own content, not artificially down to the page bottom. */
-    #resume.t2, #resume.t3, #resume.t7, #resume.t15{ display:block; }
-    #resume.t2 .side, #resume.t3 .side, #resume.t7 .side, #resume.t15 .side{ float:left; }
+    #resume.t2, #resume.t3, #resume.t7, #resume.t15, #resume.t19{ display:block; }
+    #resume.t2 .side, #resume.t3 .side, #resume.t7 .side, #resume.t15 .side, #resume.t19 .side{ float:left; }
     #resume.t2 .side{ width:250px; }
     #resume.t3 .side{ width:228px; }
     #resume.t7 .side{ width:210px; }
     #resume.t15 .side{ width:230px; }
+    #resume.t19 .side{ width:230px; }
     #resume.t2 .main{ margin-left:250px; }
     #resume.t3 .main{ margin-left:228px; }
     #resume.t7 .main{ margin-left:210px; }
     #resume.t15 .main{ margin-left:230px; }
+    #resume.t19 .main{ margin-left:230px; }
     @page{
       size:A4; margin:12mm 0;
-      @bottom-center{ content:"Page " counter(page) "/" counter(pages); font-family:-apple-system,sans-serif; font-size:9px; color:#7a756a; }
     }
     @page :first{
       margin-top:0;
@@ -740,7 +826,12 @@
         <div class="tpl-swatch t13 extra" data-tpl="t13"><div class="dot"></div>Academic</div>
         <div class="tpl-swatch t14 extra" data-tpl="t14"><div class="dot"></div>Portfolio</div>
         <div class="tpl-swatch t15 extra" data-tpl="t15"><div class="dot"></div>និស្សិតថ្មី/Fresh Grad</div>
-        <button type="button" class="show-more-btn" id="showMoreTplBtn">មើលទម្រង់ទាំងអស់ (១៥) / Show all templates</button>
+        <div class="tpl-swatch t16 extra" data-tpl="t16"><div class="dot"></div>បែបបទខ្មែរ ១/Official KH</div>
+        <div class="tpl-swatch t17 extra" data-tpl="t17"><div class="dot"></div>បែបបទខ្មែរ ២/Government</div>
+        <div class="tpl-swatch t18 extra" data-tpl="t18"><div class="dot"></div>ខ្មែរបុរាណ/Khmer Classic</div>
+        <div class="tpl-swatch t19 extra" data-tpl="t19"><div class="dot"></div>ខ្មែរស្រស់ស្អាត/Khmer Fresh</div>
+        <div class="tpl-swatch t20 extra" data-tpl="t20"><div class="dot"></div>សូត្រខ្មែរ/Khmer Silk</div>
+        <button type="button" class="show-more-btn" id="showMoreTplBtn">មើលទម្រង់ទាំងអស់ (២០) / Show all templates</button>
       </div>
     </div>
 
@@ -987,7 +1078,7 @@ $('showMoreTplBtn').addEventListener('click', ()=>{
   const showingAll = wrap.classList.toggle('show-all');
   $('showMoreTplBtn').textContent = showingAll
     ? 'មើលតិចជាងនេះ / Show fewer templates'
-    : 'មើលទម្រង់ទាំងអស់ (១៥) / Show all templates';
+    : 'មើលទម្រង់ទាំងអស់ (២០) / Show all templates';
 });
 
 // Scale picker
@@ -1168,13 +1259,19 @@ $('addCustom').addEventListener('click', ()=>{
 function escapeHtml(s){ return (s||'').replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
 function escapeAttr(s){ return escapeHtml(s).replace(/"/g,'&quot;'); }
 
-const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MONTH_NAMES_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MONTH_NAMES_KH = ['មករា','កុម្ភៈ','មីនា','មេសា','ឧសភា','មិថុនា','កក្កដា','សីហា','កញ្ញា','តុលា','វិច្ឆិកា','ធ្នូ'];
+const KHMER_TEMPLATES = ['t16','t17','t18','t19','t20'];
+function isKhmerTemplate(){
+  return KHMER_TEMPLATES.includes(state.tpl);
+}
 function formatMonthYear(ym){
   if(!ym) return '';
   const parts = ym.split('-');
   const y = parseInt(parts[0],10), m = parseInt(parts[1],10);
   if(!y || !m) return '';
-  return `${MONTH_NAMES[m-1]} ${y}`;
+  const names = isKhmerTemplate() ? MONTH_NAMES_KH : MONTH_NAMES_EN;
+  return `${names[m-1]} ${y}`;
 }
 function currentYm(){
   const d = new Date();
@@ -1190,16 +1287,17 @@ function formatDuration(totalMonths){
   const yrs = Math.floor(totalMonths / 12);
   const mos = totalMonths % 12;
   const parts = [];
-  if(yrs > 0) parts.push(`${yrs} yr${yrs > 1 ? 's' : ''}`);
-  if(mos > 0) parts.push(`${mos} mo${mos > 1 ? 's' : ''}`);
-  if(parts.length === 0) parts.push('< 1 mo');
+  const kh = isKhmerTemplate();
+  if(yrs > 0) parts.push(kh ? `${yrs} ឆ្នាំ` : `${yrs} yr${yrs > 1 ? 's' : ''}`);
+  if(mos > 0) parts.push(kh ? `${mos} ខែ` : `${mos} mo${mos > 1 ? 's' : ''}`);
+  if(parts.length === 0) parts.push(kh ? '< ១ ខែ' : '< 1 mo');
   return parts.join(' ');
 }
 function formatExpDateRange(item){
   const startLabel = formatMonthYear(item.startDate);
   if(!startLabel) return '';
   const endYm = item.current ? currentYm() : item.endDate;
-  const endLabel = item.current ? 'Present' : formatMonthYear(item.endDate);
+  const endLabel = item.current ? (isKhmerTemplate() ? 'បច្ចុប្បន្ន' : 'Present') : formatMonthYear(item.endDate);
   if(!endLabel) return startLabel;
   const dur = formatDuration(monthsBetween(item.startDate, endYm));
   return dur ? `${startLabel} – ${endLabel} (${dur})` : `${startLabel} – ${endLabel}`;
@@ -1229,9 +1327,20 @@ function render(){
   `;
   const summaryHtml = state.summary ? `<p class="summary">${escapeHtml(state.summary)}</p>` : '';
 
+  // Templates t16–t20 are fully Khmer-language resumes: section headings render in Khmer
+  // instead of English. All other templates keep the original English headings.
+  const KHMER_TPLS = new Set(['t16','t17','t18','t19','t20']);
+  const L = KHMER_TPLS.has(state.tpl) ? {
+    exp:'បទពិសោធន៍ការងារ', edu:'ការសិក្សា', skills:'ជំនាញ', lang:'ភាសា',
+    cert:'វិញ្ញាបនបត្រ', interest:'ចំណូលចិត្ត', ref:'អ្នកយោង'
+  } : {
+    exp:'Experience', edu:'Education', skills:'Skills', lang:'Languages',
+    cert:'Certifications', interest:'Interests', ref:'References'
+  };
+
   const expHtml = state.exp.some(x=>x.role||x.company) ? `
     <section class="block">
-      <h3>Experience</h3>
+      <h3>${L.exp}</h3>
       ${state.exp.filter(x=>x.role||x.company).map(x=>`
         <div class="item">
           <div class="item-top">
@@ -1246,7 +1355,7 @@ function render(){
 
   const eduHtml = state.edu.some(x=>x.degree||x.school) ? `
     <section class="block">
-      <h3>Education</h3>
+      <h3>${L.edu}</h3>
       ${state.edu.filter(x=>x.degree||x.school).map(x=>`
         <div class="item">
           <div class="item-top">
@@ -1260,34 +1369,34 @@ function render(){
 
   const skillsHtml = skillsArr.length ? `
     <section class="block">
-      <h3>Skills</h3>
+      <h3>${L.skills}</h3>
       <div class="skills-list">${skillsArr.map(s=>`<span class="skill-tag">${escapeHtml(s)}</span>`).join('')}</div>
     </section>` : '';
 
   const langArr = state.languages.split(',').map(s=>s.trim()).filter(Boolean);
   const languagesHtml = langArr.length ? `
     <section class="block">
-      <h3>Languages</h3>
+      <h3>${L.lang}</h3>
       <div class="skills-list">${langArr.map(s=>`<span class="skill-tag">${escapeHtml(s)}</span>`).join('')}</div>
     </section>` : '';
 
   const certArr = state.certifications.split('\n').map(s=>s.trim()).filter(Boolean);
   const certHtml = certArr.length ? `
     <section class="block">
-      <h3>Certifications</h3>
+      <h3>${L.cert}</h3>
       <ul class="plain-list">${certArr.map(s=>`<li>${escapeHtml(s)}</li>`).join('')}</ul>
     </section>` : '';
 
   const interestArr = state.interests.split(',').map(s=>s.trim()).filter(Boolean);
   const interestsHtml = interestArr.length ? `
     <section class="block">
-      <h3>Interests</h3>
+      <h3>${L.interest}</h3>
       <div class="skills-list">${interestArr.map(s=>`<span class="skill-tag">${escapeHtml(s)}</span>`).join('')}</div>
     </section>` : '';
 
   const refsHtml = state.refs.some(x=>x.name||x.role||x.contact) ? `
     <section class="block">
-      <h3>References</h3>
+      <h3>${L.ref}</h3>
       ${state.refs.filter(x=>x.name||x.role||x.contact).map(x=>`
         <div class="item">
           <div class="item-top"><span class="item-role">${escapeHtml(x.name)}</span></div>
@@ -1309,7 +1418,7 @@ function render(){
 
   const extrasHtml = languagesHtml + certHtml + interestsHtml + customHtml + refsHtml;
 
-  if (state.tpl === 't2' || state.tpl === 't3' || state.tpl === 't7' || state.tpl === 't15'){
+  if (state.tpl === 't2' || state.tpl === 't3' || state.tpl === 't7' || state.tpl === 't15' || state.tpl === 't19'){
     r.innerHTML = `
       <div class="side">
         ${headerHtml}
@@ -1333,7 +1442,7 @@ function render(){
         sideEl.style.minHeight = mainEl.offsetHeight + 'px';
       }
     });
-  } else if (state.tpl === 't4' || state.tpl === 't5' || state.tpl === 't8' || state.tpl === 't9' || state.tpl === 't11' || state.tpl === 't14'){
+  } else if (state.tpl === 't4' || state.tpl === 't5' || state.tpl === 't8' || state.tpl === 't9' || state.tpl === 't11' || state.tpl === 't14' || state.tpl === 't17' || state.tpl === 't20'){
     r.innerHTML = `
       <div class="head">${headerHtml}</div>
       <div class="body">
