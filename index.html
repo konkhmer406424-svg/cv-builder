@@ -339,6 +339,7 @@
     max-height:100vh;
   }
   #resume{
+    position:relative;
     --scale:1;
     width:794px;
     min-height:1123px;
@@ -388,6 +389,29 @@
   #resume .plain-list{margin:0;padding-left:calc(18px * var(--scale));font-size:calc(12.5px * var(--scale));line-height:1.65;}
   #resume .plain-list li{margin-bottom:calc(3px * var(--scale));}
 
+  /* ---- Print watermark (shown only when printing without a valid unlock) ---- */
+  #resume .print-watermark{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-wrap:wrap;
+    align-content:flex-start;
+    justify-content:flex-start;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:9999;
+  }
+  #resume .print-watermark span{
+    display:inline-block;
+    transform:rotate(-30deg);
+    font-family:-apple-system,sans-serif;
+    font-weight:800;
+    font-size:20px;
+    color:rgba(200,30,30,.3);
+    white-space:nowrap;
+    margin:34px 46px;
+  }
+
   /* ---- Photo (shared) ---- */
   #resume .head-block{display:flex;gap:calc(22px * var(--scale));align-items:flex-start;}
   #resume .photo-wrap{flex-shrink:0;}
@@ -409,12 +433,10 @@
   #resume.t1 .head-block{display:block;}
   #resume.t1 .photo-wrap{float:right;margin-left:calc(18px * var(--scale));}
   #resume.t1 .head-text{display:block;}
-  #resume.t1 section.block{clear:both;}
   #resume.t1 .name{color:#173a5c;font-size:calc(25px * var(--scale));font-weight:700;}
   #resume.t1 .title{color:var(--muted);font-style:normal;}
-  #resume.t1 .photo{width:3.6cm;height:4.8cm;border-radius:2px;border:3px solid #1d4d7a;object-fit:cover;}
-  #resume.t1 .photo-placeholder{width:3.6cm;height:4.8cm;border-radius:2px;border:2px dashed #1d4d7a;color:#1d4d7a;font-size:10px;}
-  #resume.t1 .head-block{gap:calc(14px * var(--scale));}
+  #resume.t1 .photo{width:2.8cm;height:3.6cm;border-radius:2px;border:3px solid #1d4d7a;object-fit:cover;}
+  #resume.t1 .photo-placeholder{width:2.8cm;height:3.6cm;border-radius:2px;border:2px dashed #1d4d7a;color:#1d4d7a;font-size:10px;}
   #resume.t1 .block h3{color:#173a5c;border-bottom:2px solid #1d4d7a;}
   #resume.t1 .skill-tag{background:#eaf1f7;color:#173a5c;border-radius:4px;}
 
@@ -480,7 +502,7 @@
   #resume.t5 .plain-list{color:var(--ink);}
   #resume.t5 .skill-tag{background:#eaf1f7;color:#173a5c;border-radius:4px;}
   #resume.t2 .main .summary, #resume.t3 .main .summary{margin-top:0;}
-  #resume.t4 .summary, #resume.t5 .summary{margin-top:calc(8px * var(--scale));}
+  #resume.t7 .summary, #resume.t4 .summary, #resume.t5 .summary, #resume.t6 .summary, #resume.t9 .summary, #resume.t10 .summary, #resume.t11 .summary, #resume.t14 .summary{margin-top:-5px;}
 
   /* ===== TEMPLATE 6: Minimal ATS (pure black & white, ATS-safe) ===== */
   #resume.t6{font-family:Georgia,'Times New Roman',serif;}
@@ -496,6 +518,7 @@
   #resume.t6 .skill-tag:last-child::after{content:'';}
   #resume.t6 .skills-list{gap:4px;}
   #resume.t6 .item-role, #resume.t6 .item-sub{color:#000;}
+  #resume.t6 .summary{margin-top:5px;}
 
   /* ===== TEMPLATE 7: Compact ATS (plain grayscale two-column) ===== */
   #resume.t7{padding:0;display:grid;grid-template-columns:210px 1fr;font-family:Georgia,'Times New Roman',serif;}
@@ -513,13 +536,12 @@
   #resume.t7 .main{padding:34px 28px;}
   #resume.t7 .main h3{color:#1c1b19;border-bottom:1px solid #ccc;}
   #resume.t7 .main .plain-list{color:var(--ink);}
-  #resume.t7 .main .summary{margin-top:0;}
 
   /* ===== TEMPLATE 8: Creative Splash (bold diagonal color block) ===== */
   #resume.t8{padding:0;font-family:-apple-system,sans-serif;position:relative;overflow:hidden;}
   #resume.t8 .head{position:relative;padding:34px 40px 26px;background:#6a3ea1;overflow:hidden;}
-  #resume.t8 .head::after{content:'';position:absolute;top:0;right:0;width:55%;height:100%;background:#ff8a3d;clip-path:polygon(35% 0, 100% 0, 100% 100%, 0% 100%);}
-  #resume.t8 .head .head-block{position:relative;z-index:1;justify-content:space-between;align-items:center;}
+  #resume.t8 .head::after{content:'';position:absolute;top:0;right:0;width:55%;height:100%;background:#ff8a3d;clip-path:polygon(35% 0, 100% 0, 100% 100%, 0% 100%);z-index:0;}
+  #resume.t8 .head .head-text{position:relative;z-index:1;display:block;align-items:center;padding:0 10px 0;}
   #resume.t8 .head .name{color:#fff;font-family:Georgia,serif;}
   #resume.t8 .head .title{color:#f2e6ff;}
   #resume.t8 .head .contact-line{color:#f2e6ff;}
@@ -530,14 +552,15 @@
   #resume.t8 .skill-tag{background:#f2e6ff;color:#6a3ea1;border-radius:20px;}
   #resume.t8 .skill-tag:nth-child(3n+2){background:#ffe6d1;color:#c2601a;}
   #resume.t8 .skill-tag:nth-child(3n){background:#e0f7f0;color:#1d7a6e;}
+  #resume.t8 .summary{margin-top:-5px;}
 
   /* ===== TEMPLATE 9: Timeline (vertical timeline for experience) ===== */
   #resume.t9{padding:0;font-family:-apple-system,sans-serif;}
   #resume.t9 .head{background:linear-gradient(120deg,#1d7a6e,#3dbfa8);color:#fff;padding:34px 40px 24px;}
-  #resume.t9 .head .head-block{justify-content:space-between;align-items:center;}
+  #resume.t9 .head-text{display:block; text-align:center;padding:0 50px 0;}
   #resume.t9 .head .name{color:#fff;font-family:Georgia,serif;}
   #resume.t9 .head .title{color:#dff7f0;}
-  #resume.t9 .head .contact-line{color:#dff7f0;}
+  #resume.t9 .head .contact-line{color:#dff7f0; justify-content:center;}
   #resume.t9 .photo{width:calc(92px * var(--scale));height:calc(92px * var(--scale));border:3px solid rgba(255,255,255,.6);}
   #resume.t9 .photo-placeholder{border-color:rgba(255,255,255,.6);color:#dff7f0;}
   #resume.t9 .body{padding:24px 40px 40px;}
@@ -550,14 +573,15 @@
 
   /* ===== TEMPLATE 10: Formal Khmer (official/government style, black & white) ===== */
   #resume.t10{font-family:Georgia,'Times New Roman',serif;}
-  #resume.t10 .head-block{flex-direction:row-reverse;justify-content:flex-end;gap:calc(24px * var(--scale));align-items:flex-start;}
-  #resume.t10 .head-text{text-align:center;flex:1;}
+  #resume.t10 .head-block{display:block;}
+  #resume.t10 .photo-wrap{float:right; margin-left:calc(18px * var(--scale)); margin-top:10px;}
+  #resume.t10 .head-text{display:block; text-align:center;}
   #resume.t10 .contact-line{justify-content:center;}
   #resume.t10 .name{color:#000;font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
   #resume.t10 .title{color:#333;font-style:italic;}
   #resume.t10 .photo{width:3.2cm;height:4.2cm;border-radius:0;border:1.5px solid #000;object-fit:cover;}
   #resume.t10 .photo-placeholder{width:3.2cm;height:4.2cm;border-radius:0;border:1.5px solid #000;color:#555;font-size:10px;}
-  #resume.t10 .summary{text-align:justify;}
+  #resume.t10 .summary{text-align:justify; margin-top:8px}
   #resume.t10 .block h3{color:#000;text-align:center;border-bottom:none;border-top:1px solid #000;border-bottom:1px solid #000;padding:4px 0;letter-spacing:.1em;}
   #resume.t10 .skill-tag{background:none;color:#000;padding:0;border-radius:0;}
   #resume.t10 .skill-tag::after{content:' • ';}
@@ -567,10 +591,10 @@
   /* ===== TEMPLATE 11: Elegant Executive (navy & gold, senior/formal) ===== */
   #resume.t11{padding:0;font-family:Georgia,'Times New Roman',serif;}
   #resume.t11 .head{background:#0f1f33;color:#fff;padding:34px 40px 24px;border-bottom:3px solid #c9a24b;}
-  #resume.t11 .head .head-block{justify-content:space-between;align-items:center;}
+  #resume.t11 .head-text{display:block; text-align:center;padding:0 50px 0;}
   #resume.t11 .head .name{color:#fff;letter-spacing:.03em;}
   #resume.t11 .head .title{color:#c9a24b;font-style:italic;}
-  #resume.t11 .head .contact-line{color:#cfd6e0;}
+  #resume.t11 .head .contact-line{color:#cfd6e0; justify-content:center;}
   #resume.t11 .photo{width:calc(92px * var(--scale));height:calc(92px * var(--scale));border-radius:4px;border:2px solid #c9a24b;}
   #resume.t11 .photo-placeholder{border-radius:4px;border-color:#c9a24b;color:#c9a24b;}
   #resume.t11 .body{padding:26px 40px 40px;}
@@ -608,7 +632,7 @@
   #resume.t14 .name{text-align:center;}
   #resume.t14 .title{text-align:center;}
   #resume.t14 .contact-line{justify-content:center;}
-  #resume.t14 .body{padding:16px 40px 40px;}
+  #resume.t14 .body{padding:0px 40px 20px;}
   #resume.t14 .block h3{text-align:center;letter-spacing:.15em;}
   #resume.t14 .skills-list{justify-content:center;}
 
@@ -626,7 +650,6 @@
   #resume.t15 .main{padding:34px 30px;}
   #resume.t15 .main h3{color:#3a2e05;}
   #resume.t15 .main .summary{margin-top:0;}
-
   @media print{
     body{background:#fff;}
     .no-print{display:none !important;}
@@ -636,8 +659,14 @@
       box-shadow:none; width:auto; min-height:0;
       margin:0; padding:0 !important;
     }
+    /* Plain float, no forced full-page min-height. The earlier float+min-height(297mm)
+       combo pushed the whole sidebar onto a blank next page the instant it overflowed
+       by a hair, and table/table-cell (tried next) made Chrome fragment the layout into
+       extra pages too. Letting .side be exactly as tall as its own content is the only
+       approach that paginates reliably. Trade-off: the sidebar's background color only
+       extends as far as its own content, not artificially down to the page bottom. */
     #resume.t2, #resume.t3, #resume.t7, #resume.t15{ display:block; }
-    #resume.t2 .side, #resume.t3 .side, #resume.t7 .side, #resume.t15 .side{ float:left; min-height:calc(297mm - 16mm); }
+    #resume.t2 .side, #resume.t3 .side, #resume.t7 .side, #resume.t15 .side{ float:left; }
     #resume.t2 .side{ width:250px; }
     #resume.t3 .side{ width:228px; }
     #resume.t7 .side{ width:210px; }
@@ -647,8 +676,11 @@
     #resume.t7 .main{ margin-left:210px; }
     #resume.t15 .main{ margin-left:230px; }
     @page{
-      size:A4; margin:8mm 0;
+      size:A4; margin:12mm 0;
       @bottom-center{ content:"Page " counter(page) "/" counter(pages); font-family:-apple-system,sans-serif; font-size:9px; color:#7a756a; }
+    }
+    @page :first{
+      margin-top:0;
     }
   }
   @media (max-width:900px){
@@ -658,17 +690,16 @@
     .preview-wrap{max-height:none;padding:20px;}
     #resume{width:100%;padding:32px 24px;}
   }
-#resume{ position:relative !important; overflow:hidden !important; }
-#resume.watermarked::before{
-  content:"PREVIEW — CV BUILDER — ©LTMEDIA\APREVIEW — CV BUILDER — ©LTMEDIA\APREVIEW — CV BUILDER — ©LTMEDIA\APREVIEW — CV BUILDER — ©LTMEDIA\APREVIEW — CV BUILDER — ©LTMEDIA";
-  position:absolute; inset:0;
-  display:flex; align-items:center; justify-content:center;
-  font-family:-apple-system,sans-serif; font-weight:600; font-size:28px;
-  color:rgba(0,0,0,.08); transform:rotate(-30deg);
-  pointer-events:none; z-index:5; text-align:center; white-space:pre-wrap; line-height:10;
-}
-@media print{ #resume.watermarked::before{ content:none; } }
-
+  #resume{ position:relative !important; overflow:hidden !important; }
+  #resume.watermarked::before{
+    content:"PREVIEW — CV BUILDER — ©LTMEDIA\APREVIEW — CV BUILDER — ©LTMEDIA\APREVIEW — CV BUILDER — ©LTMEDIA\APREVIEW — CV BUILDER — ©LTMEDIA\APREVIEW — CV BUILDER — ©LTMEDIA";
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    font-family:-apple-system,sans-serif; font-weight:600; font-size:28px;
+    color:rgba(0,0,0,.08); transform:rotate(-30deg);
+    pointer-events:none; z-index:5; text-align:center; white-space:pre-wrap; line-height:10;
+  }
+  @media print{ #resume.watermarked::before{ content:none; } }
 </style>
 </head>
 <body>
@@ -1461,6 +1492,35 @@ $('printBtn').addEventListener('click', ()=>{
   } else {
     showPayModal();
   }
+});
+
+// ---- Watermark failsafe: fires before ANY print (button, Ctrl+P, browser menu, right-click) ----
+// A user could bypass the button above entirely (DevTools, Ctrl+P, etc), so we re-check the
+// unlock status every single time the browser is about to print, no matter how it was triggered.
+function addPrintWatermark(){
+  const resume = $('resume');
+  if(!resume || resume.querySelector('.print-watermark')) return;
+  const wrap = document.createElement('div');
+  wrap.className = 'print-watermark';
+  const label = 'NOT PAID / មិនទាន់ទូទាត់';
+  let html = '';
+  for(let i = 0; i < 30; i++){ html += `<span>${label}</span>`; }
+  wrap.innerHTML = html;
+  resume.appendChild(wrap);
+}
+function removePrintWatermark(){
+  const wm = document.querySelector('.print-watermark');
+  if(wm) wm.remove();
+}
+window.addEventListener('beforeprint', ()=>{
+  if(!isUnlocked()){
+    addPrintWatermark();
+  } else {
+    removePrintWatermark();
+  }
+});
+window.addEventListener('afterprint', ()=>{
+  removePrintWatermark();
 });
 $('payModalCloseBtn').addEventListener('click', hidePayModal);
 $('payModalOverlay').addEventListener('click', (e)=>{
