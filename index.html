@@ -1066,13 +1066,6 @@
       </div>
     </div>
 
-    <div class="row2" style="margin-top:10px;">
-      <button class="add-btn" id="exportBtn" type="button">នាំចេញទិន្នន័យ / Export data</button>
-      <button class="add-btn" id="importBtn" type="button">នាំចូលទិន្នន័យ / Import data</button>
-    </div>
-    <input type="file" id="importFile" accept=".json" style="display:none;">
-    <details class="hint-toggle"><summary></summary><div class="hint">នាំចេញព័ត៌មានជាឯកសារផ្ញើអោយអ្នកដទៃ ឬបន្តលើ device ផ្សេង / Export your info as a file to send to someone else, or to continue on another device.</div></details>
-
   </div>
 
   <div class="resizer no-print" id="resizer"></div>
@@ -1944,6 +1937,7 @@ function buildResumeHtmlForMode(mode){
 }
 
 let pendingDownloadAction = localStorage.getItem('cvBuilderPendingAction_v1') || 'cv';
+if(!['cv','cl','both'].includes(pendingDownloadAction)) pendingDownloadAction = 'cv'; // drop old 'export'/'import' values
 
 function proceedToPrint(action){
   hideDownloadChoice();
@@ -1956,14 +1950,6 @@ function proceedToPrint(action){
   runDownloadAction(action);
 }
 function runDownloadAction(action){
-  if(action === 'export'){
-    doExport();
-    return;
-  }
-  if(action === 'import'){
-    $('importFile').click();
-    return;
-  }
   if(action === 'cv'){
     if(state.mode !== 'cv'){ state.mode = 'cv'; applyModeVisibility(); render(); }
     window.print();
@@ -2204,55 +2190,6 @@ $('clearDataBtn').addEventListener('click', (e)=>{
     saveState();
     refreshAllForms();
   }
-});
-
-function doExport(){
-  const blob = new Blob([JSON.stringify(state, null, 2)], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  const safeName = (state.fullName || 'cv-data').trim().replace(/[^a-z0-9]+/gi,'-').toLowerCase();
-  a.href = url;
-  a.download = `${safeName || 'cv-data'}.json`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
-
-$('exportBtn').addEventListener('click', ()=>{
-  if(!isUnlocked()){
-    pendingDownloadAction = 'export';
-    try{ localStorage.setItem('cvBuilderPendingAction_v1', 'export'); }catch(e){}
-    showPayModal();
-    return;
-  }
-  doExport();
-});
-$('importBtn').addEventListener('click', ()=>{
-  if(!isUnlocked()){
-    pendingDownloadAction = 'import';
-    try{ localStorage.setItem('cvBuilderPendingAction_v1', 'import'); }catch(e){}
-    showPayModal();
-    return;
-  }
-  $('importFile').click();
-});
-$('importFile').addEventListener('change', (e)=>{
-  const file = e.target.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = ev=>{
-    try{
-      const data = JSON.parse(ev.target.result);
-      Object.assign(state, blankState(), data);
-      saveState();
-      refreshAllForms();
-    }catch(err){
-      alert('មិនអាចអានឯកសារនេះបានទេ សូមប្រាកដថាវាជាឯកសារដែល Export ចេញពីកម្មវិធីនេះ / Could not read this file — please make sure it\'s a CV data file exported from this tool.');
-    }
-  };
-  reader.readAsText(file);
-  e.target.value = '';
 });
 
 const resizer = $('resizer');
