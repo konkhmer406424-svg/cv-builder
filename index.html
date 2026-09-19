@@ -833,6 +833,13 @@
     #resume.t7 .side{ width:210px; }
     #resume.t15 .side{ width:230px; }
     #resume.t19 .side{ width:230px; }
+    /* BLANK-PAGE FIX: render() sets an inline min-height on .side equal to the on-screen height of
+       .main (>= 1123px, because the screen grid stretches it to #resume's min-height). That is taller
+       than one printable A4 page (~274mm after the page margins and the 20px preview padding), so the
+       floated sidebar overflowed onto a second, blank-looking page. !important overrides that inline
+       value. 270mm keeps the sidebar colour running almost to the bottom of page 1 with a safety gap;
+       lower it (e.g. 260mm) if some browser still adds an empty page. */
+    #resume.t2 .side, #resume.t3 .side, #resume.t7 .side, #resume.t15 .side, #resume.t19 .side{ min-height:270mm !important; }
     #resume.t2 .main{ margin-left:250px; }
     #resume.t3 .main{ margin-left:228px; }
     #resume.t7 .main{ margin-left:210px; }
@@ -1113,21 +1120,9 @@
 
     <!-- Step 2: show KHQR, wait for scan + payment -->
     <div id="payStepQr" style="display:none;">
-      <div style="max-width:300px;margin:0 auto;border-radius:14px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.12);border:1px solid var(--line);background:#fff;">
-        <div style="background:#e0203a;padding:14px 18px;display:flex;align-items:center;gap:8px;">
-          <span style="background:#fff;color:#e0203a;font-weight:800;font-size:14px;letter-spacing:.5px;border-radius:4px;padding:3px 8px;">KHQR</span>
-        </div>
-        <div style="padding:16px 18px 4px;text-align:left;">
-          <div style="font-size:13.5px;font-weight:700;color:var(--ink);">CV Builder — LT Media</div>
-          <div style="font-size:22px;font-weight:800;color:var(--ink);margin-top:2px;">$<span id="qrAmountText">2.00</span> <span style="font-size:12px;font-weight:600;color:var(--muted);">USD</span></div>
-        </div>
-        <div style="padding:14px 18px 8px;">
-          <img id="qrImage" src="" alt="KHQR" style="width:100%;aspect-ratio:1/1;object-fit:contain;border:1px solid var(--line);border-radius:8px;padding:10px;background:#fff;display:block;">
-        </div>
-        <div style="padding:0 18px 16px;text-align:center;">
-          <p id="qrStatusText" style="margin:6px 0 0;font-size:12px;color:var(--muted);">សូមស្កេនដោយកម្មវិធីធនាគារ ឬ Bakong / Scan with any banking app (ABA, Bakong, ACLEDA...)</p>
-        </div>
-      </div>
+      <div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:12px;">CV Builder — LT Media</div>
+      <img id="qrImage" src="" alt="KHQR" style="display:block;width:100%;max-width:300px;height:auto;margin:0 auto;border-radius:12px;">
+      <p id="qrStatusText" style="margin:12px 0 0;font-size:12px;color:var(--muted);">សូមស្កេនដោយកម្មវិធីធនាគារ ឬ Bakong / Scan with any banking app (ABA, Bakong, ACLEDA...)</p>
       <p id="payWaitError" style="color:#a33;font-size:12px;margin:14px 0 0;display:none;">QR ផុតកំណត់ ឬការទូទាត់មិនទាន់បញ្ជាក់ សូមសាកល្បងម្ដងទៀត / QR expired or payment not confirmed yet — try again below</p>
       <button type="button" id="qrRetryBtn" style="display:none;width:100%;max-width:300px;margin:10px auto 0;background:none;border:1px solid var(--line);border-radius:6px;padding:8px;color:var(--ink);font-size:12.5px;cursor:pointer;font-family:-apple-system,sans-serif;">បង្កើត QR ថ្មី / Generate new QR</button>
       <button type="button" id="waitingShowManualBtn" style="width:100%;margin-top:14px;background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline;font-family:-apple-system,sans-serif;">មាន Unlock Code រួចហើយ?</button>
@@ -1139,8 +1134,9 @@
       <p style="margin:0 0 14px;font-size:12.5px;color:var(--muted);">Payment confirmed — save this code to unlock on other devices too</p>
       <div style="background:#f7f6f3;border:1px dashed var(--line);border-radius:8px;padding:14px;margin-bottom:8px;">
         <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">Unlock Code</div>
-        <div id="successCodeText" style="font-size:24px;font-weight:800;letter-spacing:2px;color:var(--ink);font-family:monospace;">----</div>
+        <div id="successCodeText" style="font-size:24px;font-weight:800;letter-spacing:2px;color:var(--ink);font-family:monospace;user-select:all;">----</div>
       </div>
+      <button id="copyCodeBtn" type="button" style="width:100%;margin:0 0 12px;background:#fff;border:1px solid var(--line);border-radius:6px;padding:9px;color:var(--ink);font-size:13px;font-weight:600;cursor:pointer;font-family:-apple-system,sans-serif;">📋 ចម្លង Code / Copy code</button>
       <p style="margin:0 0 16px;font-size:11.5px;color:var(--muted);">សូមថតរូបសម្ងាត់ទុក ដើម្បីប្រើនៅ device ផ្សេងទៀត (ជាមួយឈ្មោះពេញដូចគ្នា) / Screenshot this — use it on other devices with the same Full Name</p>
       <button id="successContinueBtn" type="button" class="print-btn" style="width:100%;">បន្ត Download</button>
     </div>
@@ -2058,7 +2054,6 @@ async function generateQr(){
       throw new Error(data.reason || 'createPayment failed');
     }
     try{ sessionStorage.setItem(PENDING_MD5_KEY, data.md5); }catch(e){}
-    $('qrAmountText').textContent = '2.00';
     $('qrImage').src = data.image;
     showPayStep('qr');
     pollPaymentStatus(data.md5, POLL_MAX_TRIES);
@@ -2073,6 +2068,34 @@ $('qrRetryBtn').addEventListener('click', generateQr);
 $('successContinueBtn').addEventListener('click', ()=>{
   hidePayModal();
   runDownloadAction(pendingDownloadAction);
+});
+
+// ---- Copy the unlock code to the clipboard ----
+$('copyCodeBtn').addEventListener('click', async ()=>{
+  const code = ($('successCodeText').textContent || '').trim();
+  const btn = $('copyCodeBtn');
+  if(!code || code === '----') return;
+  let ok = false;
+  try{
+    await navigator.clipboard.writeText(code);
+    ok = true;
+  }catch(e){
+    // Fallback for browsers/webviews without the async clipboard API
+    try{
+      const ta = document.createElement('textarea');
+      ta.value = code;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+    }catch(e2){ ok = false; }
+  }
+  const original = '📋 ចម្លង Code / Copy code';
+  btn.textContent = ok ? '✓ បានចម្លង / Copied' : 'សូមចុចលើ code ហើយចម្លងដោយដៃ / Please copy the code manually';
+  setTimeout(()=>{ btn.textContent = original; }, 2000);
 });
 
 // ---- Bakong Relay: poll for confirmation after the QR is shown ----
