@@ -1833,25 +1833,69 @@ function populateFormFromState(){
 // handles ?action=createPayment and ?action=checkStatus — see the separate
 // bakong-relay-backend.gs file for what to add on the Apps Script side.
 const CODE_CHECK_URL = 'https://script.google.com/macros/s/AKfycby8bpHiZVP5gQ0i5LA85rr5LvxxTuMrN4dhpG3N3FYu4qeS9oMZ8m91Nbhvw0GiCxg/exec';
-const UNLOCK_STORAGE_KEY = 'cvBuilderUnlocked_v1';
+const UNLOCK_STORAGE_KEY = 'cvBuilderUnlocked_v2'; // v2: unlock is now bound to code + Full Name
+const OLD_UNLOCK_STORAGE_KEY = 'cvBuilderUnlocked_v1'; // old flag (not tied to any code/name) — discarded
+const PENDING_NAME_KEY = 'cvBuilderPendingName_v1';
+try{ localStorage.removeItem(OLD_UNLOCK_STORAGE_KEY); }catch(e){}
 const UNLOCK_DAYS = 30;
 const PENDING_MD5_KEY = 'cvBuilderPendingMd5_v1';
 const POLL_INTERVAL_MS = 3000;
 const POLL_MAX_TRIES = 180; // ~9 minutes — KHQR codes expire around 10 minutes
 
-function isUnlocked(){
+// Same normalisation idea as the server: NFC, drop zero-width chars, lowercase, collapse spaces.
+function normName(str){
+  return (str || '').toString().normalize('NFC')
+    .replace(/[\u200B-\u200D\uFEFF]/g, '')
+    .trim().toLowerCase().replace(/\s+/g, ' ');
+}
+function readUnlock(){
   try{
     const raw = localStorage.getItem(UNLOCK_STORAGE_KEY);
-    if(!raw) return false;
-    const data = JSON.parse(raw);
-    return data.expiresAt && Date.now() < data.expiresAt;
-  }catch(e){ return false; }
+    if(!raw) return null;
+    const d = JSON.parse(raw);
+    return (d && typeof d === 'object') ? d : null;
+  }catch(e){ return null; }
 }
-function setUnlocked(){
+// Unlocked ONLY if a valid code is stored, it has not expired, AND the
+// current "Full Name" field matches the name the code was bound to.
+// Changing the name therefore locks the download again.
+function isUnlocked(){
+  const d = readUnlock();
+  if(!d || !d.code || !d.name || !d.expiresAt) return false;
+  if(Date.now() >= d.expiresAt) return false;
+  return normName(d.name) === normName(state.fullName);
+}
+function setUnlocked(code, name){
   try{
     const expiresAt = Date.now() + UNLOCK_DAYS * 24 * 60 * 60 * 1000;
-    localStorage.setItem(UNLOCK_STORAGE_KEY, JSON.stringify({unlockedAt: Date.now(), expiresAt}));
+    localStorage.setItem(UNLOCK_STORAGE_KEY, JSON.stringify({
+      code: (code || '').toString().trim(),
+      name: (name || '').toString().trim(),
+      unlockedAt: Date.now(),
+      expiresAt
+    }));
   }catch(e){}
+  render();
+}
+function clearUnlocked(){
+  try{ localStorage.removeItem(UNLOCK_STORAGE_KEY); }catch(e){}
+  render();
+}
+// Asks the server whether the stored code + name are still valid (30-day limit, name match).
+// Returns 'ok' | 'denied' | 'offline'.
+async function verifyUnlockOnServer(d){
+  try{
+    const res = await fetch(CODE_CHECK_URL + '?code=' + encodeURIComponent(d.code) + '&name=' + encodeURIComponent(d.name));
+    const data = await res.json();
+    return data.success === true ? 'ok' : 'denied';
+  }catch(e){ return 'offline'; }
+}
+// Runs in the background on page load so downloads stay instant (no await before print()).
+async function backgroundVerifyUnlock(){
+  const d = readUnlock();
+  if(!d) return;
+  const r = await verifyUnlockOnServer(d);
+  if(r === 'denied') clearUnlocked();
 }
 
 // ---- Step switching inside the pay modal ----
@@ -1995,8 +2039,19 @@ async function generateQr(){
   $('qrStatusText').textContent = 'កំពុងរង់ចាំការទូទាត់... / Waiting for payment...';
   $('genQrBtn').disabled = true;
   $('genQrBtn').textContent = 'កំពុងរៀបចំ... / Preparing...';
+  const GENERIC_PAY_ERR = 'មានបញ្ហា សូមសាកល្បងម្ដងទៀត / Something went wrong, please try again';
+  const rawName = (state.fullName || '').trim();
+  if(!rawName){
+    $('abaPayError').textContent = 'សូមវាយ "ឈ្មោះពេញ" នៅផ្នែកខាងលើជាមុនសិន / Please enter your Full Name above first';
+    $('abaPayError').style.display = 'block';
+    $('genQrBtn').disabled = false;
+    $('genQrBtn').textContent = 'បង្កើត KHQR ទូទាត់ / Generate Payment QR';
+    return;
+  }
+  $('abaPayError').textContent = GENERIC_PAY_ERR;
   try{
-    const ownerName = encodeURIComponent((state.fullName || '').trim());
+    const ownerName = encodeURIComponent(rawName);
+    try{ sessionStorage.setItem(PENDING_NAME_KEY, rawName); }catch(e){}
     const res = await fetch(CODE_CHECK_URL + '?action=createPayment&amount=2&name=' + ownerName);
     const data = await res.json();
     if(!data.success || !data.md5 || !data.image){
@@ -2027,7 +2082,9 @@ function pollPaymentStatus(md5, triesLeft){
     .then(data=>{
       if(data.success){
         try{ sessionStorage.removeItem(PENDING_MD5_KEY); }catch(e){}
-        setUnlocked();
+        let paidName = '';
+        try{ paidName = sessionStorage.getItem(PENDING_NAME_KEY) || ''; }catch(e){}
+        setUnlocked(data.code, paidName || (state.fullName || '').trim());
         $('successCodeText').textContent = data.code || '----';
         showPayStep('success');
         return;
@@ -2061,12 +2118,14 @@ function pollPaymentStatus(md5, triesLeft){
   let md5;
   try{ md5 = sessionStorage.getItem(PENDING_MD5_KEY); }catch(e){}
   if(!md5 || isUnlocked()) return;
+  let pendingName = '';
+  try{ pendingName = sessionStorage.getItem(PENDING_NAME_KEY) || ''; }catch(e){}
   try{ sessionStorage.removeItem(PENDING_MD5_KEY); }catch(e){}
   fetch(CODE_CHECK_URL + '?action=checkStatus&md5=' + encodeURIComponent(md5))
     .then(res => res.json())
     .then(data=>{
-      if(data.success){
-        setUnlocked();
+      if(data.success && data.code){
+        setUnlocked(data.code, pendingName || (state.fullName || '').trim());
       }
     })
     .catch(()=>{});
@@ -2080,16 +2139,21 @@ $('unlockSubmitBtn').addEventListener('click', async ()=>{
   $('unlockSubmitBtn').disabled = true;
   $('unlockSubmitBtn').textContent = 'កំពុងពិនិត្យ... / Checking...';
   try{
-    const ownerName = encodeURIComponent((state.fullName || '').trim());
+    const typedName = (state.fullName || '').trim();
+    const ownerName = encodeURIComponent(typedName);
     const res = await fetch(CODE_CHECK_URL + '?code=' + encodeURIComponent(entered) + '&name=' + ownerName);
     const data = await res.json();
-    if(data.success){
-      setUnlocked();
+    if(data.success === true){
+      setUnlocked(entered, typedName);
       hidePayModal();
       runDownloadAction(pendingDownloadAction);
     } else {
       if(data.reason === 'name_mismatch'){
         $('unlockError').textContent = 'Code នេះភ្ជាប់ជាមួយ CV ផ្សេង — សូមប្រាកដថាបានវាយ "ឈ្មោះពេញ" ដូចលើកមុនត្រឹមត្រូវ / This code is bound to a different name — make sure "Full Name" above matches what you used before';
+      } else if(data.reason === 'missing_name'){
+        $('unlockError').textContent = 'សូមវាយ "ឈ្មោះពេញ" នៅផ្នែកខាងលើជាមុនសិន / Please enter your Full Name above first';
+      } else if(data.reason === 'expired'){
+        $('unlockError').textContent = 'Code នេះផុតកំណត់ 30 ថ្ងៃហើយ / This code has expired (30 days)';
       } else if(data.reason === 'missing_code'){
         $('unlockError').textContent = 'សូមវាយ Unlock Code / Please enter a code';
       } else {
@@ -2214,6 +2278,7 @@ renderEduForm();
 renderRefForm();
 renderCustomForm();
 render();
+backgroundVerifyUnlock();
 </script>
 </body>
 </html>
