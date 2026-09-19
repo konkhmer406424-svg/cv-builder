@@ -883,13 +883,6 @@
       </div>
     </div>
 
-    <div class="tpl-section">
-      <div class="tpl-label">ប្រវត្តិរូប / Profile</div>
-      <select id="profileSelect" style="width:100%;font-family:-apple-system,sans-serif;font-size:13px;padding:8px 10px;border:1px solid var(--line);border-radius:5px;background:var(--paper);color:var(--ink);"></select>
-      <button class="add-btn" id="newProfileBtn" type="button" style="margin-top:8px;">+ ប្រវត្តិរូបថ្មី / New profile</button>
-      <details class="hint-toggle"><summary></summary><div class="hint">ប្រើប្រវត្តិរូបផ្សេងគ្នា បើមានច្រើននាក់ប្រើ browser/device ដដែល / Use separate profiles if more than one person shares this browser/device.</div></details>
-    </div>
-
     <div class="tpl-section" id="cvTemplateSection">
       <div class="tpl-label">ទម្រង់ / Template</div>
       <div class="templates" id="templatePicker">
@@ -1604,7 +1597,7 @@ function renderCoverLetter(){
       <p class="closing">Sincerely,<br>${escapeHtml(name)}</p>
     </div>
   `;
-  saveStateToActiveProfile();
+  saveState();
 }
 
 function render(){
@@ -1768,11 +1761,10 @@ function render(){
       ${extrasHtml}
     `;
   }
-  saveStateToActiveProfile();
+  saveState();
 }
 
-const PROFILES_KEY = 'cvBuilderProfiles_v1';
-const ACTIVE_KEY = 'cvBuilderActiveProfile_v1';
+const CV_DATA_KEY = 'cvBuilderData_v1';
 
 function blankState(){
   return {
@@ -1788,55 +1780,15 @@ function blankState(){
   };
 }
 
-function loadProfiles(){
+function loadState(){
   try{
-    const raw = localStorage.getItem(PROFILES_KEY);
-    if(raw) return JSON.parse(raw);
+    const raw = localStorage.getItem(CV_DATA_KEY);
+    if(raw) return Object.assign(blankState(), JSON.parse(raw));
   }catch(e){}
-  try{
-    const old = localStorage.getItem('cvBuilderData_v1');
-    if(old){
-      const data = JSON.parse(old);
-      return [{id:'p1', name:data.fullName || 'Profile 1', data}];
-    }
-  }catch(e){}
-  return [];
+  return blankState();
 }
-function saveProfiles(){
-  try{ localStorage.setItem(PROFILES_KEY, JSON.stringify(profiles)); }catch(e){ console.warn('Could not save profiles', e); }
-}
-function setActiveProfileId(id){
-  activeProfileId = id;
-  try{ localStorage.setItem(ACTIVE_KEY, id); }catch(e){}
-}
-
-let profiles = loadProfiles();
-let activeProfileId = localStorage.getItem(ACTIVE_KEY);
-
-function ensureProfile(){
-  if(profiles.length === 0){
-    profiles.push({id:'p'+Date.now(), name:'Profile 1', data:blankState()});
-    saveProfiles();
-  }
-  if(!activeProfileId || !profiles.find(p=>p.id===activeProfileId)){
-    setActiveProfileId(profiles[0].id);
-  }
-}
-
-function saveStateToActiveProfile(){
-  const p = profiles.find(x=>x.id===activeProfileId);
-  if(p){
-    p.data = JSON.parse(JSON.stringify(state));
-    saveProfiles();
-  }
-}
-function loadActiveProfileIntoState(){
-  const p = profiles.find(x=>x.id===activeProfileId);
-  Object.assign(state, blankState(), (p && p.data) ? p.data : {});
-}
-function renderProfileDropdown(){
-  const sel = $('profileSelect');
-  sel.innerHTML = profiles.map(p=>`<option value="${p.id}" ${p.id===activeProfileId?'selected':''}>${escapeHtml(p.name)}</option>`).join('');
+function saveState(){
+  try{ localStorage.setItem(CV_DATA_KEY, JSON.stringify(state)); }catch(e){ console.warn('Could not save CV data', e); }
 }
 function refreshAllForms(){
   populateFormFromState();
@@ -1964,6 +1916,14 @@ function proceedToPrint(action){
   runDownloadAction(action);
 }
 function runDownloadAction(action){
+  if(action === 'export'){
+    doExport();
+    return;
+  }
+  if(action === 'import'){
+    $('importFile').click();
+    return;
+  }
   if(action === 'cv'){
     if(state.mode !== 'cv'){ state.mode = 'cv'; applyModeVisibility(); render(); }
     window.print();
@@ -2150,36 +2110,16 @@ $('unlockCodeInput').addEventListener('keydown', (e)=>{
 
 
 
-$('profileSelect').addEventListener('change', (e)=>{
-  saveStateToActiveProfile();
-  setActiveProfileId(e.target.value);
-  loadActiveProfileIntoState();
-  refreshAllForms();
-});
-
-$('newProfileBtn').addEventListener('click', ()=>{
-  const name = prompt('ដាក់ឈ្មោះប្រវត្តិរូបនេះ / Name this profile:', 'Profile ' + (profiles.length + 1));
-  if(!name) return;
-  saveStateToActiveProfile();
-  const id = 'p' + Date.now();
-  profiles.push({id, name, data:blankState()});
-  saveProfiles();
-  setActiveProfileId(id);
-  loadActiveProfileIntoState();
-  renderProfileDropdown();
-  refreshAllForms();
-});
-
 $('clearDataBtn').addEventListener('click', (e)=>{
   e.preventDefault();
-  if(confirm('សម្អាតទិន្នន័យប្រវត្តិរូបនេះ? មិនអាចត្រឡប់វិញបានទេ។ / Clear all data in the current profile? This cannot be undone.')){
+  if(confirm('សម្អាតទិន្នន័យ CV នេះ? មិនអាចត្រឡប់វិញបានទេ។ / Clear all CV data? This cannot be undone.')){
     Object.assign(state, blankState());
-    saveStateToActiveProfile();
+    saveState();
     refreshAllForms();
   }
 });
 
-$('exportBtn').addEventListener('click', ()=>{
+function doExport(){
   const blob = new Blob([JSON.stringify(state, null, 2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -2190,8 +2130,26 @@ $('exportBtn').addEventListener('click', ()=>{
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+}
+
+$('exportBtn').addEventListener('click', ()=>{
+  if(!isUnlocked()){
+    pendingDownloadAction = 'export';
+    try{ localStorage.setItem('cvBuilderPendingAction_v1', 'export'); }catch(e){}
+    showPayModal();
+    return;
+  }
+  doExport();
 });
-$('importBtn').addEventListener('click', ()=> $('importFile').click());
+$('importBtn').addEventListener('click', ()=>{
+  if(!isUnlocked()){
+    pendingDownloadAction = 'import';
+    try{ localStorage.setItem('cvBuilderPendingAction_v1', 'import'); }catch(e){}
+    showPayModal();
+    return;
+  }
+  $('importFile').click();
+});
 $('importFile').addEventListener('change', (e)=>{
   const file = e.target.files[0];
   if(!file) return;
@@ -2199,14 +2157,8 @@ $('importFile').addEventListener('change', (e)=>{
   reader.onload = ev=>{
     try{
       const data = JSON.parse(ev.target.result);
-      saveStateToActiveProfile();
-      const id = 'p' + Date.now();
-      const name = data.fullName ? data.fullName : ('Imported ' + new Date().toLocaleDateString());
-      profiles.push({id, name, data});
-      saveProfiles();
-      setActiveProfileId(id);
-      loadActiveProfileIntoState();
-      renderProfileDropdown();
+      Object.assign(state, blankState(), data);
+      saveState();
       refreshAllForms();
     }catch(err){
       alert('មិនអាចអានឯកសារនេះបានទេ សូមប្រាកដថាវាជាឯកសារដែល Export ចេញពីកម្មវិធីនេះ / Could not read this file — please make sure it\'s a CV data file exported from this tool.');
@@ -2255,9 +2207,7 @@ if(resizer && appEl){
   });
 }
 
-ensureProfile();
-loadActiveProfileIntoState();
-renderProfileDropdown();
+Object.assign(state, loadState());
 populateFormFromState();
 renderExpForm();
 renderEduForm();
