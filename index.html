@@ -4,6 +4,2260 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CV Builder — Bunlai Media</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c1b19;
+    --paper:#faf8f4;
+    --panel:#ffffff;
+    --line:#e4e0d8;
+    --muted:#7a756a;
+    --accent:#8a5a3b;
+    --accent-2:#3b5a4a;
+    --sand:#efe9dd;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Iowan Old Style','Georgia','Noto Sans Khmer',serif;
+    background:var(--sand);
+    color:var(--ink);
+    min-height:100vh;
+  }
+  .app{
+    display:grid;
+    grid-template-columns:var(--editor-w, 400px) 6px 1fr;
+    min-height:100vh;
+  }
+  .resizer{
+    cursor:col-resize;
+    background:var(--line);
+    position:relative;
+  }
+  .resizer:hover, .resizer.dragging{
+    background:var(--accent);
+  }
+  .resizer::after{
+    content:'';
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    width:2px; height:32px;
+    background:rgba(255,255,255,.6);
+    border-radius:2px;
+  }
+  /* ---------- LEFT: FORM ---------- */
+  .editor{
+    background:var(--panel);
+    border-right:1px solid var(--line);
+    padding:28px 26px 60px;
+    overflow-y:auto;
+    max-height:100vh;
+  }
+  .brand-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:22px;
+  }
+  .brand-text{
+    display:flex;
+    flex-direction:column;
+  }
+  .brand{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans Khmer',sans-serif;
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:.06em;
+    color:var(--muted);
+    margin-bottom:2px;
+  }
+  .editor h1{
+    font-size:19px;
+    margin:0;
+    font-weight:600;
+  }
+  .brand-logo{
+    height:56px;
+    width:auto;
+    flex-shrink:0;
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:5px;
+    background:#fff;
+    box-shadow:0 1px 3px rgba(0,0,0,.08);
+  }
+  .templates{
+    display:flex;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    gap:8px;
+    margin-bottom:10px;
+    padding-bottom:8px;
+    scrollbar-width:thin;
+  }
+  .templates::-webkit-scrollbar{height:6px;}
+  .templates::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px;}
+  .templates::-webkit-scrollbar-thumb:hover{background:var(--accent);}
+  .tpl-swatch{
+    cursor:pointer;
+    border:2px solid var(--line);
+    border-radius:6px;
+    padding:6px 4px;
+    text-align:center;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:10px;
+    color:var(--muted);
+    background:var(--paper);
+    transition:border-color .15s, color .15s;
+    flex:0 0 78px;
+  }
+  .tpl-swatch .dot{
+    width:100%;
+    height:22px;
+    border-radius:3px;
+    margin-bottom:5px;
+  }
+  .tpl-swatch.active{
+    border-color:var(--ink);
+    color:var(--ink);
+    font-weight:600;
+  }
+  .t1 .dot{background:linear-gradient(90deg,#1d4d7a 30%,#eaf1f7 30%);}
+  .t2 .dot{background:linear-gradient(90deg,#22303c 35%,#f2f5f4 35%);}
+  .t3 .dot{background:linear-gradient(90deg,#eaf1f7 40%,#ffffff 40%);border:1px solid #c3d8e8;}
+  .t4 .dot{background:linear-gradient(90deg,#8a3b3b,#c97b4a);}
+  .t5 .dot{background:#ffffff;border-bottom:3px solid #1d4d7a;}
+  .t6 .dot{background:#ffffff;border:1px solid #444;}
+  .t7 .dot{background:linear-gradient(90deg,#e4e4e4 35%,#ffffff 35%);border:1px solid #ccc;}
+  .t8 .dot{background:linear-gradient(135deg,#6a3ea1 40%,#ff8a3d 40%);}
+  .t9 .dot{background:linear-gradient(90deg,#1d7a6e,#3dbfa8);}
+  .t10 .dot{background:#ffffff;border:1px solid #1c1b19;border-top:3px solid #1c1b19;}
+  .t11 .dot{background:linear-gradient(90deg,#0f1f33 70%,#c9a24b 70%);}
+  .t12 .dot{background:#0d2b1f;}
+  .t13 .dot{background:#ffffff;border:1px solid #999;}
+  .t14 .dot{background:#f5f5f2;border-radius:50%;}
+  .t15 .dot{background:linear-gradient(90deg,#ffe8a3 40%,#ffffff 40%);}
+  .t16 .dot{background:linear-gradient(90deg,#0b3d91 60%,#a01d26 60%);}
+  .t17 .dot{background:#0b2a5b;border-bottom:3px solid #d4af37;}
+  .t18 .dot{background:linear-gradient(90deg,#5c1420,#a97b2f);}
+  .t19 .dot{background:#0d3b2e;border:1px solid #d4af37;}
+  .t20 .dot{background:linear-gradient(120deg,#7a1f2b,#c9932f);}
+  .tpl-hint{
+    grid-column:1 / -1;
+  }
+
+  fieldset{
+    border:none;
+    padding:0;
+    margin:0 0 26px;
+  }
+  legend{
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--accent);
+    font-weight:700;
+    margin-bottom:10px;
+    padding:0;
+  }
+  label{
+    display:block;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:11px;
+    color:var(--muted);
+    margin:10px 0 4px;
+  }
+  input[type=text],input[type=email],input[type=tel],textarea{
+    width:100%;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:13.5px;
+    padding:8px 10px;
+    border:1px solid var(--line);
+    border-radius:5px;
+    background:var(--paper);
+    color:var(--ink);
+  }
+  input:focus,textarea:focus{
+    outline:none;
+    border-color:var(--accent);
+    background:#fff;
+  }
+  textarea{resize:vertical;min-height:56px;font-family:-apple-system,'Noto Sans Khmer',sans-serif;line-height:1.45;}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .entry{
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:12px 12px 4px;
+    margin-bottom:12px;
+    background:var(--paper);
+    position:relative;
+  }
+  .entry-remove{
+    position:absolute;
+    top:8px; right:8px;
+    background:none;
+    border:none;
+    color:var(--muted);
+    font-size:16px;
+    cursor:pointer;
+    line-height:1;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+  }
+  .entry-remove:hover{color:#a33;}
+  .add-btn{
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--accent);
+    background:none;
+    border:1px dashed var(--accent);
+    border-radius:6px;
+    padding:7px 12px;
+    cursor:pointer;
+    width:100%;
+    margin-top:2px;
+  }
+  .add-btn:hover{background:rgba(138,90,59,.07);}
+  .print-btn{
+    width:100%;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:14px;
+    font-weight:700;
+    color:#fff;
+    background:var(--ink);
+    border:none;
+    border-radius:7px;
+    padding:13px;
+    cursor:pointer;
+    margin-top:6px;
+  }
+  .print-btn:hover{background:#000;}
+  .acc-item{
+    border:1px solid var(--line);
+    border-radius:8px;
+    margin-bottom:10px;
+    overflow:hidden;
+    background:var(--paper);
+  }
+  .acc-header{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:12px 14px;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--accent);
+    font-weight:700;
+    text-align:left;
+  }
+  .acc-header:hover{background:rgba(138,90,59,.05);}
+  .acc-caret{
+    color:var(--muted);
+    font-size:11px;
+    transition:transform .2s ease;
+  }
+  .acc-item.open .acc-caret{transform:rotate(180deg);}
+  .acc-body{display:none;padding:0 14px 16px;}
+  .acc-item.open .acc-body{display:block;}
+  .tpl-section{margin:22px 0 18px;}
+  .tpl-label{
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--accent);
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .hint{
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:11px;
+    color:var(--muted);
+    margin-top:6px;
+    line-height:1.5;
+  }
+  details.hint-toggle{margin-top:4px;}
+  details.hint-toggle summary{
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:11px;
+    color:var(--accent);
+    cursor:pointer;
+    list-style:none;
+    user-select:none;
+  }
+  details.hint-toggle summary::-webkit-details-marker{display:none;}
+  details.hint-toggle summary::before{content:"ⓘ ជំនួយ / Tip";}
+  details.hint-toggle[open] summary::before{content:"ⓘ លាក់ / Hide";}
+  details.hint-toggle.cl-hint-toggle{margin-top:14px;padding-top:10px;border-top:1px dashed var(--line);}
+  details.hint-toggle.cl-hint-toggle summary::before{content:"ⓘ Generate Cover Letter";}
+  details.hint-toggle.cl-hint-toggle[open] summary::before{content:"ⓘ Hide Cover Letter";}
+  .cl-hint-body{margin-top:10px;}
+  .photo-row{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+  .photo-thumb-empty{
+    width:56px;height:56px;border-radius:8px;flex-shrink:0;
+    border:1px dashed var(--line);
+    display:flex;align-items:center;justify-content:center;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;font-size:9px;color:var(--muted);
+    text-align:center;
+  }
+  .photo-thumb{width:56px;height:56px;border-radius:8px;object-fit:cover;flex-shrink:0;}
+  input[type=file]{font-family:-apple-system,'Noto Sans Khmer',sans-serif;font-size:11.5px;width:100%;}
+
+  .scale-picker{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+  }
+  .cl-tpl-swatch{
+    cursor:pointer;
+    border:2px solid var(--line);
+    border-radius:6px;
+    padding:6px 4px;
+    text-align:center;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:10px;
+    color:var(--muted);
+    background:var(--paper);
+    transition:border-color .15s, color .15s;
+    flex:0 0 78px;
+  }
+  .cl-tpl-swatch .dot{width:100%;height:22px;border-radius:3px;margin-bottom:5px;}
+  .cl-tpl-swatch.active{border-color:var(--ink);color:var(--ink);font-weight:600;}
+  .cl1dot{background:linear-gradient(90deg,#8a5a3b 45%,#efe9dd 45%);}
+  .cl2dot{background:#ffffff;border:1px solid #999;}
+  .cl3dot{background:#f5f5f2;}
+  .cl4dot{background:linear-gradient(90deg,#efe9dd 50%,#ffffff 50%);border-top:3px solid #1c1b19;}
+  .cl5dot{background:linear-gradient(120deg,#3b5a4a,#8a5a3b);}
+  .scale-btn{
+    cursor:pointer;
+    border:2px solid var(--line);
+    border-radius:6px;
+    padding:9px 4px;
+    text-align:center;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:12px;
+    color:var(--muted);
+    background:var(--paper);
+  }
+  .scale-btn.active{
+    border-color:var(--ink);
+    color:var(--ink);
+    font-weight:700;
+    background:#fff;
+  }
+
+  /* ---------- RIGHT: PREVIEW ---------- */
+  .preview-wrap{
+    padding:36px;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    overflow-y:auto;
+    max-height:100vh;
+  }
+  .preview-col{width:794px;max-width:100%;}
+  .preview-tabs{
+    display:flex;
+    gap:18px;
+    margin-bottom:10px;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+  }
+  .preview-tab{
+    background:none;
+    border:none;
+    padding:0 0 5px;
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--muted);
+    cursor:pointer;
+    border-bottom:2px solid transparent;
+  }
+  .preview-tab:hover{color:var(--ink);}
+  .preview-tab.active{
+    color:var(--ink);
+    border-bottom-color:var(--accent);
+  }
+  #resume{
+    position:relative;
+    --scale:1;
+    width:794px;
+    min-height:1123px;
+    background:#fff;
+    box-shadow:0 4px 24px rgba(0,0,0,.12);
+    padding:34px 40px;
+  }
+  #resume h2.name{margin:0;font-size:calc(30px * var(--scale));letter-spacing:.01em;}
+  #resume .title{margin:calc(2px * var(--scale)) 0 0;font-size:calc(14.5px * var(--scale));color:var(--muted);font-style:italic;}
+  #resume .contact-line{
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:calc(11.5px * var(--scale));
+    color:var(--muted);
+    margin-top:calc(10px * var(--scale));
+    display:flex;flex-wrap:wrap;gap:calc(4px * var(--scale)) calc(14px * var(--scale));
+  }
+  #resume .summary{margin:calc(18px * var(--scale)) 0 0;font-size:calc(13px * var(--scale));line-height:1.6;text-align:justify;}
+  #resume section.block{margin-top:calc(24px * var(--scale));}
+  #resume .block h3{
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:calc(11.5px * var(--scale));
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    color:var(--accent);
+    border-bottom:1px solid var(--line);
+    padding-bottom:calc(5px * var(--scale));
+    margin:0 0 calc(12px * var(--scale));
+  }
+  #resume .item{margin-bottom:calc(13px * var(--scale));}
+  #resume .item-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;}
+  #resume .item-role{font-size:calc(13.5px * var(--scale));font-weight:700;}
+  #resume .item-sub{font-size:calc(12.5px * var(--scale));color:var(--muted);font-style:italic;}
+  #resume .item-date{font-family:-apple-system,'Noto Sans Khmer',sans-serif;font-size:calc(11px * var(--scale));color:var(--muted);white-space:nowrap;}
+  #resume .item-desc{font-size:calc(12.5px * var(--scale));line-height:1.55;margin-top:calc(3px * var(--scale));white-space:pre-line;}
+  #resume .item-desc-list{margin:calc(3px * var(--scale)) 0 0;padding-left:calc(16px * var(--scale));font-size:calc(12.5px * var(--scale));line-height:1.55;}
+  #resume .item-desc-list li{margin-bottom:calc(2px * var(--scale));text-align:justify;}
+  #resume .skills-list{display:flex;flex-wrap:wrap;gap:calc(7px * var(--scale));}
+  #resume .skill-tag{
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:calc(11.5px * var(--scale));
+    padding:calc(4px * var(--scale)) calc(11px * var(--scale));
+    border-radius:20px;
+    background:var(--sand);
+    color:var(--ink);
+  }
+  #resume.empty-msg{color:var(--muted);font-family:-apple-system,'Noto Sans Khmer',sans-serif;font-size:13px;text-align:center;padding-top:120px;}
+  #resume .plain-list{margin:0;padding-left:calc(18px * var(--scale));font-size:calc(12.5px * var(--scale));line-height:1.65;}
+  #resume .plain-list li{margin-bottom:calc(3px * var(--scale));}
+
+  /* ===== COVER LETTER TEMPLATES ===== */
+  #resume.letter{font-family:'Iowan Old Style','Georgia','Noto Sans Khmer',serif;}
+  #resume .letter-head{margin-bottom:calc(26px * var(--scale));}
+  #resume .ls-name{font-size:calc(20px * var(--scale));font-weight:700;}
+  #resume .ls-contact{font-family:-apple-system,'Noto Sans Khmer',sans-serif;font-size:calc(11.5px * var(--scale));color:var(--muted);margin-top:4px;}
+  #resume .letter-date{font-family:-apple-system,'Noto Sans Khmer',sans-serif;font-size:calc(12px * var(--scale));color:var(--muted);margin-top:calc(18px * var(--scale));}
+  #resume .letter-recipient{font-size:calc(13px * var(--scale));margin-top:calc(10px * var(--scale));line-height:1.5;}
+  #resume .letter-body .salutation{margin-top:calc(22px * var(--scale));font-size:calc(13px * var(--scale));}
+  #resume .letter-body p{font-size:calc(13px * var(--scale));line-height:1.7;margin:0 0 calc(14px * var(--scale));text-align:justify;}
+  #resume .letter-body .closing{margin-top:calc(22px * var(--scale));text-align:left;}
+  #resume .letter-bullets{margin:0 0 calc(14px * var(--scale));padding-left:calc(20px * var(--scale));font-size:calc(13px * var(--scale));line-height:1.6;}
+
+  /* cl1 — Short & Direct: clean sans-serif, tight spacing */
+  #resume.cl1{font-family:-apple-system,'Segoe UI','Noto Sans Khmer',sans-serif;}
+  #resume.cl1 .ls-name{color:var(--accent);letter-spacing:.01em;}
+  #resume.cl1 .letter-body p{line-height:1.6;}
+
+  /* cl2 — Standard/Professional: classic serif business letter */
+  #resume.cl2 .letter-head{border-bottom:1px solid var(--line);padding-bottom:calc(16px * var(--scale));}
+  #resume.cl2 .ls-name{text-transform:uppercase;letter-spacing:.04em;font-size:calc(17px * var(--scale));}
+
+  /* cl3 — Simple/Plain: airy, left-aligned, easy to scan */
+  #resume.cl3{font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.cl3 .letter-body p{line-height:1.9;text-align:left;}
+
+  /* cl4 — Detailed/Long: shaded letterhead band */
+  #resume.cl4 .letter-head{background:var(--sand);margin:-34px -40px 26px;padding:28px 40px 20px;}
+  #resume.cl4 .ls-name{font-size:calc(22px * var(--scale));}
+
+  /* cl5 — Modern/Friendly: accent name, left-aligned, bulleted highlights */
+  #resume.cl5{font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.cl5 .ls-name{color:var(--accent-2);font-size:calc(21px * var(--scale));}
+  #resume.cl5 .letter-body p{text-align:left;}
+  #resume.cl5 .letter-bullets li{margin-bottom:calc(4px * var(--scale));}
+
+  /* ---- Print watermark (shown only when printing without a valid unlock) ---- */
+  #resume .print-watermark{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-wrap:wrap;
+    align-content:flex-start;
+    justify-content:flex-start;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:9999;
+  }
+  #resume .print-watermark span{
+    display:inline-block;
+    transform:rotate(-30deg);
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-weight:800;
+    font-size:20px;
+    color:rgba(200,30,30,.3);
+    white-space:nowrap;
+    margin:34px 46px;
+  }
+
+  /* ---- Photo (shared) ---- */
+  #resume .head-block{display:flex;gap:calc(22px * var(--scale));align-items:flex-start;}
+  #resume .photo-wrap{flex-shrink:0;}
+  #resume .photo{width:calc(112px * var(--scale));height:calc(112px * var(--scale));border-radius:50%;object-fit:cover;object-position:center top;display:block;}
+  #resume .photo-placeholder{
+    width:calc(112px * var(--scale));height:calc(112px * var(--scale));border-radius:50%;
+    border:1.5px dashed var(--line);
+    display:flex;align-items:center;justify-content:center;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;font-size:10px;color:var(--muted);
+    text-align:center;
+  }
+  @media print{
+    #resume .head-block.no-photo .photo-wrap{display:none;}
+    #resume .head-block.no-photo{gap:0;}
+  }
+
+  /* ===== TEMPLATE 1: Local Standard (Cambodia-style, photo top-right) ===== */
+  #resume.t1{font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.t1 .head-block{display:block;}
+  #resume.t1 .photo-wrap{float:right;margin-left:calc(18px * var(--scale));}
+  #resume.t1 .head-text{display:block;}
+  #resume.t1 .name{color:#173a5c;font-size:calc(25px * var(--scale));font-weight:700;}
+  #resume.t1 .title{color:var(--muted);font-style:normal;}
+  #resume.t1 .photo{width:2.8cm;height:3.6cm;border-radius:2px;border:3px solid #1d4d7a;object-fit:cover;}
+  #resume.t1 .photo-placeholder{width:2.8cm;height:3.6cm;border-radius:2px;border:2px dashed #1d4d7a;color:#1d4d7a;font-size:10px;}
+  #resume.t1 .block h3{color:#173a5c;border-bottom:2px solid #1d4d7a;}
+  #resume.t1 .skill-tag{background:#eaf1f7;color:#173a5c;border-radius:4px;}
+
+  /* ===== TEMPLATE 2: Modern Sidebar ===== */
+  #resume.t2{padding:0;display:grid;grid-template-columns:250px 1fr;font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.t2 .side{background:#22303c;color:#eef1ef;padding:34px 20px;display:flex;flex-direction:column;align-items:center;text-align:left;}
+  #resume.t2 .side .head-block{flex-direction:column;align-items:center;gap:calc(16px * var(--scale));}
+  #resume.t2 .side .name{color:#fff;font-size:calc(22px * var(--scale));font-family:'Iowan Old Style',Georgia,'Noto Sans Khmer',serif;text-align:center;}
+  #resume.t2 .side .title{color:#a9c2b6;font-style:normal;font-size:calc(12.5px * var(--scale));margin-top:calc(4px * var(--scale));text-align:center;}
+  #resume.t2 .side .contact-line{flex-direction:column;align-items:flex-start;color:#cfd8d4;font-size:calc(11px * var(--scale));gap:calc(8px * var(--scale));margin-top:calc(20px * var(--scale));}
+  #resume.t2 .side h3{color:#a9c2b6;border-bottom:1px solid #3a4b47;font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.t2 .side .skill-tag{background:#2e3f3a;color:#eef1ef;}
+  #resume.t2 .side .skills-list{justify-content:flex-start;}
+  #resume.t2 .side section.block{width:100%;}
+  #resume.t2 .side .photo{width:calc(130px * var(--scale));height:calc(130px * var(--scale));}
+  #resume.t2 .side .photo-placeholder{width:calc(130px * var(--scale));height:calc(130px * var(--scale));border-color:#3a4b47;color:#cfd8d4;}
+  #resume.t2 .main{padding:34px 30px;}
+  #resume.t2 .main h3{color:#22303c;}
+  #resume.t2 .main .plain-list{color:var(--ink);}
+
+  /* ===== TEMPLATE 3: Corporate Blue Sidebar (common Cambodia job-portal style) ===== */
+  #resume.t3{padding:0;display:grid;grid-template-columns:228px 1fr;font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.t3 .side{background:#eaf1f7;color:#1c2b38;padding:34px 18px;border-right:1px solid #d3e2ee;display:flex;flex-direction:column;align-items:center;text-align:left;}
+  #resume.t3 .side .head-block{flex-direction:column;align-items:center;gap:calc(14px * var(--scale));}
+  #resume.t3 .side .name{color:#173a5c;font-size:calc(20px * var(--scale));text-align:center;}
+  #resume.t3 .side .title{color:#4a6b85;font-style:normal;font-size:calc(12px * var(--scale));text-align:center;}
+  #resume.t3 .side .contact-line{flex-direction:column;align-items:flex-start;color:#3c5872;font-size:calc(11px * var(--scale));gap:calc(7px * var(--scale));margin-top:calc(16px * var(--scale));}
+  #resume.t3 .side h3{color:#173a5c;border-bottom:1px solid #c3d8e8;font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.t3 .side .skill-tag{background:#d9e7f2;color:#173a5c;}
+  #resume.t3 .side .skills-list{justify-content:flex-start;}
+  #resume.t3 .side section.block{width:100%;}
+  #resume.t3 .side .photo{width:calc(115px * var(--scale));height:calc(115px * var(--scale));border-radius:8px;}
+  #resume.t3 .side .photo-placeholder{width:calc(115px * var(--scale));height:calc(115px * var(--scale));border-radius:8px;border-color:#a9c5da;color:#4a6b85;}
+  #resume.t3 .main{padding:34px 28px;}
+  #resume.t3 .main h3{color:#173a5c;}
+  #resume.t3 .main .plain-list{color:var(--ink);}
+
+  /* ===== TEMPLATE 4: Bold Header ===== */
+  #resume.t4{padding:0;font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.t4 .head{background:linear-gradient(120deg,#8a3b3b,#c97b4a);color:#fff;padding:34px 40px 24px;}
+  #resume.t4 .head .head-block{justify-content:space-between;align-items:center;}
+  #resume.t4 .head .photo-wrap{order:2;}
+  #resume.t4 .head .head-text{order:1;}
+  #resume.t4 .head .name{color:#fff;font-family:Georgia,'Noto Sans Khmer',serif;}
+  #resume.t4 .head .title{color:#fbe4d6;}
+  #resume.t4 .head .contact-line{color:#fbe4d6;}
+  #resume.t4 .photo{width:calc(120px * var(--scale));height:calc(120px * var(--scale));border:3px solid rgba(255,255,255,.55);}
+  #resume.t4 .photo-placeholder{border-color:rgba(255,255,255,.55);color:#fbe4d6;}
+  #resume.t4 .body{padding:24px 40px 34px;}
+  #resume.t4 .block h3{color:#8a3b3b;}
+  #resume.t4 .skill-tag{background:#f6e2d5;color:#7a3b28;}
+
+  /* ===== TEMPLATE 5: Simple Professional (blue banner, ATS-friendly, photo optional) ===== */
+  #resume.t5{font-family:-apple-system,'Noto Sans Khmer',sans-serif;padding:0;}
+  #resume.t5 .head{padding:34px 40px 18px;border-bottom:3px solid #1d4d7a;}
+  #resume.t5 .head .head-block{flex-direction:row;align-items:center;gap:calc(20px * var(--scale));}
+  #resume.t5 .photo{width:calc(96px * var(--scale));height:calc(96px * var(--scale));border-radius:50%;object-fit:cover;}
+  #resume.t5 .photo-placeholder{width:calc(96px * var(--scale));height:calc(96px * var(--scale));border-radius:50%;border-color:#1d4d7a;color:#1d4d7a;}
+  #resume.t5 .name{color:#173a5c;font-size:calc(25px * var(--scale));letter-spacing:0;}
+  #resume.t5 .title{font-style:normal;font-size:calc(13px * var(--scale));}
+  #resume.t5 .body{padding:20px 40px 34px;}
+  #resume.t5 .block h3{color:#1d4d7a;}
+  #resume.t5 .plain-list{color:var(--ink);}
+  #resume.t5 .skill-tag{background:#eaf1f7;color:#173a5c;border-radius:4px;}
+  #resume.t2 .main .summary, #resume.t3 .main .summary{margin-top:0;}
+  #resume.t7 .summary, #resume.t4 .summary, #resume.t5 .summary, #resume.t6 .summary, #resume.t9 .summary, #resume.t10 .summary, #resume.t11 .summary, #resume.t14 .summary, #resume.t17 .summary, #resume.t20 .summary{margin-top:-5px;}
+
+  /* ===== TEMPLATE 6: Minimal ATS (pure black & white, ATS-safe) ===== */
+  #resume.t6{font-family:Georgia,'Times New Roman','Noto Sans Khmer',serif;}
+  #resume.t6 .name{color:#000;font-weight:700;letter-spacing:0;}
+  #resume.t6 .title{color:#333;font-style:normal;}
+  #resume.t6 .head-block{flex-direction:row;align-items:flex-start;}
+  #resume.t6 .photo, #resume.t6 .photo-placeholder{width:calc(74px * var(--scale));height:calc(74px * var(--scale));border-radius:4px;}
+  #resume.t6 .photo{object-fit:cover;}
+  #resume.t6 .photo-placeholder{border:1px solid #999;color:#777;}
+  #resume.t6 .block h3{color:#000;border-bottom:1.5px solid #000;letter-spacing:.08em;}
+  #resume.t6 .skill-tag{background:none;color:#000;padding:0;border-radius:0;}
+  #resume.t6 .skill-tag::after{content:',';}
+  #resume.t6 .skill-tag:last-child::after{content:'';}
+  #resume.t6 .skills-list{gap:4px;}
+  #resume.t6 .item-role, #resume.t6 .item-sub{color:#000;}
+  #resume.t6 .summary{margin-top:5px;}
+
+  /* ===== TEMPLATE 7: Compact ATS (plain grayscale two-column) ===== */
+  #resume.t7{padding:0;display:grid;grid-template-columns:210px 1fr;font-family:Georgia,'Times New Roman','Noto Sans Khmer',serif;}
+  #resume.t7 .side{background:#f2f1ee;color:#2a2926;padding:34px 20px;border-right:1px solid #ddd9d0;display:flex;flex-direction:column;align-items:center;text-align:left;}
+  #resume.t7 .side .head-block{flex-direction:column;align-items:center;gap:calc(12px * var(--scale));}
+  #resume.t7 .side .name{color:#1c1b19;font-size:calc(19px * var(--scale));text-align:center;}
+  #resume.t7 .side .title{color:#555;font-style:normal;font-size:calc(11.5px * var(--scale));text-align:center;}
+  #resume.t7 .side .contact-line{flex-direction:column;align-items:flex-start;color:#444;font-size:calc(10.5px * var(--scale));gap:calc(6px * var(--scale));margin-top:calc(16px * var(--scale));}
+  #resume.t7 .side h3{color:#1c1b19;border-bottom:1px solid #ccc;font-family:Georgia,'Noto Sans Khmer',serif;}
+  #resume.t7 .side .skill-tag{background:none;color:#2a2926;padding:0;border-radius:0;}
+  #resume.t7 .side .skill-tag::after{content:',';}
+  #resume.t7 .side .skill-tag:last-child::after{content:'';}
+  #resume.t7 .side .photo{width:calc(84px * var(--scale));height:calc(84px * var(--scale));border-radius:6px;}
+  #resume.t7 .side .photo-placeholder{width:calc(84px * var(--scale));height:calc(84px * var(--scale));border-radius:6px;border-color:#bbb;color:#777;}
+  #resume.t7 .main{padding:34px 28px;}
+  #resume.t7 .main h3{color:#1c1b19;border-bottom:1px solid #ccc;}
+  #resume.t7 .main .plain-list{color:var(--ink);}
+
+  /* ===== TEMPLATE 8: Creative Splash (bold diagonal color block) ===== */
+  #resume.t8{padding:0;font-family:-apple-system,'Noto Sans Khmer',sans-serif;position:relative;overflow:hidden;}
+  #resume.t8 .head{position:relative;padding:34px 40px 26px;background:#6a3ea1;overflow:hidden;}
+  #resume.t8 .head::after{content:'';position:absolute;top:0;right:0;width:55%;height:100%;background:#ff8a3d;clip-path:polygon(35% 0, 100% 0, 100% 100%, 0% 100%);z-index:0;}
+  #resume.t8 .head .head-text{position:relative;z-index:1;display:block;align-items:center;padding:0 10px 0;}
+  #resume.t8 .head .name{color:#fff;font-family:Georgia,'Noto Sans Khmer',serif;}
+  #resume.t8 .head .title{color:#f2e6ff;}
+  #resume.t8 .head .contact-line{color:#f2e6ff;}
+  #resume.t8 .photo{width:calc(92px * var(--scale));height:calc(92px * var(--scale));border:4px solid #fff;}
+  #resume.t8 .photo-placeholder{border:4px dashed rgba(255,255,255,.7);color:#fff;}
+  #resume.t8 .body{padding:26px 40px 46px;}
+  #resume.t8 .block h3{color:#6a3ea1;}
+  #resume.t8 .skill-tag{background:#f2e6ff;color:#6a3ea1;border-radius:20px;}
+  #resume.t8 .skill-tag:nth-child(3n+2){background:#ffe6d1;color:#c2601a;}
+  #resume.t8 .skill-tag:nth-child(3n){background:#e0f7f0;color:#1d7a6e;}
+  #resume.t8 .summary{margin-top:-5px;}
+
+  /* ===== TEMPLATE 9: Timeline (vertical timeline for experience) ===== */
+  #resume.t9{padding:0;font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.t9 .head{background:linear-gradient(120deg,#1d7a6e,#3dbfa8);color:#fff;padding:34px 40px 24px;}
+  #resume.t9 .head-text{display:block; text-align:center;padding:0 50px 0;}
+  #resume.t9 .head .name{color:#fff;font-family:Georgia,'Noto Sans Khmer',serif;}
+  #resume.t9 .head .title{color:#dff7f0;}
+  #resume.t9 .head .contact-line{color:#dff7f0; justify-content:center;}
+  #resume.t9 .photo{width:calc(92px * var(--scale));height:calc(92px * var(--scale));border:3px solid rgba(255,255,255,.6);}
+  #resume.t9 .photo-placeholder{border-color:rgba(255,255,255,.6);color:#dff7f0;}
+  #resume.t9 .body{padding:24px 40px 40px;}
+  #resume.t9 .block h3{color:#1d7a6e;}
+  #resume.t9 .skill-tag{background:#e0f7f0;color:#1d7a6e;}
+  #resume.t9 .item{position:relative;padding-left:calc(18px * var(--scale));margin-bottom:calc(16px * var(--scale));}
+  #resume.t9 .item::before{content:'';position:absolute;left:0;top:5px;width:8px;height:8px;border-radius:50%;background:#3dbfa8;}
+  #resume.t9 .item::after{content:'';position:absolute;left:3px;top:14px;bottom:-16px;width:2px;background:#cdeee7;}
+  #resume.t9 .item:last-child::after{display:none;}
+
+  /* ===== TEMPLATE 10: Formal Khmer (official/government style, black & white) ===== */
+  #resume.t10{font-family:Georgia,'Times New Roman','Noto Sans Khmer',serif;}
+  #resume.t10 .head-block{display:block;}
+  #resume.t10 .photo-wrap{float:right; margin-left:calc(18px * var(--scale)); margin-top:10px;}
+  #resume.t10 .head-text{display:block; text-align:center;}
+  #resume.t10 .contact-line{justify-content:center;}
+  #resume.t10 .name{color:#000;font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
+  #resume.t10 .title{color:#333;font-style:italic;}
+  #resume.t10 .photo{width:3.2cm;height:4.2cm;border-radius:0;border:1.5px solid #000;object-fit:cover;}
+  #resume.t10 .photo-placeholder{width:3.2cm;height:4.2cm;border-radius:0;border:1.5px solid #000;color:#555;font-size:10px;}
+  #resume.t10 .summary{text-align:justify; margin-top:8px}
+  #resume.t10 .block h3{color:#000;text-align:center;border-bottom:none;border-top:1px solid #000;border-bottom:1px solid #000;padding:4px 0;letter-spacing:.1em;}
+  #resume.t10 .skill-tag{background:none;color:#000;padding:0;border-radius:0;}
+  #resume.t10 .skill-tag::after{content:' • ';}
+  #resume.t10 .skill-tag:last-child::after{content:'';}
+  #resume.t10 .item-role, #resume.t10 .item-sub{color:#000;}
+
+  /* ===== TEMPLATE 11: Elegant Executive (navy & gold, senior/formal) ===== */
+  #resume.t11{padding:0;font-family:Georgia,'Times New Roman','Noto Sans Khmer',serif;}
+  #resume.t11 .head{background:#0f1f33;color:#fff;padding:34px 40px 24px;border-bottom:3px solid #c9a24b;}
+  #resume.t11 .head-text{display:block; text-align:center;padding:0 50px 0;}
+  #resume.t11 .head .name{color:#fff;letter-spacing:.03em;}
+  #resume.t11 .head .title{color:#c9a24b;font-style:italic;}
+  #resume.t11 .head .contact-line{color:#cfd6e0; justify-content:center;}
+  #resume.t11 .photo{width:calc(92px * var(--scale));height:calc(92px * var(--scale));border-radius:4px;border:2px solid #c9a24b;}
+  #resume.t11 .photo-placeholder{border-radius:4px;border-color:#c9a24b;color:#c9a24b;}
+  #resume.t11 .body{padding:26px 40px 40px;}
+  #resume.t11 .block h3{color:#0f1f33;border-bottom:1px solid #c9a24b;}
+  #resume.t11 .skill-tag{background:#f4ecd8;color:#7a611f;border-radius:2px;}
+
+  /* ===== TEMPLATE 12: Tech/Developer (monospace accents, terminal green) ===== */
+  #resume.t12{font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.t12 .name{color:#0d2b1f;font-family:'Courier New','Noto Sans Khmer',monospace;font-weight:700;}
+  #resume.t12 .title{color:#1a7a4c;font-family:'Courier New','Noto Sans Khmer',monospace;font-style:normal;}
+  #resume.t12 .title::before{content:'> ';}
+  #resume.t12 .block h3{color:#1a7a4c;font-family:'Courier New','Noto Sans Khmer',monospace;border-bottom:1px dashed #1a7a4c;}
+  #resume.t12 .block h3::before{content:'# ';}
+  #resume.t12 .skill-tag{background:#0d2b1f;color:#7ee6b4;border-radius:3px;font-family:'Courier New','Noto Sans Khmer',monospace;}
+  #resume.t12 .item-role{font-family:'Courier New','Noto Sans Khmer',monospace;}
+
+  /* ===== TEMPLATE 13: Academic (formal, publications-style, minimal color) ===== */
+  #resume.t13{font-family:Georgia,'Times New Roman','Noto Sans Khmer',serif;}
+  #resume.t13 .head-block{flex-direction:column;align-items:flex-start;}
+  #resume.t13 .photo, #resume.t13 .photo-placeholder{display:none;}
+  #resume.t13 .name{color:#1c1b19;font-weight:700;border-bottom:2px solid #1c1b19;padding-bottom:4px;display:inline-block;}
+  #resume.t13 .title{color:#555;font-style:italic;}
+  #resume.t13 .block h3{color:#1c1b19;font-variant:small-caps;font-size:calc(13px * var(--scale));border-bottom:1px solid #999;}
+  #resume.t13 .skill-tag{background:none;color:#1c1b19;padding:0;border-radius:0;}
+  #resume.t13 .skill-tag::after{content:'; ';}
+  #resume.t13 .skill-tag:last-child::after{content:'';}
+  #resume.t13 .item-desc-list{font-style:normal;}
+
+  /* ===== TEMPLATE 14: Portfolio (large centered photo, minimalist) ===== */
+  #resume.t14{padding:0;font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.t14 .head{padding:44px 40px 20px;text-align:center;}
+  #resume.t14 .head-block{flex-direction:column;align-items:center;}
+  #resume.t14 .photo{width:calc(120px * var(--scale));height:calc(120px * var(--scale));}
+  #resume.t14 .photo-placeholder{width:calc(120px * var(--scale));height:calc(120px * var(--scale));}
+  #resume.t14 .name{text-align:center;}
+  #resume.t14 .title{text-align:center;}
+  #resume.t14 .contact-line{justify-content:center;}
+  #resume.t14 .body{padding:0px 40px 20px;}
+  #resume.t14 .block h3{text-align:center;letter-spacing:.15em;}
+  #resume.t14 .skills-list{justify-content:center;}
+
+  /* ===== TEMPLATE 15: Fresh Graduate (bright, friendly, education-forward) ===== */
+  #resume.t15{padding:0;display:grid;grid-template-columns:230px 1fr;font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.t15 .side{background:#ffe8a3;color:#3a2e05;padding:34px 22px;display:flex;flex-direction:column;align-items:center;text-align:center;}
+  #resume.t15 .side .head-block{flex-direction:column;align-items:center;gap:calc(14px * var(--scale));}
+  #resume.t15 .side .name{color:#3a2e05;font-size:calc(20px * var(--scale));}
+  #resume.t15 .side .title{color:#6b5a1e;font-style:normal;}
+  #resume.t15 .side .contact-line{flex-direction:column;align-items:center;color:#6b5a1e;gap:calc(6px * var(--scale));margin-top:calc(14px * var(--scale));}
+  #resume.t15 .side h3{color:#3a2e05;border-bottom:1px solid #d9b95c;}
+  #resume.t15 .side .skill-tag{background:#fff3d1;color:#6b5a1e;}
+  #resume.t15 .side .photo{width:calc(90px * var(--scale));height:calc(90px * var(--scale));border:3px solid #fff;}
+  #resume.t15 .side .photo-placeholder{border-color:#fff;color:#6b5a1e;}
+  #resume.t15 .main{padding:34px 30px;}
+  #resume.t15 .main h3{color:#3a2e05;}
+  #resume.t15 .main .summary{margin-top:0;}
+
+  /* ===== TEMPLATE 16: Official Khmer Blue (label-row government-form style) ===== */
+  #resume.t16{font-family:'Khmer OS Siemreap','Khmer OS Battambang','Noto Sans Khmer',Georgia,'Times New Roman',serif;}
+  #resume.t16 .head-block{display:block;}
+  #resume.t16 .photo-wrap{float:right;margin-left:calc(18px * var(--scale));margin-top:4px;}
+  #resume.t16 .head-text{display:block;text-align:left;border-bottom:2px solid #0b3d91;padding-bottom:calc(10px * var(--scale));margin-bottom:calc(8px * var(--scale));}
+  #resume.t16 .name{color:#0b3d91;font-weight:700;text-transform:uppercase;letter-spacing:.03em;}
+  #resume.t16 .title{color:#a01d26;font-style:normal;font-weight:600;}
+  #resume.t16 .contact-line{color:#333;}
+  #resume.t16 .photo{width:3cm;height:4cm;border-radius:0;border:2px solid #0b3d91;object-fit:cover;}
+  #resume.t16 .photo-placeholder{width:3cm;height:4cm;border-radius:0;border:2px solid #0b3d91;color:#0b3d91;font-size:10px;}
+  #resume.t16 .block h3{color:#fff;background:#0b3d91;text-align:left;padding:calc(5px * var(--scale)) calc(10px * var(--scale));border-bottom:3px solid #a01d26;letter-spacing:.04em;}
+  #resume.t16 .skill-tag{background:#eaf0fb;color:#0b3d91;border-radius:3px;border:1px solid #c3d3ee;}
+  #resume.t16 .item-role, #resume.t16 .item-sub{color:#1c1b19;}
+
+  /* ===== TEMPLATE 17: Royal Government Banner (formal Kingdom-style header) ===== */
+  #resume.t17{padding:0;font-family:'Khmer OS Siemreap','Khmer OS Battambang','Noto Sans Khmer',Georgia,'Times New Roman',serif;}
+  #resume.t17 .head{background:#0b2a5b;color:#fff;padding:calc(30px * var(--scale)) 40px calc(22px * var(--scale));border-bottom:4px solid #d4af37;position:relative;}
+  #resume.t17 .head::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#a01d26,#d4af37,#0b2a5b);}
+  #resume.t17 .head-text{display:block;text-align:center;}
+  #resume.t17 .head .name{color:#fff;text-transform:uppercase;letter-spacing:.05em;}
+  #resume.t17 .head .title{color:#d4af37;font-style:normal;font-weight:600;}
+  #resume.t17 .head .contact-line{color:#dbe4f5;justify-content:center;}
+  #resume.t17 .photo{width:calc(100px * var(--scale));height:calc(100px * var(--scale));border-radius:4px;border:3px solid #d4af37;}
+  #resume.t17 .photo-placeholder{border-radius:4px;border-color:#d4af37;color:#d4af37;}
+  #resume.t17 .body{padding:26px 40px 40px;}
+  #resume.t17 .block h3{color:#0b2a5b;border-bottom:2px solid #d4af37;text-align:left;}
+  #resume.t17 .skill-tag{background:#f3ecd8;color:#7a611f;border-radius:2px;}
+
+  /* ===== TEMPLATE 18: Khmer Classic (warm maroon & gold, elegant serif) ===== */
+  #resume.t18{font-family:'Khmer OS Siemreap','Khmer OS Battambang','Noto Sans Khmer',Georgia,serif;}
+  #resume.t18 .head-text{border-top:3px double #8a1c2e;padding-top:calc(10px * var(--scale));}
+  #resume.t18 .name{color:#5c1420;font-weight:700;}
+  #resume.t18 .title{color:#a97b2f;font-style:normal;}
+  #resume.t18 .photo{width:calc(108px * var(--scale));height:calc(108px * var(--scale));border-radius:6px;border:3px solid #a97b2f;}
+  #resume.t18 .photo-placeholder{border-radius:6px;border-color:#a97b2f;color:#a97b2f;}
+  #resume.t18 .block h3{color:#5c1420;border-bottom:2px solid #a97b2f;}
+  #resume.t18 .skill-tag{background:#f6ece0;color:#5c1420;border-radius:12px;}
+
+  /* ===== TEMPLATE 19: Khmer Fresh Green (sidebar, Khmer labels, fresh-graduate friendly) ===== */
+  #resume.t19{padding:0;display:grid;grid-template-columns:230px 1fr;font-family:'Khmer OS Siemreap','Noto Sans Khmer',-apple-system,sans-serif;}
+  #resume.t19 .side{background:#0d3b2e;color:#eaf4ef;padding:34px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;}
+  #resume.t19 .side .head-block{flex-direction:column;align-items:center;gap:calc(14px * var(--scale));}
+  #resume.t19 .side .name{color:#fff;font-size:calc(20px * var(--scale));}
+  #resume.t19 .side .title{color:#d4af37;font-style:normal;}
+  #resume.t19 .side .contact-line{flex-direction:column;align-items:center;color:#cfe3da;gap:calc(6px * var(--scale));margin-top:calc(14px * var(--scale));}
+  #resume.t19 .side h3{color:#d4af37;border-bottom:1px solid #1e5a46;}
+  #resume.t19 .side .skill-tag{background:#144a3a;color:#eaf4ef;}
+  #resume.t19 .side .skills-list{justify-content:center;}
+  #resume.t19 .side section.block{width:100%;}
+  #resume.t19 .side .photo{width:calc(96px * var(--scale));height:calc(96px * var(--scale));border:3px solid #d4af37;}
+  #resume.t19 .side .photo-placeholder{border-color:#d4af37;color:#cfe3da;}
+  #resume.t19 .main{padding:34px 30px;}
+  #resume.t19 .main h3{color:#0d3b2e;}
+  #resume.t19 .main .summary{margin-top:0;}
+
+  /* ===== TEMPLATE 20: Khmer Silk (silk-weave gradient header, elegant) ===== */
+  #resume.t20{padding:0;font-family:'Khmer OS Siemreap','Noto Sans Khmer',Georgia,serif;}
+  #resume.t20 .head{background:linear-gradient(120deg,#7a1f2b 0%,#a9502b 55%,#c9932f 100%);color:#fff;padding:34px 40px 26px;position:relative;}
+  #resume.t20 .head::after{content:'';position:absolute;left:0;right:0;bottom:0;height:6px;background:repeating-linear-gradient(90deg,#d4af37 0 10px,#7a1f2b 10px 20px);}
+  #resume.t20 .head-text{display:block;text-align:center;}
+  #resume.t20 .head .name{color:#fff;}
+  #resume.t20 .head .title{color:#ffe6c2;font-style:normal;}
+  #resume.t20 .head .contact-line{color:#ffe6c2;justify-content:center;}
+  #resume.t20 .photo{width:calc(96px * var(--scale));height:calc(96px * var(--scale));border-radius:50%;border:4px solid #ffe6c2;}
+  #resume.t20 .photo-placeholder{border-radius:50%;border-color:#ffe6c2;color:#ffe6c2;}
+  #resume.t20 .body{padding:26px 40px 40px;}
+  #resume.t20 .block h3{color:#7a1f2b;border-bottom:2px solid #d4af37;}
+  #resume.t20 .skill-tag{background:#fbeee0;color:#7a1f2b;border-radius:20px;}
+
+  /* ===== Khmer-language templates (t16–t20): heading sizing ===== */
+  #resume.t16 .block h3,
+  #resume.t17 .block h3,
+  #resume.t18 .block h3,
+  #resume.t19 .block h3,
+  #resume.t20 .block h3{
+    font-size:calc(16px * var(--scale));
+    letter-spacing:.01em;
+    text-transform:none;
+  }
+  @media print{
+    /* Print backgrounds/colours exactly as on screen, without the user having to tick "Background graphics" */
+    html, body, #resume, #resume *, #printBothWrap, #printBothWrap *{
+      -webkit-print-color-adjust:exact;
+      print-color-adjust:exact;
+    }
+    body{background:#fff;}
+    .no-print{display:none !important;}
+    .app{display:block;}
+    .preview-wrap{padding:0;display:block;max-height:none;overflow:visible;}
+    #resume{
+      box-shadow:none; width:auto; min-height:0;
+      margin:0; padding:0 !important;
+    }
+    /* Plain float, no forced full-page min-height. The earlier float+min-height(297mm)
+       combo pushed the whole sidebar onto a blank next page the instant it overflowed
+       by a hair, and table/table-cell (tried next) made Chrome fragment the layout into
+       extra pages too. Letting .side be exactly as tall as its own content is the only
+       approach that paginates reliably. Trade-off: the sidebar's background color only
+       extends as far as its own content, not artificially down to the page bottom. */
+    #resume.t2, #resume.t3, #resume.t7, #resume.t15, #resume.t19{ display:block; }
+    #resume.t2 .side, #resume.t3 .side, #resume.t7 .side, #resume.t15 .side, #resume.t19 .side{ float:left; }
+    #resume.t2 .side{ width:250px; }
+    #resume.t3 .side{ width:228px; }
+    #resume.t7 .side{ width:210px; }
+    #resume.t15 .side{ width:230px; }
+    #resume.t19 .side{ width:230px; }
+    /* BLANK-PAGE FIX: render() sets an inline min-height on .side equal to the on-screen height of
+       .main (>= 1123px, because the screen grid stretches it to #resume's min-height). That is taller
+       than one printable A4 page (~274mm after the page margins and the 20px preview padding), so the
+       floated sidebar overflowed onto a second, blank-looking page. !important overrides that inline
+       value. 270mm keeps the sidebar colour running almost to the bottom of page 1 with a safety gap;
+       lower it (e.g. 260mm) if some browser still adds an empty page. */
+    #resume.t2 .side, #resume.t3 .side, #resume.t7 .side, #resume.t15 .side, #resume.t19 .side{ min-height:270mm !important; }
+    #resume.t2 .main{ margin-left:250px; }
+    #resume.t3 .main{ margin-left:228px; }
+    #resume.t7 .main{ margin-left:210px; }
+    #resume.t15 .main{ margin-left:230px; }
+    #resume.t19 .main{ margin-left:230px; }
+    @page{
+      size:A4; margin:12mm 0;
+    }
+    @page :first{
+      margin-top:0;
+    }
+    #resume.cl4 .letter-head{ margin:0 0 20px; padding:0; background:none; }
+    body.printing-both .preview-wrap{display:none !important;}
+    body.printing-both #printBothWrap{display:block !important;}
+    #printBothWrap > div{page-break-after:always;}
+    #printBothWrap > div:last-child{page-break-after:auto;}
+  }
+  #printBothWrap{display:none;}
+  @media (max-width:900px){
+    .app{grid-template-columns:1fr;}
+    .resizer{display:none;}
+    .editor{max-height:none;border-right:none;border-bottom:1px solid var(--line);}
+    .preview-wrap{max-height:none;padding:20px;}
+    #resume{width:100%;padding:32px 24px;}
+  }
+  #resume{ position:relative !important; overflow:hidden !important; }
+  #resume.watermarked::before{
+    content:"PREVIEW — CV BUILDER — ©LTMEDIA\APREVIEW — CV BUILDER — ©LTMEDIA\APREVIEW — CV BUILDER — ©LTMEDIA\APREVIEW — CV BUILDER — ©LTMEDIA\APREVIEW — CV BUILDER — ©LTMEDIA";
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif; font-weight:600; font-size:28px;
+    color:rgba(0,0,0,.08); transform:rotate(-30deg);
+    pointer-events:none; z-index:5; text-align:center; white-space:pre-wrap; line-height:10;
+  }
+  @media print{ #resume.watermarked::before{ content:none; } }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ================= EDITOR ================= -->
+  <div class="editor no-print">
+    <div class="brand-row">
+      <img class="brand-logo" src="data:image/png;base64,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" alt="Logo">
+      <div class="brand-text">
+        <h1>CV Builder</h1>
+      </div>
+    </div>
+
+    <a href="https://t.me/LTMediakh_bot" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;margin:0 0 20px;padding:10px 14px;background:linear-gradient(90deg,#2AABEE,#229ED9);color:#fff;border-radius:8px;text-decoration:none;font-size:13px;font-weight:600;">
+      💬 មិនចង់ធ្វើដោយខ្លួនឯង? ជួល Team ធ្វើជូន
+    </a>
+
+    <div class="tpl-section" id="cvTemplateSection">
+      <div class="tpl-label">ទម្រង់ / Template</div>
+      <div class="templates" id="templatePicker">
+        <div class="tpl-swatch t10 active" data-tpl="t10"><div class="dot"></div>ផ្លូវការ/Formal</div>
+        <div class="tpl-swatch t1" data-tpl="t1"><div class="dot"></div>ខ្មែរ/Local</div>
+        <div class="tpl-swatch t2" data-tpl="t2"><div class="dot"></div>ទំនើប/Modern</div>
+        <div class="tpl-swatch t3" data-tpl="t3"><div class="dot"></div>ក្រុមហ៊ុន/Corporate</div>
+        <div class="tpl-swatch t4" data-tpl="t4"><div class="dot"></div>ដិត/Bold</div>
+        <div class="tpl-swatch t5 extra" data-tpl="t5"><div class="dot"></div>សាមញ្ញ/Simple</div>
+        <div class="tpl-swatch t6 extra" data-tpl="t6"><div class="dot"></div>Minimal ATS</div>
+        <div class="tpl-swatch t7 extra" data-tpl="t7"><div class="dot"></div>Compact ATS</div>
+        <div class="tpl-swatch t8 extra" data-tpl="t8"><div class="dot"></div>Creative</div>
+        <div class="tpl-swatch t9 extra" data-tpl="t9"><div class="dot"></div>Timeline</div>
+        <div class="tpl-swatch t11 extra" data-tpl="t11"><div class="dot"></div>Executive</div>
+        <div class="tpl-swatch t12 extra" data-tpl="t12"><div class="dot"></div>Tech/Dev</div>
+        <div class="tpl-swatch t13 extra" data-tpl="t13"><div class="dot"></div>Academic</div>
+        <div class="tpl-swatch t14 extra" data-tpl="t14"><div class="dot"></div>Portfolio</div>
+        <div class="tpl-swatch t15 extra" data-tpl="t15"><div class="dot"></div>និស្សិតថ្មី/Fresh Grad</div>
+        <div class="tpl-swatch t16 extra" data-tpl="t16"><div class="dot"></div>បែបបទខ្មែរ ១/Official KH</div>
+        <div class="tpl-swatch t17 extra" data-tpl="t17"><div class="dot"></div>បែបបទខ្មែរ ២/Government</div>
+        <div class="tpl-swatch t18 extra" data-tpl="t18"><div class="dot"></div>ខ្មែរបុរាណ/Khmer Classic</div>
+        <div class="tpl-swatch t19 extra" data-tpl="t19"><div class="dot"></div>ខ្មែរស្រស់ស្អាត/Khmer Fresh</div>
+        <div class="tpl-swatch t20 extra" data-tpl="t20"><div class="dot"></div>សូត្រខ្មែរ/Khmer Silk</div>
+      </div>
+      <div class="hint">អូសទៅឆ្វេង/ស្តាំដើម្បីមើលទម្រង់ទាំង ២០ / Scroll left/right to see all 20 templates.</div>
+
+      <details class="hint-toggle cl-hint-toggle" id="clDetails">
+        <summary></summary>
+        <div class="cl-hint-body">
+          <div class="templates" id="clTemplatePicker">
+            <div class="cl-tpl-swatch active" data-cltpl="cl1"><div class="dot cl1dot"></div>Short &amp; Direct</div>
+            <div class="cl-tpl-swatch" data-cltpl="cl2"><div class="dot cl2dot"></div>Standard</div>
+            <div class="cl-tpl-swatch" data-cltpl="cl3"><div class="dot cl3dot"></div>Simple</div>
+            <div class="cl-tpl-swatch" data-cltpl="cl4"><div class="dot cl4dot"></div>Detailed</div>
+            <div class="cl-tpl-swatch" data-cltpl="cl5"><div class="dot cl5dot"></div>Modern</div>
+          </div>
+          <div class="hint">All 5 templates auto-fill from your name, contact info, experience, skills and summary above — plus the details below.</div>
+
+          <label>Company Name</label>
+          <input type="text" id="clCompany" placeholder="Bunlai Media Co., Ltd.">
+          <label>Position You're Applying For</label>
+          <input type="text" id="clPosition" placeholder="Digital Marketing Manager">
+          <div class="row2">
+            <div>
+              <label>Hiring Manager (optional)</label>
+              <input type="text" id="clHiringManager" placeholder="Mr. Sok Dara">
+            </div>
+            <div>
+              <label>Date (optional)</label>
+              <input type="text" id="clDate" placeholder="September 17, 2026">
+            </div>
+          </div>
+          <label>Key Highlight to Mention (optional)</label>
+          <textarea id="clHighlight" placeholder="e.g. Led a campaign that grew leads by 40% in 3 months..."></textarea>
+          <div class="hint">Leave any of these blank and the letter will fall back to sensible defaults (e.g. your Job Title above, or "Hiring Manager").</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="tpl-section">
+      <div class="tpl-label">មាត្រដ្ឋានអក្សរ / Text &amp; Spacing Scale</div>
+      <div class="scale-picker" id="scalePicker">
+        <div class="scale-btn" data-scale="0.85">តូច/Small</div>
+        <div class="scale-btn active" data-scale="1">មធ្យម/Medium</div>
+        <div class="scale-btn" data-scale="1.18">ធំ/Large</div>
+      </div>
+      <details class="hint-toggle"><summary></summary><div class="hint">ប្រើ "Large" ពេលព័ត៌មានតិច ឬ "Small" ពេលចង់ដាក់អោយសមក្នុងទំព័រតែមួយ / Use "Large" to fill the page when you have little content, or "Small" to fit more onto one page.</div></details>
+    </div>
+
+    <button class="print-btn" id="printBtn" type="button">ទាញយកជា PDF / Download as PDF</button>
+    <details class="hint-toggle"><summary></summary><div class="hint">ប្រើ Print dialog របស់ Browser — ជ្រើសរើស "Save as PDF" ជាទិសដៅ / Uses your browser's print dialog — choose "Save as PDF" as the destination.</div></details>
+    <details class="hint-toggle"><summary></summary><div class="hint">Your info is auto-saved in this browser, so it's still here next time you open this page. <a href="#" id="clearDataBtn" style="color:var(--accent);">សម្អាតទិន្នន័យ / Clear saved data</a></div></details>
+
+    <div class="acc-item cv-only" data-acc="photo">
+      <button type="button" class="acc-header"><span>រូបថត / Photo (optional)</span><span class="acc-caret">▾</span></button>
+      <div class="acc-body">
+        <div class="photo-row">
+          <div class="photo-thumb-empty" id="photoThumb">No photo</div>
+          <input type="file" id="photoInput" accept="image/*">
+        </div>
+        <button class="add-btn" id="removePhoto" type="button" style="display:none;">លុបរូបថត / Remove photo</button>
+        <details class="hint-toggle"><summary></summary><div class="hint">ជំនួយ៖ សម្រាប់ទម្រង់ "Local" ប្រើរូបថតបញ្ឈរ (3×4cm) / Tip: for the "Local" template, use a portrait photo — it will be cropped to a standard 3×4cm ID-photo box.</div></details>
+      </div>
+    </div>
+
+    <div class="acc-item open" data-acc="basic">
+      <button type="button" class="acc-header"><span>ព័ត៌មានមូលដ្ឋាន / Basic Info</span><span class="acc-caret">▾</span></button>
+      <div class="acc-body">
+        <label>ឈ្មោះពេញ / Full Name</label>
+        <input type="text" id="fullName" placeholder="Sok Dara">
+        <label>តួនាទី / Professional Title</label>
+        <input type="text" id="jobTitle" placeholder="Digital Marketing Manager">
+        <div class="row2">
+          <div>
+            <label>អ៊ីមែល / Email</label>
+            <input type="email" id="email" placeholder="dara@email.com">
+          </div>
+          <div>
+            <label>លេខទូរស័ព្ទ / Phone</label>
+            <input type="tel" id="phone" placeholder="+855 12 345 678">
+          </div>
+        </div>
+        <label>ទីតាំង / Location</label>
+        <input type="text" id="location" placeholder="Phnom Penh, Cambodia">
+        <label>LinkedIn / Portfolio (មិនចាំបាច់)</label>
+        <input type="text" id="linkedin" placeholder="linkedin.com/in/sokdara">
+        <label>សេចក្ដីសង្ខេប / Summary</label>
+        <textarea id="summary" placeholder="A short 2-3 sentence professional summary..."></textarea>
+      </div>
+    </div>
+
+    <div class="acc-item" data-acc="exp">
+      <button type="button" class="acc-header"><span>បទពិសោធន៍ / Experience</span><span class="acc-caret">▾</span></button>
+      <div class="acc-body">
+        <div id="expList"></div>
+        <button class="add-btn" id="addExp" type="button">+ បន្ថែមបទពិសោធន៍ / Add experience</button>
+      </div>
+    </div>
+
+    <div class="acc-item" data-acc="edu">
+      <button type="button" class="acc-header"><span>ការសិក្សា / Education</span><span class="acc-caret">▾</span></button>
+      <div class="acc-body">
+        <div id="eduList"></div>
+        <button class="add-btn" id="addEdu" type="button">+ បន្ថែមការសិក្សា / Add education</button>
+      </div>
+    </div>
+
+    <div class="acc-item" data-acc="skills">
+      <button type="button" class="acc-header"><span>ជំនាញ / Skills</span><span class="acc-caret">▾</span></button>
+      <div class="acc-body">
+        <label>បំបែកដោយសញ្ញាក្បៀស (,) / Comma-separated list</label>
+        <input type="text" id="skills" placeholder="Facebook Ads, TikTok Ads, Media Planning, Excel">
+      </div>
+    </div>
+
+    <div class="acc-item" data-acc="languages">
+      <button type="button" class="acc-header"><span>ភាសា / Languages (optional)</span><span class="acc-caret">▾</span></button>
+      <div class="acc-body">
+        <label>បំបែកដោយសញ្ញាក្បៀស (,) / Comma-separated list</label>
+        <input type="text" id="languages" placeholder="Khmer (Native), English (Fluent)">
+      </div>
+    </div>
+
+    <div class="acc-item" data-acc="certifications">
+      <button type="button" class="acc-header"><span>វិញ្ញាបនបត្រ / Certifications (optional)</span><span class="acc-caret">▾</span></button>
+      <div class="acc-body">
+        <label>មួយបន្ទាត់មួយ / One per line</label>
+        <textarea id="certifications" placeholder="Google Ads Certification, 2024"></textarea>
+      </div>
+    </div>
+
+    <div class="acc-item" data-acc="interests">
+      <button type="button" class="acc-header"><span>ចំណូលចិត្ត / Interests (optional)</span><span class="acc-caret">▾</span></button>
+      <div class="acc-body">
+        <label>បំបែកដោយសញ្ញាក្បៀស (,) / Comma-separated list</label>
+        <input type="text" id="interests" placeholder="Photography, Football, Reading">
+      </div>
+    </div>
+
+    <div class="acc-item" data-acc="custom">
+      <button type="button" class="acc-header"><span>ផ្នែកផ្ទាល់ខ្លួន / Custom Sections (optional)</span><span class="acc-caret">▾</span></button>
+      <div class="acc-body">
+        <div id="customList"></div>
+        <button class="add-btn" id="addCustom" type="button">+ បន្ថែមផ្នែកថ្មី / Add custom section</button>
+        <details class="hint-toggle"><summary></summary><div class="hint">បន្ថែមផ្នែកផ្ទាល់ខ្លួន (ឧ. កម្ពស់ ទម្ងន់ សាសនា) / Add your own section for anything not listed above — e.g. Height, Weight, Marital Status, Religion, Hobbies.</div></details>
+      </div>
+    </div>
+
+    <div class="acc-item" data-acc="refs">
+      <button type="button" class="acc-header"><span>អ្នកយោង / References (optional)</span><span class="acc-caret">▾</span></button>
+      <div class="acc-body">
+        <div id="refList"></div>
+        <button class="add-btn" id="addRef" type="button">+ បន្ថែមអ្នកយោង / Add reference</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="resizer no-print" id="resizer"></div>
+
+  <!-- ================= PREVIEW ================= -->
+  <div class="preview-wrap">
+    <div class="preview-col">
+      <div class="preview-tabs no-print">
+        <button type="button" class="preview-tab active" id="previewTabCv">CV</button>
+        <button type="button" class="preview-tab" id="previewTabCl">Cover Letter</button>
+      </div>
+      <div id="resume" class="t10"></div>
+    </div>
+  </div>
+
+  <div id="printBothWrap"></div>
+
+</div>
+
+<!-- ================= PAYMENT GATE MODAL ================= -->
+<div id="downloadChoiceOverlay" class="no-print" style="display:none;position:fixed;inset:0;background:rgba(28,27,25,.55);z-index:1000;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:12px;max-width:340px;width:92%;padding:26px 24px;font-family:-apple-system,sans-serif;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.25);">
+    <h2 style="margin:0 0 4px;font-size:17px;color:var(--ink);">ទាញយកជា PDF / Download as PDF</h2>
+    <p style="margin:0 0 16px;font-size:12.5px;color:var(--muted);">ជ្រើសរើសអ្វីដែលអ្នកចង់ទាញយក / Choose what to download</p>
+
+    <button type="button" class="add-btn" id="dlChoiceCv" style="width:100%;margin-bottom:8px;box-sizing:border-box;">CV / ប្រវត្តិរូបប៉ុណ្ណោះ</button>
+    <button type="button" class="add-btn" id="dlChoiceCl" style="width:100%;margin-bottom:8px;box-sizing:border-box;">Cover Letter ប៉ុណ្ណោះ</button>
+    <button type="button" class="add-btn" id="dlChoiceBoth" style="width:100%;margin-bottom:4px;box-sizing:border-box;">ទាំងពីរ / Both (CV + Cover Letter)</button>
+
+    <button type="button" id="dlChoiceCancel" style="width:100%;margin-top:10px;background:none;border:none;color:var(--muted);font-size:12.5px;cursor:pointer;font-family:-apple-system,sans-serif;">បិទ / Cancel</button>
+  </div>
+</div>
+
+<div id="payModalOverlay" class="no-print" style="display:none;position:fixed;inset:0;background:rgba(28,27,25,.55);z-index:1000;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:12px;max-width:380px;width:92%;padding:28px 26px;font-family:-apple-system,sans-serif;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.25);">
+
+    <!-- Step 1: intro -->
+    <div id="payStepPay">
+      <h2 style="margin:0 0 4px;font-size:19px;color:var(--ink);">សូមទូទាត់ដើម្បីទាញយក</h2>
+      <p style="margin:0 0 20px;font-size:13px;color:var(--muted);">Pay to unlock 30-day download access — <strong>$2</strong></p>
+      <button id="genQrBtn" type="button" class="print-btn" style="width:100%;">បង្កើត KHQR ទូទាត់ / Generate Payment QR</button>
+      <p id="abaPayError" style="color:#a33;font-size:12px;margin:10px 0 0;display:none;">មានបញ្ហា សូមសាកល្បងម្ដងទៀត / Something went wrong, please try again</p>
+      <button type="button" id="showManualCodeBtn" style="width:100%;margin-top:14px;background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline;font-family:-apple-system,sans-serif;">មាន Unlock Code រួចហើយ?</button>
+    </div>
+
+    <!-- Step 2: show KHQR, wait for scan + payment -->
+    <div id="payStepQr" style="display:none;">
+      <div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:12px;">CV Builder</div>
+      <img id="qrImage" src="" alt="KHQR" style="display:block;width:100%;max-width:300px;height:auto;margin:0 auto;border-radius:12px;">
+      <p id="qrStatusText" style="margin:12px 0 0;font-size:12px;color:var(--muted);">សូមស្កេនដោយកម្មវិធីធនាគារ ឬ Bakong / Scan with any banking app (ABA, Bakong, ACLEDA...)</p>
+      <p id="payWaitError" style="color:#a33;font-size:12px;margin:14px 0 0;display:none;">QR ផុតកំណត់ ឬការទូទាត់មិនទាន់បញ្ជាក់ សូមសាកល្បងម្ដងទៀត / QR expired or payment not confirmed yet — try again below</p>
+      <button type="button" id="qrRetryBtn" style="display:none;width:100%;max-width:300px;margin:10px auto 0;background:none;border:1px solid var(--line);border-radius:6px;padding:8px;color:var(--ink);font-size:12.5px;cursor:pointer;font-family:-apple-system,sans-serif;">បង្កើត QR ថ្មី / Generate new QR</button>
+      <button type="button" id="waitingShowManualBtn" style="width:100%;margin-top:14px;background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline;font-family:-apple-system,sans-serif;">មាន Unlock Code រួចហើយ?</button>
+    </div>
+
+    <!-- Step 2b: payment confirmed — show the code before continuing -->
+    <div id="payStepSuccess" style="display:none;">
+      <h2 style="margin:0 0 6px;font-size:18px;color:var(--ink);">ការទូទាត់ជោគជ័យ! 🎉</h2>
+      <p style="margin:0 0 14px;font-size:12.5px;color:var(--muted);">Payment confirmed — save this code to unlock on other devices too</p>
+      <div style="background:#f7f6f3;border:1px dashed var(--line);border-radius:8px;padding:14px;margin-bottom:8px;">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">Unlock Code</div>
+        <div id="successCodeText" style="font-size:24px;font-weight:800;letter-spacing:2px;color:var(--ink);font-family:monospace;user-select:all;">----</div>
+      </div>
+      <button id="copyCodeBtn" type="button" style="width:100%;margin:0 0 12px;background:#fff;border:1px solid var(--line);border-radius:6px;padding:9px;color:var(--ink);font-size:13px;font-weight:600;cursor:pointer;font-family:-apple-system,sans-serif;">📋 ចម្លង Code / Copy code</button>
+      <p style="margin:0 0 16px;font-size:11.5px;color:var(--muted);">សូមថតរូបសម្ងាត់ទុក ដើម្បីប្រើនៅ device ផ្សេងទៀត (ជាមួយឈ្មោះពេញដូចគ្នា) / Screenshot this — use it on other devices with the same Full Name</p>
+      <button id="successContinueBtn" type="button" class="print-btn" style="width:100%;">បន្ត Download</button>
+    </div>
+
+    <!-- Step 3: manual code fallback -->
+    <div id="payStepManual" style="display:none;">
+      <h2 style="margin:0 0 4px;font-size:17px;color:var(--ink);">វាយបញ្ចូល Unlock Code</h2>
+      <p style="margin:0 0 16px;font-size:12.5px;color:var(--muted);">Enter the unlock code you received</p>
+      <p style="margin:0 0 12px;font-size:11.5px;color:var(--muted);background:#f7f6f3;border-radius:6px;padding:8px 10px;">ត្រូវប្រាកដថាបានវាយ <strong>"ឈ្មោះពេញ"</strong> នៅផ្នែកខាងលើដូចលើកមុន ដើម្បីអាចប្រើ code ដដែលនេះបានលើ device ថ្មី / Make sure "Full Name" above matches what you used before, so this code works on a new device</p>
+      <input type="text" id="unlockCodeInput" placeholder="វាយ Unlock Code" style="width:100%;font-family:-apple-system,sans-serif;font-size:14px;padding:10px 12px;border:1px solid var(--line);border-radius:6px;text-align:center;margin-bottom:6px;box-sizing:border-box;">
+      <div id="unlockError" style="color:#a33;font-size:12px;margin-bottom:10px;display:none;">Code មិនត្រឹមត្រូវ សូមសាកល្បងម្ដងទៀត</div>
+      <button id="unlockSubmitBtn" type="button" class="print-btn" style="margin-top:4px;">ដោះសោ Download</button>
+      <button type="button" id="backToPayBtn" style="width:100%;margin-top:14px;background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline;font-family:-apple-system,sans-serif;">ត្រឡប់ទៅទូទាត់វិញ / Back to payment</button>
+    </div>
+
+    <button id="payModalCloseBtn" type="button" style="width:100%;margin-top:14px;background:none;border:none;color:var(--muted);font-size:12.5px;cursor:pointer;font-family:-apple-system,sans-serif;">បិទ / Cancel</button>
+  </div>
+</div>
+
+
+<script>
+document.querySelectorAll('.acc-header').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    btn.closest('.acc-item').classList.toggle('open');
+  });
+});
+
+let state = {
+  tpl: 't10',
+  scale: 1,
+  photo: null,
+  mode: 'cv',
+  clTpl: 'cl1',
+  clCompany: '', clHiringManager: '', clPosition: '', clDate: '', clHighlight: '',
+  fullName:'', jobTitle:'', email:'', phone:'', location:'', linkedin:'', summary:'',
+  exp: [{role:'',company:'',startDate:'',endDate:'',current:false,desc:''}],
+  edu: [{degree:'',school:'',dates:''}],
+  skills: '',
+  languages: '',
+  certifications: '',
+  interests: '',
+  refs: [{name:'',role:'',contact:''}],
+  custom: []
+};
+
+const $ = id => document.getElementById(id);
+
+function bindBasic(id, key){
+  $(id).addEventListener('input', e => { state[key] = e.target.value; render(); });
+}
+['fullName','jobTitle','email','phone','location','linkedin'].forEach(k => bindBasic(k,k));
+['clCompany','clHiringManager','clPosition','clDate','clHighlight'].forEach(k => bindBasic(k,k));
+$('summary').addEventListener('input', e => { state.summary = e.target.value; render(); });
+$('skills').addEventListener('input', e => { state.skills = e.target.value; render(); });
+$('languages').addEventListener('input', e => { state.languages = e.target.value; render(); });
+$('certifications').addEventListener('input', e => { state.certifications = e.target.value; render(); });
+$('interests').addEventListener('input', e => { state.interests = e.target.value; render(); });
+
+// ---- Photo upload ----
+$('photoInput').addEventListener('change', e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    state.photo = ev.target.result;
+    updatePhotoThumb();
+    render();
+  };
+  reader.readAsDataURL(file);
+});
+$('removePhoto').addEventListener('click', ()=>{
+  state.photo = null;
+  $('photoInput').value = '';
+  updatePhotoThumb();
+  render();
+});
+function updatePhotoThumb(){
+  const wrap = $('photoThumb').parentElement;
+  if(state.photo){
+    wrap.innerHTML = `<img class="photo-thumb" src="${state.photo}" alt="thumb" id="photoThumb"><input type="file" id="photoInput" accept="image/*">`;
+    $('removePhoto').style.display = 'block';
+  } else {
+    wrap.innerHTML = `<div class="photo-thumb-empty" id="photoThumb">No photo</div><input type="file" id="photoInput" accept="image/*">`;
+    $('removePhoto').style.display = 'none';
+  }
+  $('photoInput').addEventListener('change', e=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => { state.photo = ev.target.result; updatePhotoThumb(); render(); };
+    reader.readAsDataURL(file);
+  });
+}
+
+// Template picker
+document.querySelectorAll('.tpl-swatch').forEach(el=>{
+  el.addEventListener('click', ()=>{
+    document.querySelectorAll('.tpl-swatch').forEach(s=>s.classList.remove('active'));
+    el.classList.add('active');
+    state.tpl = el.dataset.tpl;
+    render();
+  });
+});
+// Cover Letter: hidden as a subtle "tip" toggle at the end of the Template section,
+// plus small tabs above the preview so switching back and forth is always easy.
+function applyModeVisibility(){
+  const isCL = state.mode === 'cl';
+  document.querySelectorAll('.cv-only').forEach(el => el.style.display = isCL ? 'none' : '');
+  if($('clDetails').open !== isCL) $('clDetails').open = isCL;
+  $('previewTabCv').classList.toggle('active', !isCL);
+  $('previewTabCl').classList.toggle('active', isCL);
+}
+function switchToMode(mode){
+  const wantOpen = mode === 'cl';
+  if($('clDetails').open !== wantOpen){
+    $('clDetails').open = wantOpen; // fires the 'toggle' handler below, which sets state.mode + renders
+  }
+}
+$('clDetails').addEventListener('toggle', ()=>{
+  state.mode = $('clDetails').open ? 'cl' : 'cv';
+  applyModeVisibility();
+  render();
+});
+$('previewTabCv').addEventListener('click', ()=> switchToMode('cv'));
+$('previewTabCl').addEventListener('click', ()=> switchToMode('cl'));
+
+// Cover letter template picker
+document.querySelectorAll('#clTemplatePicker [data-cltpl]').forEach(el=>{
+  el.addEventListener('click', ()=>{
+    document.querySelectorAll('#clTemplatePicker [data-cltpl]').forEach(s=>s.classList.remove('active'));
+    el.classList.add('active');
+    state.clTpl = el.dataset.cltpl;
+    render();
+  });
+});
+
+// Scale picker
+document.querySelectorAll('.scale-btn').forEach(el=>{
+  el.addEventListener('click', ()=>{
+    document.querySelectorAll('.scale-btn').forEach(s=>s.classList.remove('active'));
+    el.classList.add('active');
+    state.scale = parseFloat(el.dataset.scale);
+    render();
+  });
+});
+
+// ---- Experience entries ----
+function renderExpForm(){
+  const wrap = $('expList');
+  wrap.innerHTML = '';
+  state.exp.forEach((item, i)=>{
+    const div = document.createElement('div');
+    div.className = 'entry';
+    div.innerHTML = `
+      ${state.exp.length>1 ? `<button class="entry-remove" data-i="${i}" data-type="exp">×</button>` : ''}
+      <label>តួនាទីការងារ / Role</label>
+      <input type="text" data-field="role" data-i="${i}" value="${escapeAttr(item.role)}" placeholder="Media Executive">
+      <label>ក្រុមហ៊ុន / Company</label>
+      <input type="text" data-field="company" data-i="${i}" value="${escapeAttr(item.company)}" placeholder="FCB & Prakit">
+      <div class="row2">
+        <div><label>ថ្ងៃចាប់ផ្ដើម / Start Date</label>
+          <input type="month" data-field="startDate" data-i="${i}" value="${escapeAttr(item.startDate)}"></div>
+        <div><label>ថ្ងៃបញ្ចប់ / End Date</label>
+          <input type="month" data-field="endDate" data-i="${i}" value="${escapeAttr(item.endDate)}" ${item.current ? 'disabled' : ''}></div>
+      </div>
+      <label style="display:flex;align-items:center;gap:6px;margin-top:8px;">
+        <input type="checkbox" data-field="current" data-i="${i}" data-type="checkbox" style="width:auto;" ${item.current ? 'checked' : ''}>
+        <span style="margin:0;">កំពុងធ្វើការនៅទីនេះ / Currently working here</span>
+      </label>
+      <label>ការពិពណ៌នា / Description</label>
+      <textarea data-field="desc" data-i="${i}" placeholder="One achievement per line — each line becomes a bullet point">${escapeHtml(item.desc)}</textarea>
+    `;
+    wrap.appendChild(div);
+  });
+  wrap.querySelectorAll('input[type=text],input[type=month],textarea').forEach(el=>{
+    el.addEventListener('input', e=>{
+      const i = e.target.dataset.i, field = e.target.dataset.field;
+      state.exp[i][field] = e.target.value;
+      render();
+    });
+  });
+  wrap.querySelectorAll('input[type=checkbox]').forEach(el=>{
+    el.addEventListener('change', e=>{
+      const i = e.target.dataset.i, field = e.target.dataset.field;
+      state.exp[i][field] = e.target.checked;
+      renderExpForm(); render();
+    });
+  });
+  wrap.querySelectorAll('.entry-remove').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      state.exp.splice(Number(e.target.dataset.i),1);
+      renderExpForm(); render();
+    });
+  });
+}
+$('addExp').addEventListener('click', ()=>{
+  state.exp.push({role:'',company:'',startDate:'',endDate:'',current:false,desc:''});
+  renderExpForm(); render();
+});
+
+// ---- Education entries ----
+function renderEduForm(){
+  const wrap = $('eduList');
+  wrap.innerHTML = '';
+  state.edu.forEach((item, i)=>{
+    const div = document.createElement('div');
+    div.className = 'entry';
+    div.innerHTML = `
+      ${state.edu.length>1 ? `<button class="entry-remove" data-i="${i}" data-type="edu">×</button>` : ''}
+      <label>សញ្ញាបត្រ / Degree</label>
+      <input type="text" data-field="degree" data-i="${i}" value="${escapeAttr(item.degree)}" placeholder="BA in Marketing">
+      <div class="row2">
+        <div><label>សាលា / School</label>
+          <input type="text" data-field="school" data-i="${i}" value="${escapeAttr(item.school)}" placeholder="RUPP"></div>
+        <div><label>កាលបរិច្ឆេទ / Dates</label>
+          <input type="text" data-field="dates" data-i="${i}" value="${escapeAttr(item.dates)}" placeholder="2018 – 2022"></div>
+      </div>
+    `;
+    wrap.appendChild(div);
+  });
+  wrap.querySelectorAll('input').forEach(el=>{
+    el.addEventListener('input', e=>{
+      const i = e.target.dataset.i, field = e.target.dataset.field;
+      state.edu[i][field] = e.target.value;
+      render();
+    });
+  });
+  wrap.querySelectorAll('.entry-remove').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      state.edu.splice(Number(e.target.dataset.i),1);
+      renderEduForm(); render();
+    });
+  });
+}
+$('addEdu').addEventListener('click', ()=>{
+  state.edu.push({degree:'',school:'',dates:''});
+  renderEduForm(); render();
+});
+
+// ---- References ----
+function renderRefForm(){
+  const wrap = $('refList');
+  wrap.innerHTML = '';
+  state.refs.forEach((item, i)=>{
+    const div = document.createElement('div');
+    div.className = 'entry';
+    div.innerHTML = `
+      ${state.refs.length>1 ? `<button class="entry-remove" data-i="${i}" data-type="ref">×</button>` : ''}
+      <label>ឈ្មោះ / Name</label>
+      <input type="text" data-field="name" data-i="${i}" value="${escapeAttr(item.name)}" placeholder="Chan Sopheak">
+      <label>តួនាទី/ទំនាក់ទំនង / Position / Relation</label>
+      <input type="text" data-field="role" data-i="${i}" value="${escapeAttr(item.role)}" placeholder="Manager at FCB & Prakit">
+      <label>ទំនាក់ទំនង / Contact</label>
+      <input type="text" data-field="contact" data-i="${i}" value="${escapeAttr(item.contact)}" placeholder="+855 12 345 678 / email">
+    `;
+    wrap.appendChild(div);
+  });
+  wrap.querySelectorAll('input').forEach(el=>{
+    el.addEventListener('input', e=>{
+      const i = e.target.dataset.i, field = e.target.dataset.field;
+      state.refs[i][field] = e.target.value;
+      render();
+    });
+  });
+  wrap.querySelectorAll('.entry-remove').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      state.refs.splice(Number(e.target.dataset.i),1);
+      renderRefForm(); render();
+    });
+  });
+}
+$('addRef').addEventListener('click', ()=>{
+  state.refs.push({name:'',role:'',contact:''});
+  renderRefForm(); render();
+});
+
+// ---- Custom sections ----
+function renderCustomForm(){
+  const wrap = $('customList');
+  wrap.innerHTML = '';
+  state.custom.forEach((item, i)=>{
+    const div = document.createElement('div');
+    div.className = 'entry';
+    div.innerHTML = `
+      <button class="entry-remove" data-i="${i}" data-type="custom">×</button>
+      <label>ចំណងជើងផ្នែក / Section Title</label>
+      <input type="text" data-field="title" data-i="${i}" value="${escapeAttr(item.title)}" placeholder="Height, Weight, Hobby...">
+      <label>បំបែកដោយសញ្ញាក្បៀស (,) / Comma-separated list</label>
+      <input type="text" data-field="content" data-i="${i}" value="${escapeAttr(item.content)}" placeholder="170cm, 60kg">
+    `;
+    wrap.appendChild(div);
+  });
+  wrap.querySelectorAll('input').forEach(el=>{
+    el.addEventListener('input', e=>{
+      const i = e.target.dataset.i, field = e.target.dataset.field;
+      state.custom[i][field] = e.target.value;
+      render();
+    });
+  });
+  wrap.querySelectorAll('.entry-remove').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      state.custom.splice(Number(e.target.dataset.i),1);
+      renderCustomForm(); render();
+    });
+  });
+}
+$('addCustom').addEventListener('click', ()=>{
+  state.custom.push({title:'',content:''});
+  renderCustomForm(); render();
+});
+
+function escapeHtml(s){ return (s||'').replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+function escapeAttr(s){ return escapeHtml(s).replace(/"/g,'&quot;'); }
+
+const MONTH_NAMES_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MONTH_NAMES_KH = ['មករា','កុម្ភៈ','មីនា','មេសា','ឧសភា','មិថុនា','កក្កដា','សីហា','កញ្ញា','តុលា','វិច្ឆិកា','ធ្នូ'];
+const KHMER_TEMPLATES = ['t16','t17','t18','t19','t20'];
+function isKhmerTemplate(){
+  return KHMER_TEMPLATES.includes(state.tpl);
+}
+function formatMonthYear(ym){
+  if(!ym) return '';
+  const parts = ym.split('-');
+  const y = parseInt(parts[0],10), m = parseInt(parts[1],10);
+  if(!y || !m) return '';
+  const names = isKhmerTemplate() ? MONTH_NAMES_KH : MONTH_NAMES_EN;
+  return `${names[m-1]} ${y}`;
+}
+function currentYm(){
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+}
+function monthsBetween(startYm, endYm){
+  const [sy,sm] = startYm.split('-').map(Number);
+  const [ey,em] = endYm.split('-').map(Number);
+  return (ey - sy) * 12 + (em - sm) + 1;
+}
+function formatDuration(totalMonths){
+  if(totalMonths < 1) return '';
+  const yrs = Math.floor(totalMonths / 12);
+  const mos = totalMonths % 12;
+  const parts = [];
+  const kh = isKhmerTemplate();
+  if(yrs > 0) parts.push(kh ? `${yrs} ឆ្នាំ` : `${yrs} yr${yrs > 1 ? 's' : ''}`);
+  if(mos > 0) parts.push(kh ? `${mos} ខែ` : `${mos} mo${mos > 1 ? 's' : ''}`);
+  if(parts.length === 0) parts.push(kh ? '< ១ ខែ' : '< 1 mo');
+  return parts.join(' ');
+}
+function formatExpDateRange(item){
+  const startLabel = formatMonthYear(item.startDate);
+  if(!startLabel) return '';
+  const endYm = item.current ? currentYm() : item.endDate;
+  const endLabel = item.current ? (isKhmerTemplate() ? 'បច្ចុប្បន្ន' : 'Present') : formatMonthYear(item.endDate);
+  if(!endLabel) return startLabel;
+  const dur = formatDuration(monthsBetween(item.startDate, endYm));
+  return dur ? `${startLabel} – ${endLabel} (${dur})` : `${startLabel} – ${endLabel}`;
+}
+
+// ---- Cover Letter: content generation (auto-filled from the same data as the CV) ----
+function clFirstExp(){ return state.exp.find(x=>x.role||x.company) || null; }
+function clSkillsList(n){ return state.skills.split(',').map(s=>s.trim()).filter(Boolean).slice(0,n); }
+function clToday(){
+  return new Date().toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
+}
+function buildCoverLetterContent(){
+  const name = state.fullName || 'Your Name';
+  const position = state.clPosition.trim() || state.jobTitle.trim() || 'this position';
+  const company = state.clCompany.trim() || 'your company';
+  const hiring = state.clHiringManager.trim();
+  const salutation = hiring ? `Dear ${hiring},` : 'Dear Hiring Manager,';
+  const exp = clFirstExp();
+  const expLine = exp ? `${exp.role || 'my role'} at ${exp.company || 'my previous company'}` : 'my recent professional experience';
+  const skills = clSkillsList(4);
+  const skillsLine = skills.length ? skills.join(', ') : 'a strong and relevant skill set';
+  const summary = state.summary.trim();
+  const highlight = state.clHighlight.trim();
+  const firstDescLine = (exp && exp.desc) ? exp.desc.split('\n')[0].trim().replace(/^[-•]\s*/, '') : '';
+
+  const variants = {
+    cl1: [
+      `I am writing to apply for the ${position} position at ${company}. With a background in ${state.jobTitle.trim() || 'this field'} and hands-on experience as ${expLine}, I believe I would be a strong fit for your team.`,
+      `${summary || `My core strengths include ${skillsLine}, which I have applied directly in previous roles to deliver real results.`}${highlight ? ' ' + highlight : ''}`,
+      `I would welcome the chance to discuss how I can contribute to ${company}. Thank you for your time and consideration — I look forward to hearing from you.`
+    ],
+    cl2: [
+      `I am writing to express my interest in the ${position} role at ${company}. I believe my professional background and skill set make me a strong candidate for this opportunity.`,
+      `${summary || `Over the course of my career, I have developed expertise as ${expLine}, building strong capabilities in ${skillsLine}.`}${highlight ? ' ' + highlight : ''}`,
+      `I am confident that my experience and dedication would allow me to contribute meaningfully to your team at ${company}. I am particularly drawn to this role because it aligns closely with both my skills and my career goals.`,
+      `Thank you for considering my application. I have attached my resume for your review and would welcome the opportunity to discuss my qualifications further at your convenience.`
+    ],
+    cl3: [
+      `My name is ${name}, and I would like to apply for the ${position} position at ${company}.`,
+      `I have experience working as ${expLine}. I am good at ${skillsLine}.`,
+      `${highlight || `I work hard, I learn quickly, and I want to help ${company} grow.`}`,
+      `Thank you for reading my letter. I hope to talk with you soon.`
+    ],
+    cl4: [
+      `I am excited to submit my application for the ${position} position at ${company}. ${summary || `With a solid foundation as ${expLine}, I have built a track record of delivering measurable results and growing steadily in my field.`}`,
+      `In my most recent role${exp && exp.company ? ` at ${exp.company}` : ''}, I ${firstDescLine ? firstDescLine.toLowerCase() : 'took on responsibilities that strengthened my expertise and delivered clear value to the organization'}. This experience sharpened my abilities in ${skillsLine}, which I understand are central to success in this role.`,
+      `${highlight || `Beyond technical skills, I bring strong communication, adaptability, and a genuine commitment to quality — qualities I believe are essential for the ${position} role.`}`,
+      `I am confident that my background positions me to make an immediate and lasting contribution to ${company}, and I am eager to bring that same energy and reliability to your team.`,
+      `Thank you very much for taking the time to review my application. I have attached my resume for further detail and would greatly welcome the opportunity for an interview at your convenience.`
+    ],
+    cl5: [
+      `Hi${hiring ? ' ' + hiring : ''}, I'm ${name}, and I'd love to be considered for the ${position} role at ${company}!`,
+      `${summary || `I've spent my career working as ${expLine}, and I genuinely enjoy the kind of work this role involves.`}`,
+      `Here's a quick snapshot of what I bring:`,
+      `${highlight || `I'm someone who takes ownership, learns fast, and enjoys collaborating with a team that cares about doing great work.`}`,
+      `Thanks so much for considering my application — I'd love the chance to chat more about how I could contribute to ${company}.`
+    ]
+  };
+
+  return {salutation, variants, skills, name, position, company, hiring};
+}
+function renderCoverLetter(){
+  const r = $('resume');
+  r.className = 'letter ' + state.clTpl + (isUnlocked() ? '' : ' watermarked');
+  r.style.setProperty('--scale', state.scale);
+
+  const {salutation, variants, skills, name, company, hiring} = buildCoverLetterContent();
+  const paras = variants[state.clTpl] || variants.cl2;
+  const contactBits = [state.email, state.phone, state.location, state.linkedin].filter(Boolean);
+  const contactLine = contactBits.map(escapeHtml).join('&nbsp;&nbsp;•&nbsp;&nbsp;');
+  const dateLine = state.clDate.trim() || clToday();
+  const recipientLines = [escapeHtml(hiring || 'Hiring Manager'), escapeHtml(company)].join('<br>');
+
+  let bodyParasHtml;
+  if(state.clTpl === 'cl5'){
+    const bulletSkills = skills.length ? skills : ['adaptability','collaboration','problem-solving'];
+    bodyParasHtml = `
+      <p>${escapeHtml(paras[0])}</p>
+      <p>${escapeHtml(paras[1])}</p>
+      <p>${escapeHtml(paras[2])}</p>
+      <ul class="letter-bullets">${bulletSkills.slice(0,3).map(s=>`<li>${escapeHtml(s)}</li>`).join('')}</ul>
+      <p>${escapeHtml(paras[3])}</p>
+      <p>${escapeHtml(paras[4])}</p>
+    `;
+  } else {
+    bodyParasHtml = paras.map(p=>`<p>${escapeHtml(p)}</p>`).join('');
+  }
+
+  r.innerHTML = `
+    <div class="letter-head">
+      <div class="letter-sender">
+        <div class="ls-name">${escapeHtml(name)}</div>
+        ${contactLine ? `<div class="ls-contact">${contactLine}</div>` : ''}
+      </div>
+      <div class="letter-date">${escapeHtml(dateLine)}</div>
+      <div class="letter-recipient">${recipientLines}</div>
+    </div>
+    <div class="letter-body">
+      <p class="salutation">${escapeHtml(salutation)}</p>
+      ${bodyParasHtml}
+      <p class="closing">Sincerely,<br>${escapeHtml(name)}</p>
+    </div>
+  `;
+  saveState();
+}
+
+function render(){
+  if(state.mode === 'cl'){ renderCoverLetter(); return; }
+  const r = $('resume');
+  r.className = state.tpl + (isUnlocked() ? '' : ' watermarked');
+  r.style.setProperty('--scale', state.scale);
+
+  const contactBits = [state.email, state.phone, state.location, state.linkedin].filter(Boolean);
+  const skillsArr = state.skills.split(',').map(s=>s.trim()).filter(Boolean);
+
+  const contactHtml = `<div class="contact-line">${contactBits.map(b=>`<span>${escapeHtml(b)}</span>`).join('')}</div>`;
+  const photoHtml = state.photo
+    ? `<div class="photo-wrap"><img class="photo" src="${state.photo}" alt="Photo"></div>`
+    : `<div class="photo-wrap"><div class="photo photo-placeholder">Photo</div></div>`;
+  const headerHtml = `
+    <div class="head-block${state.photo ? '' : ' no-photo'}">
+      ${photoHtml}
+      <div class="head-text">
+        <h2 class="name">${escapeHtml(state.fullName) || 'Your Name'}</h2>
+        <p class="title">${escapeHtml(state.jobTitle) || 'Professional Title'}</p>
+        ${contactHtml}
+      </div>
+    </div>
+  `;
+  const summaryHtml = state.summary ? `<p class="summary">${escapeHtml(state.summary)}</p>` : '';
+
+  // Templates t16–t20 are fully Khmer-language resumes: section headings render in Khmer
+  // instead of English. All other templates keep the original English headings.
+  const KHMER_TPLS = new Set(['t16','t17','t18','t19','t20']);
+  const L = KHMER_TPLS.has(state.tpl) ? {
+    exp:'បទពិសោធន៍ការងារ', edu:'ការសិក្សា', skills:'ជំនាញ', lang:'ភាសា',
+    cert:'វិញ្ញាបនបត្រ', interest:'ចំណូលចិត្ត', ref:'អ្នកយោង'
+  } : {
+    exp:'Experience', edu:'Education', skills:'Skills', lang:'Languages',
+    cert:'Certifications', interest:'Interests', ref:'References'
+  };
+
+  const expHtml = state.exp.some(x=>x.role||x.company) ? `
+    <section class="block">
+      <h3>${L.exp}</h3>
+      ${state.exp.filter(x=>x.role||x.company).map(x=>`
+        <div class="item">
+          <div class="item-top">
+            <span class="item-role">${escapeHtml(x.role)}</span>
+            <span class="item-date">${formatExpDateRange(x)}</span>
+          </div>
+          <div class="item-sub">${escapeHtml(x.company)}</div>
+          ${x.desc ? `<ul class="item-desc-list">${x.desc.split('\n').map(l=>l.trim()).filter(Boolean).map(l=>`<li>${escapeHtml(l)}</li>`).join('')}</ul>` : ''}
+        </div>
+      `).join('')}
+    </section>` : '';
+
+  const eduHtml = state.edu.some(x=>x.degree||x.school) ? `
+    <section class="block">
+      <h3>${L.edu}</h3>
+      ${state.edu.filter(x=>x.degree||x.school).map(x=>`
+        <div class="item">
+          <div class="item-top">
+            <span class="item-role">${escapeHtml(x.degree)}</span>
+            <span class="item-date">${escapeHtml(x.dates)}</span>
+          </div>
+          <div class="item-sub">${escapeHtml(x.school)}</div>
+        </div>
+      `).join('')}
+    </section>` : '';
+
+  const skillsHtml = skillsArr.length ? `
+    <section class="block">
+      <h3>${L.skills}</h3>
+      <div class="skills-list">${skillsArr.map(s=>`<span class="skill-tag">${escapeHtml(s)}</span>`).join('')}</div>
+    </section>` : '';
+
+  const langArr = state.languages.split(',').map(s=>s.trim()).filter(Boolean);
+  const languagesHtml = langArr.length ? `
+    <section class="block">
+      <h3>${L.lang}</h3>
+      <div class="skills-list">${langArr.map(s=>`<span class="skill-tag">${escapeHtml(s)}</span>`).join('')}</div>
+    </section>` : '';
+
+  const certArr = state.certifications.split('\n').map(s=>s.trim()).filter(Boolean);
+  const certHtml = certArr.length ? `
+    <section class="block">
+      <h3>${L.cert}</h3>
+      <ul class="plain-list">${certArr.map(s=>`<li>${escapeHtml(s)}</li>`).join('')}</ul>
+    </section>` : '';
+
+  const interestArr = state.interests.split(',').map(s=>s.trim()).filter(Boolean);
+  const interestsHtml = interestArr.length ? `
+    <section class="block">
+      <h3>${L.interest}</h3>
+      <div class="skills-list">${interestArr.map(s=>`<span class="skill-tag">${escapeHtml(s)}</span>`).join('')}</div>
+    </section>` : '';
+
+  const refsHtml = state.refs.some(x=>x.name||x.role||x.contact) ? `
+    <section class="block">
+      <h3>${L.ref}</h3>
+      ${state.refs.filter(x=>x.name||x.role||x.contact).map(x=>`
+        <div class="item">
+          <div class="item-top"><span class="item-role">${escapeHtml(x.name)}</span></div>
+          <div class="item-sub">${escapeHtml(x.role)}</div>
+          ${x.contact ? `<div class="item-desc">${escapeHtml(x.contact)}</div>` : ''}
+        </div>
+      `).join('')}
+    </section>` : '';
+
+  const customArr = state.custom.filter(c=>c.title && c.content);
+  const customHtml = customArr.map(c=>{
+    const items = c.content.split(',').map(s=>s.trim()).filter(Boolean);
+    return `
+    <section class="block">
+      <h3>${escapeHtml(c.title)}</h3>
+      <div class="skills-list">${items.map(s=>`<span class="skill-tag">${escapeHtml(s)}</span>`).join('')}</div>
+    </section>`;
+  }).join('');
+
+  const extrasHtml = languagesHtml + certHtml + interestsHtml + customHtml + refsHtml;
+
+  if (state.tpl === 't2' || state.tpl === 't3' || state.tpl === 't7' || state.tpl === 't15' || state.tpl === 't19'){
+    r.innerHTML = `
+      <div class="side">
+        ${headerHtml}
+        ${skillsHtml}
+        ${languagesHtml}
+        ${interestsHtml}
+        ${customHtml}
+      </div>
+      <div class="main">
+        ${summaryHtml}
+        ${expHtml}
+        ${eduHtml}
+        ${certHtml}
+        ${refsHtml}
+      </div>
+    `;
+    requestAnimationFrame(()=>{
+      const sideEl = r.querySelector('.side');
+      const mainEl = r.querySelector('.main');
+      if(sideEl && mainEl){
+        sideEl.style.minHeight = mainEl.offsetHeight + 'px';
+      }
+    });
+  } else if (state.tpl === 't4' || state.tpl === 't5' || state.tpl === 't8' || state.tpl === 't9' || state.tpl === 't11' || state.tpl === 't14' || state.tpl === 't17' || state.tpl === 't20'){
+    r.innerHTML = `
+      <div class="head">${headerHtml}</div>
+      <div class="body">
+        ${summaryHtml}
+        ${expHtml}
+        ${eduHtml}
+        ${skillsHtml}
+        ${extrasHtml}
+      </div>
+    `;
+  } else {
+    r.innerHTML = `
+      ${headerHtml}
+      ${summaryHtml}
+      ${expHtml}
+      ${eduHtml}
+      ${skillsHtml}
+      ${extrasHtml}
+    `;
+  }
+  saveState();
+}
+
+const CV_DATA_KEY = 'cvBuilderData_v1';
+
+function blankState(){
+  return {
+    tpl:'t10', scale:1, photo:null,
+    mode:'cv', clTpl:'cl1',
+    clCompany:'', clHiringManager:'', clPosition:'', clDate:'', clHighlight:'',
+    fullName:'', jobTitle:'', email:'', phone:'', location:'', linkedin:'', summary:'',
+    exp:[{role:'',company:'',startDate:'',endDate:'',current:false,desc:''}],
+    edu:[{degree:'',school:'',dates:''}],
+    skills:'', languages:'', certifications:'', interests:'',
+    refs:[{name:'',role:'',contact:''}],
+    custom:[]
+  };
+}
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(CV_DATA_KEY);
+    if(raw) return Object.assign(blankState(), JSON.parse(raw));
+  }catch(e){}
+  return blankState();
+}
+function saveState(){
+  try{ localStorage.setItem(CV_DATA_KEY, JSON.stringify(state)); }catch(e){ console.warn('Could not save CV data', e); }
+}
+function refreshAllForms(){
+  populateFormFromState();
+  renderExpForm();
+  renderEduForm();
+  renderRefForm();
+  renderCustomForm();
+  render();
+}
+
+function populateFormFromState(){
+  ['fullName','jobTitle','email','phone','location','linkedin'].forEach(k=>{
+    if($(k)) $(k).value = state[k] || '';
+  });
+  ['clCompany','clHiringManager','clPosition','clDate','clHighlight'].forEach(k=>{
+    if($(k)) $(k).value = state[k] || '';
+  });
+  if($('summary')) $('summary').value = state.summary || '';
+  if($('skills')) $('skills').value = state.skills || '';
+  if($('languages')) $('languages').value = state.languages || '';
+  if($('certifications')) $('certifications').value = state.certifications || '';
+  if($('interests')) $('interests').value = state.interests || '';
+
+  document.querySelectorAll('.tpl-swatch').forEach(s=>{
+    s.classList.toggle('active', s.dataset.tpl === state.tpl);
+  });
+  const activeSwatch = document.querySelector('.tpl-swatch.active');
+  if(activeSwatch) activeSwatch.scrollIntoView({block:'nearest', inline:'center'});
+  document.querySelectorAll('.scale-btn').forEach(s=>{
+    s.classList.toggle('active', parseFloat(s.dataset.scale) === state.scale);
+  });
+  document.querySelectorAll('#clTemplatePicker [data-cltpl]').forEach(s=>{
+    s.classList.toggle('active', s.dataset.cltpl === state.clTpl);
+  });
+  applyModeVisibility();
+
+  updatePhotoThumb();
+}
+
+// ---- Payment gate (Bakong Relay KHQR auto-unlock) ----
+// Same Google Apps Script Web App URL as before (ends in /exec). It now also
+// handles ?action=createPayment and ?action=checkStatus — see the separate
+// bakong-relay-backend.gs file for what to add on the Apps Script side.
+const CODE_CHECK_URL = 'https://script.google.com/macros/s/AKfycbzcaIg0U0p2kg1zdoq6TjPsD5so18-45qVpw9e4H4PEJlbcGtvDBO8rKGTpVWJ5JOKdWQ/exec';
+const UNLOCK_STORAGE_KEY = 'cvBuilderUnlocked_v2'; // v2: unlock is now bound to code + Full Name
+const OLD_UNLOCK_STORAGE_KEY = 'cvBuilderUnlocked_v1'; // old flag (not tied to any code/name) — discarded
+const PENDING_NAME_KEY = 'cvBuilderPendingName_v1';
+try{ localStorage.removeItem(OLD_UNLOCK_STORAGE_KEY); }catch(e){}
+const UNLOCK_DAYS = 30;
+const PENDING_MD5_KEY = 'cvBuilderPendingMd5_v1';
+const POLL_INTERVAL_MS = 3000;
+const POLL_MAX_TRIES = 180; // ~9 minutes — KHQR codes expire around 10 minutes
+
+// Same normalisation idea as the server: NFC, drop zero-width chars, lowercase, collapse spaces.
+function normName(str){
+  return (str || '').toString().normalize('NFC')
+    .replace(/[\u200B-\u200D\uFEFF]/g, '')
+    .trim().toLowerCase().replace(/\s+/g, ' ');
+}
+function readUnlock(){
+  try{
+    const raw = localStorage.getItem(UNLOCK_STORAGE_KEY);
+    if(!raw) return null;
+    const d = JSON.parse(raw);
+    return (d && typeof d === 'object') ? d : null;
+  }catch(e){ return null; }
+}
+// Unlocked ONLY if a valid code is stored, it has not expired, AND the
+// current "Full Name" field matches the name the code was bound to.
+// Changing the name therefore locks the download again.
+function isUnlocked(){
+  const d = readUnlock();
+  if(!d || !d.code || !d.name || !d.expiresAt) return false;
+  if(Date.now() >= d.expiresAt) return false;
+  return normName(d.name) === normName(state.fullName);
+}
+function setUnlocked(code, name){
+  try{
+    const expiresAt = Date.now() + UNLOCK_DAYS * 24 * 60 * 60 * 1000;
+    localStorage.setItem(UNLOCK_STORAGE_KEY, JSON.stringify({
+      code: (code || '').toString().trim(),
+      name: (name || '').toString().trim(),
+      unlockedAt: Date.now(),
+      expiresAt
+    }));
+  }catch(e){}
+  render();
+}
+function clearUnlocked(){
+  try{ localStorage.removeItem(UNLOCK_STORAGE_KEY); }catch(e){}
+  render();
+}
+// Asks the server whether the stored code + name are still valid (30-day limit, name match).
+// Returns 'ok' | 'denied' | 'offline'.
+async function verifyUnlockOnServer(d){
+  try{
+    const res = await fetch(CODE_CHECK_URL + '?code=' + encodeURIComponent(d.code) + '&name=' + encodeURIComponent(d.name));
+    const data = await res.json();
+    return data.success === true ? 'ok' : 'denied';
+  }catch(e){ return 'offline'; }
+}
+// Runs in the background on page load so downloads stay instant (no await before print()).
+async function backgroundVerifyUnlock(){
+  const d = readUnlock();
+  if(!d) return;
+  const r = await verifyUnlockOnServer(d);
+  if(r === 'denied') clearUnlocked();
+}
+
+// ---- Step switching inside the pay modal ----
+let pollTimer = null;
+function stopPolling(){
+  if(pollTimer){ clearTimeout(pollTimer); pollTimer = null; }
+}
+function showPayStep(step){
+  $('payStepPay').style.display = step === 'pay' ? '' : 'none';
+  $('payStepQr').style.display = step === 'qr' ? '' : 'none';
+  $('payStepSuccess').style.display = step === 'success' ? '' : 'none';
+  $('payStepManual').style.display = step === 'manual' ? '' : 'none';
+  if(step !== 'qr') stopPolling();
+}
+function showPayModal(){
+  $('abaPayError').style.display = 'none';
+  $('payWaitError').style.display = 'none';
+  $('unlockError').style.display = 'none';
+  $('unlockCodeInput').value = '';
+  showPayStep('pay');
+  $('payModalOverlay').style.display = 'flex';
+}
+function hidePayModal(){
+  stopPolling();
+  $('payModalOverlay').style.display = 'none';
+}
+
+function showDownloadChoice(){
+  $('downloadChoiceOverlay').style.display = 'flex';
+}
+function hideDownloadChoice(){
+  $('downloadChoiceOverlay').style.display = 'none';
+}
+$('printBtn').addEventListener('click', showDownloadChoice);
+$('dlChoiceCancel').addEventListener('click', hideDownloadChoice);
+$('downloadChoiceOverlay').addEventListener('click', (e)=>{
+  if(e.target.id === 'downloadChoiceOverlay') hideDownloadChoice();
+});
+
+// Builds the full #resume markup for a given mode ('cv' or 'cl') without
+// disturbing the mode the user is actually looking at, by switching state.mode
+// just long enough to render, then restoring it.
+function buildResumeHtmlForMode(mode){
+  const prevMode = state.mode;
+  state.mode = mode;
+  render();
+  const html = $('resume').outerHTML;
+  state.mode = prevMode;
+  return html;
+}
+
+let pendingDownloadAction = localStorage.getItem('cvBuilderPendingAction_v1') || 'cv';
+if(!['cv','cl','both'].includes(pendingDownloadAction)) pendingDownloadAction = 'cv'; // drop old 'export'/'import' values
+
+function proceedToPrint(action){
+  hideDownloadChoice();
+  pendingDownloadAction = action;
+  try{ localStorage.setItem('cvBuilderPendingAction_v1', action); }catch(e){}
+  if(!isUnlocked()){
+    showPayModal();
+    return;
+  }
+  runDownloadAction(action);
+}
+function runDownloadAction(action){
+  if(action === 'cv'){
+    if(state.mode !== 'cv'){ state.mode = 'cv'; applyModeVisibility(); render(); }
+    window.print();
+  } else if(action === 'cl'){
+    if(state.mode !== 'cl'){ state.mode = 'cl'; applyModeVisibility(); render(); }
+    window.print();
+  } else if(action === 'both'){
+    const cvHtml = buildResumeHtmlForMode('cv');
+    const clHtml = buildResumeHtmlForMode('cl');
+    render(); // restore the view the user was actually on
+    $('printBothWrap').innerHTML = `<div>${cvHtml}</div><div>${clHtml}</div>`;
+    document.body.classList.add('printing-both');
+    window.print();
+  }
+}
+$('dlChoiceCv').addEventListener('click', ()=> proceedToPrint('cv'));
+$('dlChoiceCl').addEventListener('click', ()=> proceedToPrint('cl'));
+$('dlChoiceBoth').addEventListener('click', ()=> proceedToPrint('both'));
+
+// ---- Watermark failsafe: fires before ANY print (button, Ctrl+P, browser menu, right-click) ----
+// A user could bypass the button above entirely (DevTools, Ctrl+P, etc), so we re-check the
+// unlock status every single time the browser is about to print, no matter how it was triggered.
+// querySelectorAll (not getElementById) is used deliberately: when printing "Both", the print
+// area temporarily contains two #resume-style pages, and the watermark must cover every one of them.
+function addPrintWatermark(){
+  document.querySelectorAll('#resume').forEach(resume=>{
+    if(!resume || resume.querySelector('.print-watermark')) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'print-watermark';
+    const label = 'NOT PAID / មិនទាន់ទូទាត់';
+    let html = '';
+    for(let i = 0; i < 30; i++){ html += `<span>${label}</span>`; }
+    wrap.innerHTML = html;
+    resume.appendChild(wrap);
+  });
+}
+function removePrintWatermark(){
+  document.querySelectorAll('.print-watermark').forEach(wm => wm.remove());
+}
+window.addEventListener('beforeprint', ()=>{
+  if(!isUnlocked()){
+    addPrintWatermark();
+  } else {
+    removePrintWatermark();
+  }
+});
+window.addEventListener('afterprint', ()=>{
+  removePrintWatermark();
+  if(document.body.classList.contains('printing-both')){
+    document.body.classList.remove('printing-both');
+    $('printBothWrap').innerHTML = '';
+  }
+});
+$('payModalCloseBtn').addEventListener('click', hidePayModal);
+$('payModalOverlay').addEventListener('click', (e)=>{
+  if(e.target.id === 'payModalOverlay') hidePayModal();
+});
+
+// ---- Step navigation buttons ----
+$('showManualCodeBtn').addEventListener('click', ()=> showPayStep('manual'));
+$('waitingShowManualBtn').addEventListener('click', ()=> showPayStep('manual'));
+$('backToPayBtn').addEventListener('click', ()=> showPayStep('pay'));
+
+// ---- Bakong Relay: generate a KHQR code for this order ----
+async function generateQr(){
+  $('abaPayError').style.display = 'none';
+  $('payWaitError').style.display = 'none';
+  $('qrRetryBtn').style.display = 'none';
+  $('qrStatusText').textContent = 'កំពុងរង់ចាំការទូទាត់... / Waiting for payment...';
+  $('genQrBtn').disabled = true;
+  $('genQrBtn').textContent = 'កំពុងរៀបចំ... / Preparing...';
+  const GENERIC_PAY_ERR = 'មានបញ្ហា សូមសាកល្បងម្ដងទៀត / Something went wrong, please try again';
+  const rawName = (state.fullName || '').trim();
+  if(!rawName){
+    $('abaPayError').textContent = 'សូមវាយ "ឈ្មោះពេញ" នៅផ្នែកខាងលើជាមុនសិន / Please enter your Full Name above first';
+    $('abaPayError').style.display = 'block';
+    $('genQrBtn').disabled = false;
+    $('genQrBtn').textContent = 'បង្កើត KHQR ទូទាត់ / Generate Payment QR';
+    return;
+  }
+  $('abaPayError').textContent = GENERIC_PAY_ERR;
+  try{
+    const ownerName = encodeURIComponent(rawName);
+    try{ sessionStorage.setItem(PENDING_NAME_KEY, rawName); }catch(e){}
+    const res = await fetch(CODE_CHECK_URL + '?action=createPayment&amount=2&name=' + ownerName);
+    const data = await res.json();
+    if(!data.success || !data.md5 || !data.image){
+      throw new Error(data.reason || 'createPayment failed');
+    }
+    try{ sessionStorage.setItem(PENDING_MD5_KEY, data.md5); }catch(e){}
+    $('qrImage').src = data.image;
+    showPayStep('qr');
+    pollPaymentStatus(data.md5, POLL_MAX_TRIES);
+  }catch(err){
+    $('abaPayError').style.display = 'block';
+  }
+  $('genQrBtn').disabled = false;
+  $('genQrBtn').textContent = 'បង្កើត KHQR ទូទាត់ / Generate Payment QR';
+}
+$('genQrBtn').addEventListener('click', generateQr);
+$('qrRetryBtn').addEventListener('click', generateQr);
+$('successContinueBtn').addEventListener('click', ()=>{
+  hidePayModal();
+  runDownloadAction(pendingDownloadAction);
+});
+
+// ---- Copy the unlock code to the clipboard ----
+$('copyCodeBtn').addEventListener('click', async ()=>{
+  const code = ($('successCodeText').textContent || '').trim();
+  const btn = $('copyCodeBtn');
+  if(!code || code === '----') return;
+  let ok = false;
+  try{
+    await navigator.clipboard.writeText(code);
+    ok = true;
+  }catch(e){
+    // Fallback for browsers/webviews without the async clipboard API
+    try{
+      const ta = document.createElement('textarea');
+      ta.value = code;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+    }catch(e2){ ok = false; }
+  }
+  const original = '📋 ចម្លង Code / Copy code';
+  btn.textContent = ok ? '✓ បានចម្លង / Copied' : 'សូមចុចលើ code ហើយចម្លងដោយដៃ / Please copy the code manually';
+  setTimeout(()=>{ btn.textContent = original; }, 2000);
+});
+
+// ---- Bakong Relay: poll for confirmation after the QR is shown ----
+function pollPaymentStatus(md5, triesLeft){
+  fetch(CODE_CHECK_URL + '?action=checkStatus&md5=' + encodeURIComponent(md5))
+    .then(res => res.json())
+    .then(data=>{
+      if(data.success){
+        try{ sessionStorage.removeItem(PENDING_MD5_KEY); }catch(e){}
+        let paidName = '';
+        try{ paidName = sessionStorage.getItem(PENDING_NAME_KEY) || ''; }catch(e){}
+        setUnlocked(data.code, paidName || (state.fullName || '').trim());
+        $('successCodeText').textContent = data.code || '----';
+        showPayStep('success');
+        return;
+      }
+      if(data.status === 'expired' || triesLeft <= 0){
+        $('payWaitError').style.display = 'block';
+        $('qrRetryBtn').style.display = 'block';
+        $('qrStatusText').textContent = '';
+        try{ sessionStorage.removeItem(PENDING_MD5_KEY); }catch(e){}
+        return;
+      }
+      if(data.status === 'scanned'){
+        $('qrStatusText').textContent = 'បានស្កេន — កំពុងបញ្ជាក់ការទូទាត់... / Scanned — confirming payment...';
+      }
+      pollTimer = setTimeout(()=> pollPaymentStatus(md5, triesLeft - 1), POLL_INTERVAL_MS);
+    })
+    .catch(()=>{
+      if(triesLeft <= 0){
+        $('payWaitError').style.display = 'block';
+        $('qrRetryBtn').style.display = 'block';
+        return;
+      }
+      pollTimer = setTimeout(()=> pollPaymentStatus(md5, triesLeft - 1), POLL_INTERVAL_MS);
+    });
+}
+
+// On load: if a QR was pending before the tab was closed/refreshed, resume
+// polling it (but we have no image to re-show, so just fall back to letting
+// the person tap "Generate Payment QR" again if it's actually gone).
+(function resumePendingIfAny(){
+  let md5;
+  try{ md5 = sessionStorage.getItem(PENDING_MD5_KEY); }catch(e){}
+  if(!md5 || isUnlocked()) return;
+  let pendingName = '';
+  try{ pendingName = sessionStorage.getItem(PENDING_NAME_KEY) || ''; }catch(e){}
+  try{ sessionStorage.removeItem(PENDING_MD5_KEY); }catch(e){}
+  fetch(CODE_CHECK_URL + '?action=checkStatus&md5=' + encodeURIComponent(md5))
+    .then(res => res.json())
+    .then(data=>{
+      if(data.success && data.code){
+        setUnlocked(data.code, pendingName || (state.fullName || '').trim());
+      }
+    })
+    .catch(()=>{});
+})();
+
+// ---- Manual unlock-code fallback (unchanged from before) ----
+$('unlockSubmitBtn').addEventListener('click', async ()=>{
+  const entered = $('unlockCodeInput').value.trim();
+  if(!entered) return;
+  $('unlockError').style.display = 'none';
+  $('unlockSubmitBtn').disabled = true;
+  $('unlockSubmitBtn').textContent = 'កំពុងពិនិត្យ... / Checking...';
+  try{
+    const typedName = (state.fullName || '').trim();
+    const ownerName = encodeURIComponent(typedName);
+    const res = await fetch(CODE_CHECK_URL + '?code=' + encodeURIComponent(entered) + '&name=' + ownerName);
+    const data = await res.json();
+    if(data.success === true){
+      setUnlocked(entered, typedName);
+      hidePayModal();
+      runDownloadAction(pendingDownloadAction);
+    } else {
+      if(data.reason === 'name_mismatch'){
+        $('unlockError').textContent = 'Code នេះភ្ជាប់ជាមួយ CV ផ្សេង — សូមប្រាកដថាបានវាយ "ឈ្មោះពេញ" ដូចលើកមុនត្រឹមត្រូវ / This code is bound to a different name — make sure "Full Name" above matches what you used before';
+      } else if(data.reason === 'missing_name'){
+        $('unlockError').textContent = 'សូមវាយ "ឈ្មោះពេញ" នៅផ្នែកខាងលើជាមុនសិន / Please enter your Full Name above first';
+      } else if(data.reason === 'expired'){
+        $('unlockError').textContent = 'Code នេះផុតកំណត់ 30 ថ្ងៃហើយ / This code has expired (30 days)';
+      } else if(data.reason === 'missing_code'){
+        $('unlockError').textContent = 'សូមវាយ Unlock Code / Please enter a code';
+      } else {
+        $('unlockError').textContent = 'Code មិនត្រឹមត្រូវ / Invalid code';
+      }
+      $('unlockError').style.display = 'block';
+    }
+  }catch(err){
+    $('unlockError').textContent = 'មានបញ្ហាតភ្ជាប់ សូមសាកល្បងម្ដងទៀត / Connection error, please try again';
+    $('unlockError').style.display = 'block';
+  }
+  $('unlockSubmitBtn').disabled = false;
+  $('unlockSubmitBtn').textContent = 'ដោះសោ Download';
+});
+$('unlockCodeInput').addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter') $('unlockSubmitBtn').click();
+});
+
+
+
+$('clearDataBtn').addEventListener('click', (e)=>{
+  e.preventDefault();
+  if(confirm('សម្អាតទិន្នន័យ CV នេះ? មិនអាចត្រឡប់វិញបានទេ។ / Clear all CV data? This cannot be undone.')){
+    Object.assign(state, blankState());
+    saveState();
+    refreshAllForms();
+  }
+});
+
+const resizer = $('resizer');
+const appEl = document.querySelector('.app');
+if(resizer && appEl){
+  let dragging = false;
+  const MIN_W = 280, MAX_W = 700;
+  resizer.addEventListener('mousedown', (e)=>{
+    dragging = true;
+    resizer.classList.add('dragging');
+    document.body.style.userSelect = 'none';
+    e.preventDefault();
+  });
+  window.addEventListener('mousemove', (e)=>{
+    if(!dragging) return;
+    const w = Math.min(MAX_W, Math.max(MIN_W, e.clientX));
+    appEl.style.setProperty('--editor-w', w + 'px');
+  });
+  window.addEventListener('mouseup', ()=>{
+    if(!dragging) return;
+    dragging = false;
+    resizer.classList.remove('dragging');
+    document.body.style.userSelect = '';
+  });
+  // touch support
+  resizer.addEventListener('touchstart', (e)=>{
+    dragging = true;
+    resizer.classList.add('dragging');
+  }, {passive:true});
+  window.addEventListener('touchmove', (e)=>{
+    if(!dragging) return;
+    const x = e.touches[0].clientX;
+    const w = Math.min(MAX_W, Math.max(MIN_W, x));
+    appEl.style.setProperty('--editor-w', w + 'px');
+  }, {passive:true});
+  window.addEventListener('touchend', ()=>{
+    dragging = false;
+    resizer.classList.remove('dragging');
+  });
+}
+
+Object.assign(state, loadState());
+populateFormFromState();
+renderExpForm();
+renderEduForm();
+renderRefForm();
+renderCustomForm();
+render();
+backgroundVerifyUnlock();
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV Builder — Bunlai Media</title>
 <style>
   :root{
     --ink:#1c1b19;
