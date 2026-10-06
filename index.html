@@ -866,12 +866,45 @@
     #printBothWrap > div:last-child{page-break-after:auto;}
   }
   #printBothWrap{display:none;}
-  @media (max-width:900px){
-    .app{grid-template-columns:1fr;}
-    .resizer{display:none;}
-    .editor{max-height:none;border-right:none;border-bottom:1px solid var(--line);}
-    .preview-wrap{max-height:none;padding:20px;}
-    #resume{width:100%;padding:32px 24px;}
+  /* ===== PHONE / TABLET: side-by-side — left = build, right = live review ===== */
+  @media screen and (max-width:900px){
+    html,body{height:100%;overflow:hidden;}
+    .app{
+      grid-template-columns:var(--editor-w, 50%) 12px minmax(0,1fr);
+      height:100vh; height:100dvh; min-height:0;
+    }
+    .resizer{display:block;touch-action:none;background:var(--line);}
+    .resizer::after{height:44px;width:3px;}
+    .editor{
+      max-height:none; height:100%; min-width:0;
+      border-right:none; border-bottom:none;
+      padding:12px 10px 80px;
+      overflow-y:auto; -webkit-overflow-scrolling:touch;
+    }
+    .brand-logo{height:34px;padding:3px;}
+    .editor h1{font-size:15px;}
+    .brand-row{margin-bottom:12px;gap:8px;}
+    .row2{grid-template-columns:1fr;gap:0;}
+    input[type=text],input[type=email],input[type=tel],textarea,select{font-size:16px;}
+    .preview-wrap{
+      max-height:none; height:100%; min-width:0;
+      display:block; padding:6px 6px 40px;
+      overflow-y:auto; overflow-x:hidden;
+      -webkit-overflow-scrolling:touch;
+    }
+    .preview-col{width:100%;max-width:100%;}
+    .preview-tabs{
+      position:sticky; top:-6px; z-index:5;
+      background:var(--sand); padding:6px 0 2px; margin:-6px 0 6px; gap:14px;
+    }
+    /* Keep the real A4 layout (794px) and just shrink it to fit the column.
+       --fit is calculated by fitPreview() in the script below. */
+    #resume{
+      zoom:var(--fit, .4);
+      width:794px; min-height:1123px;
+      padding:34px 40px;
+    }
+    #resume.t2,#resume.t3,#resume.t7,#resume.t15,#resume.t19{padding:0;}
   }
   #resume{ position:relative !important; overflow:hidden !important; }
   #resume.watermarked::before{
@@ -2205,9 +2238,12 @@ $('clearDataBtn').addEventListener('click', (e)=>{
 
 const resizer = $('resizer');
 const appEl = document.querySelector('.app');
+const isPhoneLayout = () => window.matchMedia('(max-width:900px)').matches;
 if(resizer && appEl){
   let dragging = false;
-  const MIN_W = 280, MAX_W = 700;
+  const limits = () => isPhoneLayout()
+    ? { min: 110, max: Math.max(160, window.innerWidth - 110) }
+    : { min: 280, max: 700 };
   resizer.addEventListener('mousedown', (e)=>{
     dragging = true;
     resizer.classList.add('dragging');
@@ -2216,7 +2252,7 @@ if(resizer && appEl){
   });
   window.addEventListener('mousemove', (e)=>{
     if(!dragging) return;
-    const w = Math.min(MAX_W, Math.max(MIN_W, e.clientX));
+    const L = limits(); const w = Math.min(L.max, Math.max(L.min, e.clientX));
     appEl.style.setProperty('--editor-w', w + 'px');
   });
   window.addEventListener('mouseup', ()=>{
@@ -2233,7 +2269,7 @@ if(resizer && appEl){
   window.addEventListener('touchmove', (e)=>{
     if(!dragging) return;
     const x = e.touches[0].clientX;
-    const w = Math.min(MAX_W, Math.max(MIN_W, x));
+    const L = limits(); const w = Math.min(L.max, Math.max(L.min, x));
     appEl.style.setProperty('--editor-w', w + 'px');
   }, {passive:true});
   window.addEventListener('touchend', ()=>{
@@ -2241,6 +2277,20 @@ if(resizer && appEl){
     resizer.classList.remove('dragging');
   });
 }
+
+// ---- Phone layout: shrink the A4 preview to fit the right-hand column ----
+function fitPreview(){
+  const wrap = document.querySelector('.preview-wrap');
+  const col = document.querySelector('.preview-col');
+  if(!wrap || !col) return;
+  if(!isPhoneLayout()){ col.style.removeProperty('--fit'); return; }
+  const cs = getComputedStyle(wrap);
+  const avail = wrap.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+  col.style.setProperty('--fit', Math.max(0.15, avail / 794).toFixed(4));
+}
+window.addEventListener('resize', fitPreview);
+window.addEventListener('orientationchange', fitPreview);
+if(window.ResizeObserver){ new ResizeObserver(fitPreview).observe(document.querySelector('.preview-wrap')); }
 
 Object.assign(state, loadState());
 populateFormFromState();
@@ -2250,6 +2300,7 @@ renderRefForm();
 renderCustomForm();
 render();
 backgroundVerifyUnlock();
+fitPreview();
 </script>
 </body>
 </html>
