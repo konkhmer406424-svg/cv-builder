@@ -866,45 +866,42 @@
     #printBothWrap > div:last-child{page-break-after:auto;}
   }
   #printBothWrap{display:none;}
-  /* ===== PHONE / TABLET: side-by-side — left = build, right = live review ===== */
+  /* ===== PHONE / TABLET: top tabs (Edit | Preview), one panel at a time ===== */
+  .mobile-tabs{display:none;}
   @media screen and (max-width:900px){
-    html,body{height:100%;overflow:hidden;}
-    .app{
-      grid-template-columns:var(--editor-w, 50%) 12px minmax(0,1fr);
-      height:100vh; height:100dvh; min-height:0;
+    html,body{height:100%;}
+    .mobile-tabs{
+      display:flex; position:sticky; top:0; z-index:50;
+      background:#fff; border-bottom:1px solid var(--line);
+      font-family:-apple-system,'Noto Sans Khmer',sans-serif;
     }
-    .resizer{display:block;touch-action:none;background:var(--line);}
-    .resizer::after{height:44px;width:3px;}
+    .mobile-tab{
+      flex:1; background:none; border:none; padding:14px 8px;
+      font-family:inherit; font-size:15px; font-weight:600;
+      color:var(--muted); cursor:pointer;
+      border-bottom:3px solid transparent;
+    }
+    .mobile-tab.active{color:var(--accent); border-bottom-color:var(--accent);}
+    .app{display:block; min-height:0;}
+    .resizer{display:none;}
     .editor{
-      max-height:none; height:100%; min-width:0;
-      border-right:none; border-bottom:none;
-      padding:12px 10px 80px;
-      overflow-y:auto; -webkit-overflow-scrolling:touch;
+      max-height:none; height:auto; border-right:none;
+      padding:18px 16px 80px; overflow:visible;
     }
-    .brand-logo{height:34px;padding:3px;}
-    .editor h1{font-size:15px;}
-    .brand-row{margin-bottom:12px;gap:8px;}
-    .row2{grid-template-columns:1fr;gap:0;}
-    input[type=text],input[type=email],input[type=tel],textarea,select{font-size:16px;}
     .preview-wrap{
-      max-height:none; height:100%; min-width:0;
-      display:block; padding:6px 6px 40px;
-      overflow-y:auto; overflow-x:hidden;
-      -webkit-overflow-scrolling:touch;
+      max-height:none; height:auto; display:block;
+      padding:10px 8px 60px; overflow:visible;
     }
-    .preview-col{width:100%;max-width:100%;}
-    .preview-tabs{
-      position:sticky; top:-6px; z-index:5;
-      background:var(--sand); padding:6px 0 2px; margin:-6px 0 6px; gap:14px;
-    }
-    /* Keep the real A4 layout (794px) and just shrink it to fit the column.
-       --fit is calculated by fitPreview() in the script below. */
+    body.show-edit .preview-wrap{display:none;}
+    body.show-preview .editor{display:none;}
+    .preview-col{width:100%; max-width:100%;}
+    input[type=text],input[type=email],input[type=tel],textarea,select{font-size:16px;}
+    /* Keep the real A4 layout (794px) and shrink it to the screen width.
+       --fit is calculated by fitPreview() below. */
     #resume{
-      zoom:var(--fit, .4);
+      zoom:var(--fit, .45);
       width:794px; min-height:1123px;
-      padding:34px 40px;
     }
-    #resume.t2,#resume.t3,#resume.t7,#resume.t15,#resume.t19{padding:0;}
   }
   #resume{ position:relative !important; overflow:hidden !important; }
   #resume.watermarked::before{
@@ -918,7 +915,11 @@
   @media print{ #resume.watermarked::before{ content:none; } }
 </style>
 </head>
-<body>
+<body class="show-edit">
+<div class="mobile-tabs no-print">
+  <button type="button" class="mobile-tab active" id="mTabEdit">កែប្រែ</button>
+  <button type="button" class="mobile-tab" id="mTabPreview">មើលសាកល្បង</button>
+</div>
 <div class="app">
 
   <!-- ================= EDITOR ================= -->
@@ -2279,18 +2280,40 @@ if(resizer && appEl){
 }
 
 // ---- Phone layout: shrink the A4 preview to fit the right-hand column ----
+let _fitRaf = 0, _lastFit = '';
 function fitPreview(){
-  const wrap = document.querySelector('.preview-wrap');
-  const col = document.querySelector('.preview-col');
-  if(!wrap || !col) return;
-  if(!isPhoneLayout()){ col.style.removeProperty('--fit'); return; }
-  const cs = getComputedStyle(wrap);
-  const avail = wrap.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-  col.style.setProperty('--fit', Math.max(0.15, avail / 794).toFixed(4));
+  if(_fitRaf) return;
+  _fitRaf = requestAnimationFrame(()=>{
+    _fitRaf = 0;
+    const wrap = document.querySelector('.preview-wrap');
+    const col = document.querySelector('.preview-col');
+    if(!wrap || !col) return;
+    if(!isPhoneLayout()){
+      if(_lastFit){ col.style.removeProperty('--fit'); _lastFit = ''; }
+      return;
+    }
+    const cs = getComputedStyle(wrap);
+    const avail = wrap.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    if(avail <= 0) return; // preview tab hidden
+    const v = Math.max(0.15, avail / 794).toFixed(3);
+    if(v !== _lastFit){ _lastFit = v; col.style.setProperty('--fit', v); }
+  });
 }
 window.addEventListener('resize', fitPreview);
 window.addEventListener('orientationchange', fitPreview);
 if(window.ResizeObserver){ new ResizeObserver(fitPreview).observe(document.querySelector('.preview-wrap')); }
+
+// ---- Phone: Edit / Preview tabs ----
+function setMobileView(v){
+  document.body.classList.toggle('show-edit', v==='edit');
+  document.body.classList.toggle('show-preview', v==='preview');
+  $('mTabEdit').classList.toggle('active', v==='edit');
+  $('mTabPreview').classList.toggle('active', v==='preview');
+  window.scrollTo(0,0);
+  if(v==='preview') fitPreview();
+}
+$('mTabEdit').addEventListener('click', ()=>setMobileView('edit'));
+$('mTabPreview').addEventListener('click', ()=>setMobileView('preview'));
 
 Object.assign(state, loadState());
 populateFormFromState();
