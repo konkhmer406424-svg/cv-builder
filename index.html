@@ -1244,7 +1244,7 @@ let state = {
 const $ = id => document.getElementById(id);
 
 // ---- AI helper (Cloudflare Worker /ai — the API key never touches this page) ----
-const AI_URL = 'cv-ai.konkhmer406424.workers.dev/ai';   // <-- put your Worker URL here
+const AI_URL = 'https://cv-ai.konkhmer406424.workers.dev/ai';   // <-- put your Worker URL here
 // Templates 1–15 = English CV, templates 16–20 = Khmer CV.
 function langMode(){
   const n = parseInt(String(state.tpl).replace(/\D/g, ''), 10);
