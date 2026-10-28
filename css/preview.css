@@ -1,0 +1,156 @@
+/* preview.css — Preview column, cover-letter styles, print watermark, shared photo */
+  /* ---------- RIGHT: PREVIEW ---------- */
+  .preview-wrap{
+    padding:36px;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    overflow-y:auto;
+    max-height:100vh;
+  }
+  .preview-col{width:794px;max-width:100%;}
+  .preview-tabs{
+    display:flex;
+    gap:18px;
+    margin-bottom:10px;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+  }
+  .preview-tab{
+    background:none;
+    border:none;
+    padding:0 0 5px;
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--muted);
+    cursor:pointer;
+    border-bottom:2px solid transparent;
+  }
+  .preview-tab:hover{color:var(--ink);}
+  .preview-tab.active{
+    color:var(--ink);
+    border-bottom-color:var(--accent);
+  }
+  #resume{
+    position:relative;
+    --scale:1;
+    width:794px;
+    min-height:1123px;
+    background:#fff;
+    box-shadow:0 4px 24px rgba(0,0,0,.12);
+    padding:34px 40px;
+  }
+  #resume h2.name{margin:0;font-size:calc(30px * var(--scale));letter-spacing:.01em;}
+  #resume .title{margin:calc(2px * var(--scale)) 0 0;font-size:calc(14.5px * var(--scale));color:var(--muted);font-style:italic;}
+  #resume .contact-line{
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:calc(11.5px * var(--scale));
+    color:var(--muted);
+    margin-top:calc(10px * var(--scale));
+    display:flex;flex-wrap:wrap;gap:calc(4px * var(--scale)) calc(14px * var(--scale));
+  }
+  #resume .summary{margin:calc(18px * var(--scale)) 0 0;font-size:calc(13px * var(--scale));line-height:1.6;text-align:justify;}
+  #resume section.block{margin-top:calc(24px * var(--scale));}
+  #resume .block h3{
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:calc(11.5px * var(--scale));
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    color:var(--accent);
+    border-bottom:1px solid var(--line);
+    padding-bottom:calc(5px * var(--scale));
+    margin:0 0 calc(12px * var(--scale));
+  }
+  #resume .item{margin-bottom:calc(13px * var(--scale));}
+  #resume .item-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;}
+  #resume .item-role{font-size:calc(13.5px * var(--scale));font-weight:700;}
+  #resume .item-sub{font-size:calc(12.5px * var(--scale));color:var(--muted);font-style:italic;}
+  #resume .item-date{font-family:-apple-system,'Noto Sans Khmer',sans-serif;font-size:calc(11px * var(--scale));color:var(--muted);white-space:nowrap;}
+  #resume .item-desc{font-size:calc(12.5px * var(--scale));line-height:1.55;margin-top:calc(3px * var(--scale));white-space:pre-line;}
+  #resume .item-desc-list{margin:calc(3px * var(--scale)) 0 0;padding-left:calc(16px * var(--scale));font-size:calc(12.5px * var(--scale));line-height:1.55;}
+  #resume .item-desc-list li{margin-bottom:calc(2px * var(--scale));text-align:justify;}
+  #resume .skills-list{display:flex;flex-wrap:wrap;gap:calc(7px * var(--scale));}
+  #resume .skill-tag{
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:calc(11.5px * var(--scale));
+    padding:calc(4px * var(--scale)) calc(11px * var(--scale));
+    border-radius:20px;
+    background:var(--sand);
+    color:var(--ink);
+  }
+  #resume.empty-msg{color:var(--muted);font-family:-apple-system,'Noto Sans Khmer',sans-serif;font-size:13px;text-align:center;padding-top:120px;}
+  #resume .plain-list{margin:0;padding-left:calc(18px * var(--scale));font-size:calc(12.5px * var(--scale));line-height:1.65;}
+  #resume .plain-list li{margin-bottom:calc(3px * var(--scale));}
+
+  /* ===== COVER LETTER TEMPLATES ===== */
+  #resume.letter{font-family:'Iowan Old Style','Georgia','Noto Sans Khmer',serif;}
+  #resume .letter-head{margin-bottom:calc(26px * var(--scale));}
+  #resume .ls-name{font-size:calc(20px * var(--scale));font-weight:700;}
+  #resume .ls-contact{font-family:-apple-system,'Noto Sans Khmer',sans-serif;font-size:calc(11.5px * var(--scale));color:var(--muted);margin-top:4px;}
+  #resume .letter-date{font-family:-apple-system,'Noto Sans Khmer',sans-serif;font-size:calc(12px * var(--scale));color:var(--muted);margin-top:calc(18px * var(--scale));}
+  #resume .letter-recipient{font-size:calc(13px * var(--scale));margin-top:calc(10px * var(--scale));line-height:1.5;}
+  #resume .letter-body .salutation{margin-top:calc(22px * var(--scale));font-size:calc(13px * var(--scale));}
+  #resume .letter-body p{font-size:calc(13px * var(--scale));line-height:1.7;margin:0 0 calc(14px * var(--scale));text-align:justify;}
+  #resume .letter-body .closing{margin-top:calc(22px * var(--scale));text-align:left;}
+  #resume .letter-bullets{margin:0 0 calc(14px * var(--scale));padding-left:calc(20px * var(--scale));font-size:calc(13px * var(--scale));line-height:1.6;}
+
+  /* cl1 — Short & Direct: clean sans-serif, tight spacing */
+  #resume.cl1{font-family:-apple-system,'Segoe UI','Noto Sans Khmer',sans-serif;}
+  #resume.cl1 .ls-name{color:var(--accent);letter-spacing:.01em;}
+  #resume.cl1 .letter-body p{line-height:1.6;}
+
+  /* cl2 — Standard/Professional: classic serif business letter */
+  #resume.cl2 .letter-head{border-bottom:1px solid var(--line);padding-bottom:calc(16px * var(--scale));}
+  #resume.cl2 .ls-name{text-transform:uppercase;letter-spacing:.04em;font-size:calc(17px * var(--scale));}
+
+  /* cl3 — Simple/Plain: airy, left-aligned, easy to scan */
+  #resume.cl3{font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.cl3 .letter-body p{line-height:1.9;text-align:left;}
+
+  /* cl4 — Detailed/Long: shaded letterhead band */
+  #resume.cl4 .letter-head{background:var(--sand);margin:-34px -40px 26px;padding:28px 40px 20px;}
+  #resume.cl4 .ls-name{font-size:calc(22px * var(--scale));}
+
+  /* cl5 — Modern/Friendly: accent name, left-aligned, bulleted highlights */
+  #resume.cl5{font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.cl5 .ls-name{color:var(--accent-2);font-size:calc(21px * var(--scale));}
+  #resume.cl5 .letter-body p{text-align:left;}
+  #resume.cl5 .letter-bullets li{margin-bottom:calc(4px * var(--scale));}
+
+  /* ---- Print watermark (shown only when printing without a valid unlock) ---- */
+  #resume .print-watermark{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-wrap:wrap;
+    align-content:flex-start;
+    justify-content:flex-start;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:9999;
+  }
+  #resume .print-watermark span{
+    display:inline-block;
+    transform:rotate(-30deg);
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-weight:800;
+    font-size:20px;
+    color:rgba(200,30,30,.3);
+    white-space:nowrap;
+    margin:34px 46px;
+  }
+
+  /* ---- Photo (shared) ---- */
+  #resume .head-block{display:flex;gap:calc(22px * var(--scale));align-items:flex-start;}
+  #resume .photo-wrap{flex-shrink:0;}
+  #resume .photo{width:calc(112px * var(--scale));height:calc(112px * var(--scale));border-radius:50%;object-fit:cover;object-position:center top;display:block;}
+  #resume .photo-placeholder{
+    width:calc(112px * var(--scale));height:calc(112px * var(--scale));border-radius:50%;
+    border:1.5px dashed var(--line);
+    display:flex;align-items:center;justify-content:center;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;font-size:10px;color:var(--muted);
+    text-align:center;
+  }
+  @media print{
+    #resume .head-block.no-photo .photo-wrap{display:none;}
+    #resume .head-block.no-photo{gap:0;}
+  }

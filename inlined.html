@@ -1,0 +1,2137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+
+
+
+
+</head>
+<body class="show-edit">
+<div class="mobile-tabs no-print">
+  <button type="button" class="mobile-tab active" id="mTabEdit">កែប្រែ</button>
+  <button type="button" class="mobile-tab" id="mTabPreview">មើលសាកល្បង</button>
+</div>
+<div class="app">
+
+  <!-- ================= EDITOR ================= -->
+  <div class="editor no-print">
+    <div class="brand-row">
+      <img class="brand-logo" src="data:image/png;base64,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" alt="Logo">
+      <div class="brand-text">
+        <h1>CV Builder</h1>
+      </div>
+    </div>
+
+    <a href="https://t.me/LTMediakh_bot" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;margin:0 0 20px;padding:10px 14px;background:linear-gradient(90deg,#2AABEE,#229ED9);color:#fff;border-radius:8px;text-decoration:none;font-size:13px;font-weight:600;">
+      💬 មិនចង់ធ្វើដោយខ្លួនឯង? ជួល Team ធ្វើជូន
+    </a>
+
+    <div class="tpl-section" id="cvTemplateSection">
+      <div class="tpl-label">ទម្រង់ / Template</div>
+      <div class="templates" id="templatePicker">
+        <div class="tpl-swatch t10 active" data-tpl="t10"><div class="dot"></div>ផ្លូវការ/Formal</div>
+        <div class="tpl-swatch t1" data-tpl="t1"><div class="dot"></div>ខ្មែរ/Local</div>
+        <div class="tpl-swatch t2" data-tpl="t2"><div class="dot"></div>ទំនើប/Modern</div>
+        <div class="tpl-swatch t3" data-tpl="t3"><div class="dot"></div>ក្រុមហ៊ុន/Corporate</div>
+        <div class="tpl-swatch t4" data-tpl="t4"><div class="dot"></div>ដិត/Bold</div>
+        <div class="tpl-swatch t5 extra" data-tpl="t5"><div class="dot"></div>សាមញ្ញ/Simple</div>
+        <div class="tpl-swatch t6 extra" data-tpl="t6"><div class="dot"></div>Minimal ATS</div>
+        <div class="tpl-swatch t7 extra" data-tpl="t7"><div class="dot"></div>Compact ATS</div>
+        <div class="tpl-swatch t8 extra" data-tpl="t8"><div class="dot"></div>Creative</div>
+        <div class="tpl-swatch t9 extra" data-tpl="t9"><div class="dot"></div>Timeline</div>
+        <div class="tpl-swatch t11 extra" data-tpl="t11"><div class="dot"></div>Executive</div>
+        <div class="tpl-swatch t12 extra" data-tpl="t12"><div class="dot"></div>Tech/Dev</div>
+        <div class="tpl-swatch t13 extra" data-tpl="t13"><div class="dot"></div>Academic</div>
+        <div class="tpl-swatch t14 extra" data-tpl="t14"><div class="dot"></div>Portfolio</div>
+        <div class="tpl-swatch t15 extra" data-tpl="t15"><div class="dot"></div>និស្សិតថ្មី/Fresh Grad</div>
+        <div class="tpl-swatch t16 extra" data-tpl="t16"><div class="dot"></div>បែបបទខ្មែរ ១/Official KH</div>
+        <div class="tpl-swatch t17 extra" data-tpl="t17"><div class="dot"></div>បែបបទខ្មែរ ២/Government</div>
+        <div class="tpl-swatch t18 extra" data-tpl="t18"><div class="dot"></div>ខ្មែរបុរាណ/Khmer Classic</div>
+        <div class="tpl-swatch t19 extra" data-tpl="t19"><div class="dot"></div>ខ្មែរស្រស់ស្អាត/Khmer Fresh</div>
+        <div class="tpl-swatch t20 extra" data-tpl="t20"><div class="dot"></div>សូត្រខ្មែរ/Khmer Silk</div>
+      </div>
+      <div class="hint">អូសទៅឆ្វេង/ស្តាំដើម្បីមើលទម្រង់ទាំង ២០ / Scroll left/right to see all 20 templates.</div>
+
+      <details class="hint-toggle cl-hint-toggle" id="clDetails">
+        <summary></summary>
+        <div class="cl-hint-body">
+          <div class="templates" id="clTemplatePicker">
+            <div class="cl-tpl-swatch active" data-cltpl="cl1"><div class="dot cl1dot"></div>Short &amp; Direct</div>
+            <div class="cl-tpl-swatch" data-cltpl="cl2"><div class="dot cl2dot"></div>Standard</div>
+            <div class="cl-tpl-swatch" data-cltpl="cl3"><div class="dot cl3dot"></div>Simple</div>
+            <div class="cl-tpl-swatch" data-cltpl="cl4"><div class="dot cl4dot"></div>Detailed</div>
+            <div class="cl-tpl-swatch" data-cltpl="cl5"><div class="dot cl5dot"></div>Modern</div>
+          </div>
+          <div class="hint">All 5 templates auto-fill from your name, contact info, experience, skills and summary above — plus the details below.</div>
+
+          <label>Company Name</label>
+          <input type="text" id="clCompany" placeholder="ABC Company Co., Ltd.">
+          <label>Position You're Applying For</label>
+          <input type="text" id="clPosition" placeholder="Digital Marketing Manager">
+          <div class="row2">
+            <div>
+              <label>Hiring Manager (optional)</label>
+              <input type="text" id="clHiringManager" placeholder="Mr. Sok Dara">
+            </div>
+            <div>
+              <label>Date (optional)</label>
+              <input type="text" id="clDate" placeholder="September 17, 2026">
+            </div>
+          </div>
+          <label>Key Highlight to Mention (optional)</label>
+          <textarea id="clHighlight" placeholder="e.g. Led a campaign that grew leads by 40% in 3 months..."></textarea>
+          <div class="ai-bar" data-sel="#clHighlight" data-kind="text"></div>
+          <div class="hint">Leave any of these blank and the letter will fall back to sensible defaults (e.g. your Job Title above, or "Hiring Manager").</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="tpl-section">
+      <div class="tpl-label">មាត្រដ្ឋានអក្សរ / Text &amp; Spacing Scale</div>
+      <div class="scale-picker" id="scalePicker">
+        <div class="scale-btn" data-scale="0.85">តូច/Small</div>
+        <div class="scale-btn active" data-scale="1">មធ្យម/Medium</div>
+        <div class="scale-btn" data-scale="1.18">ធំ/Large</div>
+      </div>
+      <details class="hint-toggle"><summary></summary><div class="hint">ប្រើ "Large" ពេលព័ត៌មានតិច ឬ "Small" ពេលចង់ដាក់អោយសមក្នុងទំព័រតែមួយ / Use "Large" to fill the page when you have little content, or "Small" to fit more onto one page.</div></details>
+    </div>
+
+    <button class="print-btn" id="printBtn" type="button">ទាញយកជា PDF / Download as PDF</button>
+    <details class="hint-toggle"><summary></summary><div class="hint">ប្រើ Print dialog របស់ Browser — ជ្រើសរើស "Save as PDF" ជាទិសដៅ / Uses your browser's print dialog — choose "Save as PDF" as the destination.</div></details>
+    <details class="hint-toggle"><summary></summary><div class="hint">Your info is auto-saved in this browser, so it's still here next time you open this page. <a href="#" id="clearDataBtn" style="color:var(--accent);">សម្អាតទិន្នន័យ / Clear saved data</a></div></details>
+
+    <div class="acc-item cv-only" data-acc="photo">
+      <button type="button" class="acc-header"><span>រូបថត / Photo (optional)</span><span class="acc-caret">▾</span></button>
+      <div class="acc-body">
+        <div class="photo-row">
+          <div class="photo-thumb-empty" id="photoThumb">No photo</div>
+          <button type="button" class="photo-btn" id="photoBtn">📷 ថត / កែរូប  Take / Edit photo</button>
+        </div>
+        <button class="add-btn" id="removePhoto" type="button" style="display:none;">លុបរូបថត / Remove photo</button>
+        <details class="hint-toggle"><summary></summary><div class="hint">ជំនួយ៖ សម្រាប់ទម្រង់ "Local" ប្រើរូបថតបញ្ឈរ (3×4cm) / Tip: for the "Local" template, use a portrait photo — it will be cropped to a standard 3×4cm ID-photo box.</div></details>
+      </div>
+    </div>
+
+    <div class="acc-item open" data-acc="basic">
+      <button type="button" class="acc-header"><span>ព័ត៌មានមូលដ្ឋាន / Basic Info</span><span class="acc-caret">▾</span></button>
+      <div class="acc-body">
+        <label>ឈ្មោះពេញ / Full Name</label>
+        <input type="text" id="fullName" placeholder="Sok Dara">
+        <label>តួនាទី / Professional Title</label>
+        <input type="text" id="jobTitle" placeholder="Digital Marketing Manager">
+        <div class="ai-bar" data-sel="#jobTitle" data-kind="title" data-mini="1"></div>
+        <div class="row2">
+          <div>
+            <label>អ៊ីមែល / Email</label>
+            <input type="email" id="email" placeholder="dara@email.com">
+          </div>
+          <div>
+            <label>លេខទូរស័ព្ទ / Phone</label>
+            <input type="tel" id="phone" placeholder="+855 12 345 678">
+          </div>
+        </div>
+        <label>ទីតាំង / Location</label>
+        <input type="text" id="location" placeholder="Phnom Penh, Cambodia">
+        <label>LinkedIn / Portfolio (មិនចាំបាច់)</label>
+        <input type="text" id="linkedin" placeholder="linkedin.com/in/sokdara">
+        <label>សេចក្ដីសង្ខេប / Summary</label>
+        <textarea id="summary" placeholder="A short 2-3 sentence professional summary..."></textarea>
+        <div class="ai-bar" data-sel="#summary" data-kind="text"></div>
+      </div>
+    </div>
+
+    <div class="acc-item" data-acc="exp">
+      <button type="button" class="acc-header"><span>បទពិសោធន៍ / Experience</span><span class="acc-caret">▾</span></button>
+      <div class="acc-body">
+        <div id="expList"></div>
+        <button class="add-btn" id="addExp" type="button">+ បន្ថែមបទពិសោធន៍ / Add experience</button>
+      </div>
+    </div>
+
+    <div class="acc-item" data-acc="edu">
+      <button type="button" class="acc-header"><span>ការសិក្សា / Education</span><span class="acc-caret">▾</span></button>
+      <div class="acc-body">
+        <div id="eduList"></div>
+        <button class="add-btn" id="addEdu" type="button">+ បន្ថែមការសិក្សា / Add education</button>
+      </div>
+    </div>
+
+    <div class="acc-item" data-acc="skills">
+      <button type="button" class="acc-header"><span>ជំនាញ / Skills</span><span class="acc-caret">▾</span></button>
+      <div class="acc-body">
+        <label>បំបែកដោយសញ្ញាក្បៀស (,) / Comma-separated list</label>
+        <input type="text" id="skills" placeholder="Facebook Ads, TikTok Ads, Media Planning, Excel">
+        <div class="ai-bar" data-sel="#skills" data-kind="list" data-mini="1"></div>
+      </div>
+    </div>
+
+    <div class="acc-item" data-acc="languages">
+      <button type="button" class="acc-header"><span>ភាសា / Languages (optional)</span><span class="acc-caret">▾</span></button>
+      <div class="acc-body">
+        <label>បំបែកដោយសញ្ញាក្បៀស (,) / Comma-separated list</label>
+        <input type="text" id="languages" placeholder="Khmer (Native), English (Fluent)">
+      </div>
+    </div>
+
+    <div class="acc-item" data-acc="certifications">
+      <button type="button" class="acc-header"><span>វិញ្ញាបនបត្រ / Certifications (optional)</span><span class="acc-caret">▾</span></button>
+      <div class="acc-body">
+        <label>មួយបន្ទាត់មួយ / One per line</label>
+        <textarea id="certifications" placeholder="Google Ads Certification, 2024"></textarea>
+        <div class="ai-bar" data-sel="#certifications" data-kind="lines" data-mini="1"></div>
+      </div>
+    </div>
+
+    <div class="acc-item" data-acc="interests">
+      <button type="button" class="acc-header"><span>ចំណូលចិត្ត / Interests (optional)</span><span class="acc-caret">▾</span></button>
+      <div class="acc-body">
+        <label>បំបែកដោយសញ្ញាក្បៀស (,) / Comma-separated list</label>
+        <input type="text" id="interests" placeholder="Photography, Football, Reading">
+        <div class="ai-bar" data-sel="#interests" data-kind="list" data-mini="1"></div>
+      </div>
+    </div>
+
+    <div class="acc-item" data-acc="custom">
+      <button type="button" class="acc-header"><span>ផ្នែកផ្ទាល់ខ្លួន / Custom Sections (optional)</span><span class="acc-caret">▾</span></button>
+      <div class="acc-body">
+        <div id="customList"></div>
+        <button class="add-btn" id="addCustom" type="button">+ បន្ថែមផ្នែកថ្មី / Add custom section</button>
+        <details class="hint-toggle"><summary></summary><div class="hint">បន្ថែមផ្នែកផ្ទាល់ខ្លួន (ឧ. កម្ពស់ ទម្ងន់ សាសនា) / Add your own section for anything not listed above — e.g. Height, Weight, Marital Status, Religion, Hobbies.</div></details>
+      </div>
+    </div>
+
+    <div class="acc-item" data-acc="refs">
+      <button type="button" class="acc-header"><span>អ្នកយោង / References (optional)</span><span class="acc-caret">▾</span></button>
+      <div class="acc-body">
+        <div id="refList"></div>
+        <button class="add-btn" id="addRef" type="button">+ បន្ថែមអ្នកយោង / Add reference</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="resizer no-print" id="resizer"></div>
+
+  <!-- ================= PREVIEW ================= -->
+  <div class="preview-wrap">
+    <div class="preview-col">
+      <div class="preview-tabs no-print">
+        <button type="button" class="preview-tab active" id="previewTabCv">CV</button>
+        <button type="button" class="preview-tab" id="previewTabCl">Cover Letter</button>
+      </div>
+      <div id="resume" class="t10"></div>
+    </div>
+  </div>
+
+  <div id="printBothWrap"></div>
+
+</div>
+
+<!-- ================= PAYMENT GATE MODAL ================= -->
+<div id="downloadChoiceOverlay" class="no-print" style="display:none;position:fixed;inset:0;background:rgba(28,27,25,.55);z-index:1000;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:12px;max-width:340px;width:92%;padding:26px 24px;font-family:-apple-system,sans-serif;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.25);">
+    <h2 style="margin:0 0 4px;font-size:17px;color:var(--ink);">ទាញយកជា PDF / Download as PDF</h2>
+    <p style="margin:0 0 16px;font-size:12.5px;color:var(--muted);">ជ្រើសរើសអ្វីដែលអ្នកចង់ទាញយក / Choose what to download</p>
+
+    <button type="button" class="add-btn" id="dlChoiceCv" style="width:100%;margin-bottom:8px;box-sizing:border-box;">CV / ប្រវត្តិរូបប៉ុណ្ណោះ</button>
+    <button type="button" class="add-btn" id="dlChoiceCl" style="width:100%;margin-bottom:8px;box-sizing:border-box;">Cover Letter ប៉ុណ្ណោះ</button>
+    <button type="button" class="add-btn" id="dlChoiceBoth" style="width:100%;margin-bottom:4px;box-sizing:border-box;">ទាំងពីរ / Both (CV + Cover Letter)</button>
+
+    <button type="button" id="dlChoiceCancel" style="width:100%;margin-top:10px;background:none;border:none;color:var(--muted);font-size:12.5px;cursor:pointer;font-family:-apple-system,sans-serif;">បិទ / Cancel</button>
+  </div>
+</div>
+
+<div id="payModalOverlay" class="no-print" style="display:none;position:fixed;inset:0;background:rgba(28,27,25,.55);z-index:1000;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:12px;max-width:380px;width:92%;padding:28px 26px;font-family:-apple-system,sans-serif;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.25);">
+
+    <!-- Step 1: intro -->
+    <div id="payStepPay">
+      <h2 style="margin:0 0 4px;font-size:19px;color:var(--ink);">សូមទូទាត់ដើម្បីទាញយក</h2>
+      <p style="margin:0 0 20px;font-size:13px;color:var(--muted);">Pay to unlock 30-day download access — <strong>$2</strong></p>
+      <button id="genQrBtn" type="button" class="print-btn" style="width:100%;">បង្កើត KHQR ទូទាត់ / Generate Payment QR</button>
+      <p id="abaPayError" style="color:#a33;font-size:12px;margin:10px 0 0;display:none;">មានបញ្ហា សូមសាកល្បងម្ដងទៀត / Something went wrong, please try again</p>
+      <button type="button" id="showManualCodeBtn" style="width:100%;margin-top:14px;background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline;font-family:-apple-system,sans-serif;">មាន Unlock Code រួចហើយ?</button>
+    </div>
+
+    <!-- Step 2: show KHQR, wait for scan + payment -->
+    <div id="payStepQr" style="display:none;">
+      <div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:12px;">CV Builder</div>
+      <img id="qrImage" src="" alt="KHQR" style="display:block;width:100%;max-width:300px;height:auto;margin:0 auto;border-radius:12px;">
+      <p id="qrStatusText" style="margin:12px 0 0;font-size:12px;color:var(--muted);">សូមស្កេនដោយកម្មវិធីធនាគារ ឬ Bakong / Scan with any banking app (ABA, Bakong, ACLEDA...)</p>
+      <p id="payWaitError" style="color:#a33;font-size:12px;margin:14px 0 0;display:none;">QR ផុតកំណត់ ឬការទូទាត់មិនទាន់បញ្ជាក់ សូមសាកល្បងម្ដងទៀត / QR expired or payment not confirmed yet — try again below</p>
+      <button type="button" id="qrRetryBtn" style="display:none;width:100%;max-width:300px;margin:10px auto 0;background:none;border:1px solid var(--line);border-radius:6px;padding:8px;color:var(--ink);font-size:12.5px;cursor:pointer;font-family:-apple-system,sans-serif;">បង្កើត QR ថ្មី / Generate new QR</button>
+      <button type="button" id="waitingShowManualBtn" style="width:100%;margin-top:14px;background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline;font-family:-apple-system,sans-serif;">មាន Unlock Code រួចហើយ?</button>
+    </div>
+
+    <!-- Step 2b: payment confirmed — show the code before continuing -->
+    <div id="payStepSuccess" style="display:none;">
+      <h2 style="margin:0 0 6px;font-size:18px;color:var(--ink);">ការទូទាត់ជោគជ័យ! 🎉</h2>
+      <p style="margin:0 0 14px;font-size:12.5px;color:var(--muted);">Payment confirmed — save this code to unlock on other devices too</p>
+      <div style="background:#f7f6f3;border:1px dashed var(--line);border-radius:8px;padding:14px;margin-bottom:8px;">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">Unlock Code</div>
+        <div id="successCodeText" style="font-size:24px;font-weight:800;letter-spacing:2px;color:var(--ink);font-family:monospace;user-select:all;">----</div>
+      </div>
+      <button id="copyCodeBtn" type="button" style="width:100%;margin:0 0 12px;background:#fff;border:1px solid var(--line);border-radius:6px;padding:9px;color:var(--ink);font-size:13px;font-weight:600;cursor:pointer;font-family:-apple-system,sans-serif;">📋 ចម្លង Code / Copy code</button>
+      <p style="margin:0 0 16px;font-size:11.5px;color:var(--muted);">សូមថតរូបសម្ងាត់ទុក ដើម្បីប្រើនៅ device ផ្សេងទៀត (ជាមួយឈ្មោះពេញដូចគ្នា) / Screenshot this — use it on other devices with the same Full Name</p>
+      <button id="successContinueBtn" type="button" class="print-btn" style="width:100%;">បន្ត Download</button>
+    </div>
+
+    <!-- Step 3: manual code fallback -->
+    <div id="payStepManual" style="display:none;">
+      <h2 style="margin:0 0 4px;font-size:17px;color:var(--ink);">វាយបញ្ចូល Unlock Code</h2>
+      <p style="margin:0 0 16px;font-size:12.5px;color:var(--muted);">Enter the unlock code you received</p>
+      <p style="margin:0 0 12px;font-size:11.5px;color:var(--muted);background:#f7f6f3;border-radius:6px;padding:8px 10px;">ត្រូវប្រាកដថាបានវាយ <strong>"ឈ្មោះពេញ"</strong> នៅផ្នែកខាងលើដូចលើកមុន ដើម្បីអាចប្រើ code ដដែលនេះបានលើ device ថ្មី / Make sure "Full Name" above matches what you used before, so this code works on a new device</p>
+      <input type="text" id="unlockCodeInput" placeholder="វាយ Unlock Code" style="width:100%;font-family:-apple-system,sans-serif;font-size:14px;padding:10px 12px;border:1px solid var(--line);border-radius:6px;text-align:center;margin-bottom:6px;box-sizing:border-box;">
+      <div id="unlockError" style="color:#a33;font-size:12px;margin-bottom:10px;display:none;">Code មិនត្រឹមត្រូវ សូមសាកល្បងម្ដងទៀត</div>
+      <button id="unlockSubmitBtn" type="button" class="print-btn" style="margin-top:4px;">ដោះសោ Download</button>
+      <button type="button" id="backToPayBtn" style="width:100%;margin-top:14px;background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline;font-family:-apple-system,sans-serif;">ត្រឡប់ទៅទូទាត់វិញ / Back to payment</button>
+    </div>
+
+    <button id="payModalCloseBtn" type="button" style="width:100%;margin-top:14px;background:none;border:none;color:var(--muted);font-size:12.5px;cursor:pointer;font-family:-apple-system,sans-serif;">បិទ / Cancel</button>
+  </div>
+</div>
+
+
+
+<script>/* ==========================================================================
+   cv-photo.js — រូបថត CV: ថតភ្លាមៗ · កាត់ (crop) · ប្តូរទំហំ · ដកផ្ទៃខាងក្រោយ · ដាក់ពណ៌ខាងក្រោយ · បង្រួមទំហំឯកសារ
+   Photo tool for CV Builder. One file, no libraries, everything runs ON THE USER'S DEVICE (the photo is never uploaded).
+
+   Quick start (2 lines, after the page has loaded):
+     <script src="cv-photo.js"><\/script>
+     <script> CVPhoto.attach(document.querySelector('#photoInput')); <\/script>
+   → the existing <input type="file"> keeps working: when the user picks a picture, the editor opens first, and the
+     site's own code then receives the EDITED picture (same input, same "change" event). A "📷 ថត / កែរូប" button is added
+     next to the input (camera + gallery + editor).
+
+   Or call it yourself:
+     CVPhoto.open({ file:null, aspect:"3x4", maxKB:250,
+                    onDone:(dataUrl, info) => { img.src = dataUrl; } });   // info = {width,height,kb,format,blob}
+
+   Options   aspect: "3x4" (default) | "4x6" | "1x1"   · aspects: ["3x4","4x6","1x1"] (which buttons to show)
+             outWidth: px width of the result (default 600 for 3x4 and 1x1, 800 for 4x6)
+             maxKB: the result is compressed until it is smaller (default 250) → safe for localStorage and PDF
+             bg: starting background colour ("#ffffff"; "transparent" is allowed)
+             button:false (attach only) = do not add the extra button
+   Needs HTTPS (or localhost) for the camera. GitHub Pages is HTTPS, so it works.
+
+   Changes in this version
+     - New look: site colours, bottom sheet on phones / two panes on desktop, SVG icons, face guide, switch for background removal.
+     - Camera: closing the editor / pressing Back / switching camera while the camera is still starting no longer
+       leaves the camera light on (a late stream is stopped; see S.camTok).
+     - "Use this photo" cannot fire twice (S.busy).
+     - Pending timers are cleared when the editor closes.
+   ========================================================================== */
+(function (global) {
+  "use strict";
+
+  /* ------------------------------ text (Khmer / English) ------------------------------ */
+  const T = {
+    title: "រូបថត / Photo",
+    camera: "ថតភ្លាមៗ / Take a photo",
+    gallery: "ជ្រើសពីឧបករណ៍ / Choose from device",
+    tips: "ដាក់មុខនៅកណ្តាល ពន្លឺមកពីមុខ ផ្ទៃខាងក្រោយសាមញ្ញ / Centre your face, light from the front, plain background",
+    capture: "ថត / Capture",
+    switchCam: "ប្តូរ / Switch",
+    back: "ត្រឡប់ / Back",
+    zoom: "ពង្រីក / Zoom",
+    adjust: "កែតម្រូវ / Adjust",
+    rotL: "បង្វិលឆ្វេង / Rotate left", rotR: "បង្វិលស្តាំ / Rotate right", flip: "ត្រឡប់ / Flip",
+    size: "ទំហំ / Size",
+    bg: "ផ្ទៃខាងក្រោយ / Background",
+    remove: "ដកផ្ទៃខាងក្រោយ / Remove background",
+    strength: "កម្រិតដក / Strength",
+    removeHint: "ល្អបំផុតពេលផ្ទៃខាងក្រោយមានពណ៌តែមួយ (ជញ្ជាំងស...) / Works best on a plain background",
+    working: "កំពុងដំណើរការ… / Working…",
+    noBg: "រកមិនឃើញផ្ទៃខាងក្រោយ — សាកកើនកម្រិត / Background not found — raise the strength",
+    allBg: "ដកច្រើនពេក — សាកបន្ថយកម្រិត / Removed too much — lower the strength",
+    done: "ប្រើរូបនេះ / Use this photo",
+    again: "ថតម្តងទៀត / Retake",
+    guide: "ខ្សែណែនាំមុខ / Face guide",
+    hint: "អូសដើម្បីរំកិល ច្បិចដើម្បីពង្រីក / Drag to move, pinch to zoom",
+    privacy: "កែក្នុងឧបករណ៍របស់អ្នក មិនបញ្ជូនរូបទៅកន្លែងណាទេ / Edited on your device — nothing is uploaded",
+    camErr: "មិនអាចបើកកាមេរ៉ា។ សូមអនុញ្ញាតកាមេរ៉ា ឬជ្រើសរូបពីឧបករណ៍ / Cannot open the camera. Allow camera access or choose a photo.",
+    loadErr: "មិនអាចបើករូបនេះ / Cannot open this picture",
+    openBtn: "📷 ថត / កែរូប  Take / Edit photo",
+    custom: "ពណ៌ផ្សេង / Custom colour"
+  };
+  const svg = (p, s) => '<svg viewBox="0 0 24 24" width="' + (s || 20) + '" height="' + (s || 20) + '" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + p + '</svg>';
+  const I = {
+    cam: svg('<path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/>', 24),
+    img: svg('<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/>', 24),
+    lock: svg('<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>', 16),
+    tip: svg('<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>', 16),
+    rotL: svg('<path d="M4 12a8 8 0 1 0 3-6.2"/><path d="M4 4v4h4"/>'),
+    rotR: svg('<path d="M20 12a8 8 0 1 1-3-6.2"/><path d="M20 4v4h-4"/>'),
+    flip: svg('<path d="M12 3v18"/><path d="M8 7l-5 5 5 5z"/><path d="M16 7l5 5-5 5z"/>'),
+    back: svg('<path d="M15 5l-7 7 7 7"/>'),
+    swap: svg('<path d="M4 8h13l-3-3"/><path d="M20 16H7l3 3"/>'),
+    x: svg('<path d="M6 6l12 12M18 6L6 18"/>'),
+    check: svg('<path d="M5 12.5l4.5 4.5L19 7.5"/>', 16),
+    checkB: svg('<path d="M5 12.5l4.5 4.5L19 7.5"/>'),
+    minus: svg('<path d="M5 12h14"/>', 16),
+    plus: svg('<path d="M5 12h14M12 5v14"/>', 16),
+    spark: svg('<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 17v4M17 19h4"/>', 22)
+  };
+  // "ខ្មែរ / English" -> two spans (Khmer first, English smaller)
+  const lb = t => { const i = t.indexOf(" / "); return i < 0 ? t : '<span class="cvp-k">' + t.slice(0, i) + '</span><span class="cvp-e">' + t.slice(i + 3) + '</span>'; };
+
+  const SIZES = { "3x4": { a: 3 / 4, w: 600, label: "3×4" }, "4x6": { a: 2 / 3, w: 800, label: "4×6" }, "1x1": { a: 1, w: 600, label: "1:1" } };
+  const SWATCHES = ["#ffffff", "#e6e6e6", "#cfe3f7", "#2d6cdf", "#d33a3a", "transparent"];
+  const BASE_MAX = 1600;   // longest side of the working picture (memory + speed)
+
+  /* ------------------------------ core (pure, testable) ------------------------------ */
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  function makeCanvas(w, h) { const c = document.createElement("canvas"); c.width = Math.max(1, Math.round(w)); c.height = Math.max(1, Math.round(h)); return c; }
+
+  // crop rectangle (in picture pixels) for a frame of the given aspect, zoom (1 = largest frame that fits) and centre
+  function cropRect(W, H, aspect, zoom, cx, cy) {
+    let bw, bh;
+    if (W / H > aspect) { bh = H; bw = H * aspect; } else { bw = W; bh = W / aspect; }
+    const w = bw / zoom, h = bh / zoom;
+    const x = w <= W ? clamp(cx - w / 2, 0, W - w) : clamp(cx - w / 2, W - w, 0);   // zoom < 1: the frame may be bigger than the picture
+    const y = h <= H ? clamp(cy - h / 2, 0, H - h) : clamp(cy - h / 2, H - h, 0);
+    return { x, y, w, h };
+  }
+
+  // draw the rectangle of src into a dw×dh canvas; outside the picture = fill colour (or transparent)
+  function drawCrop(ctx, src, r, dw, dh, fill) {
+    ctx.save();
+    ctx.clearRect(0, 0, dw, dh);
+    if (fill && fill !== "transparent") { ctx.fillStyle = fill; ctx.fillRect(0, 0, dw, dh); }
+    const sx = dw / r.w, sy = dh / r.h;
+    const ix = Math.max(0, r.x), iy = Math.max(0, r.y), ix2 = Math.min(src.width, r.x + r.w), iy2 = Math.min(src.height, r.y + r.h);
+    if (ix2 > ix && iy2 > iy) {
+      ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = "high";
+      ctx.drawImage(src, ix, iy, ix2 - ix, iy2 - iy, (ix - r.x) * sx, (iy - r.y) * sy, (ix2 - ix) * sx, (iy2 - iy) * sy);
+    }
+    ctx.restore();
+  }
+
+  // rotate (quarter turns) and flip horizontally (as the user sees it)
+  function orient(src, rot, flip) {
+    const odd = rot % 2 === 1;
+    const c = makeCanvas(odd ? src.height : src.width, odd ? src.width : src.height);
+    const ctx = c.getContext("2d");
+    ctx.translate(c.width / 2, c.height / 2);
+    if (flip) ctx.scale(-1, 1);
+    ctx.rotate(rot * Math.PI / 2);
+    ctx.drawImage(src, -src.width / 2, -src.height / 2);
+    return c;
+  }
+
+  // scale a source (image/video/canvas) into a canvas whose longest side is <= max
+  function toBase(src, sw, sh, max) {
+    const k = Math.min(1, max / Math.max(sw, sh));
+    const c = makeCanvas(sw * k, sh * k);
+    c.getContext("2d").drawImage(src, 0, 0, c.width, c.height);
+    return c;
+  }
+
+  // Background removal for a PLAIN background: find the background colour on the picture border, then flood-fill inward
+  // from the border over every pixel close to that colour. tol 1..100. Returns { data:ImageData, ratio:0..1 (share removed) }.
+  function removeBackground(img, tol) {
+    const w = img.width, h = img.height, src = img.data, N = w * h;
+    const t = Math.max(2, Math.round(Math.min(w, h) * 0.02));
+    const R = [], G = [], B = [];
+    const take = (x, y) => { const i = (y * w + x) * 4; if (src[i + 3] > 200) { R.push(src[i]); G.push(src[i + 1]); B.push(src[i + 2]); } };
+    for (let y = 0; y < h; y += 2) {                       // sample a thin ring along the picture border
+      if (y < t || y >= h - t) { for (let x = 0; x < w; x += 2) take(x, y); }
+      else { for (let x = 0; x < t; x += 2) take(x, y); for (let x = w - t; x < w; x += 2) take(x, y); }
+    }
+    const med = a => { a.sort((p, q) => p - q); return a.length ? a[a.length >> 1] : 255; };
+    const rr = med(R), gg = med(G), bb = med(B);
+    const thr = tol * 1.5, thr2 = thr * thr;
+    const near = i => { const o = i * 4; if (src[o + 3] < 10) return true; const dr = src[o] - rr, dg = src[o + 1] - gg, db = src[o + 2] - bb; return dr * dr + dg * dg + db * db <= thr2; };
+
+    const mask = new Uint8Array(N);            // 1 = background
+    const stack = new Int32Array(N); let sp = 0;
+    const push = i => { if (!mask[i] && near(i)) { mask[i] = 1; stack[sp++] = i; } };
+    for (let x = 0; x < w; x++) { push(x); push((h - 1) * w + x); }
+    for (let y = 0; y < h; y++) { push(y * w); push(y * w + w - 1); }
+    while (sp) {
+      const i = stack[--sp], x = i % w;
+      if (x > 0) push(i - 1);
+      if (x < w - 1) push(i + 1);
+      if (i >= w) push(i - w);
+      if (i < N - w) push(i + w);
+    }
+    let bgCount = 0; for (let i = 0; i < N; i++) bgCount += mask[i];
+
+    // erode the subject by 1px (kills the tinted edge), then feather the edge with a small blur
+    const a = new Uint8Array(N);
+    for (let i = 0; i < N; i++) {
+      if (mask[i]) continue;
+      const x = i % w;
+      const edge = (x > 0 && mask[i - 1]) || (x < w - 1 && mask[i + 1]) || (i >= w && mask[i - w]) || (i < N - w && mask[i + w]);
+      a[i] = edge ? 0 : 255;
+    }
+    const f = new Uint8Array(N);
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+      let s = 0, n = 0;
+      for (let dy = -1; dy <= 1; dy++) { const yy = y + dy; if (yy < 0 || yy >= h) continue; for (let dx = -1; dx <= 1; dx++) { const xx = x + dx; if (xx < 0 || xx >= w) continue; s += a[yy * w + xx]; n++; } }
+      f[y * w + x] = s / n;
+    }
+    const out = new Uint8ClampedArray(src);
+    for (let i = 0; i < N; i++) out[i * 4 + 3] = Math.min(out[i * 4 + 3], f[i]);
+    return { data: { width: w, height: h, data: out }, ratio: bgCount / N };
+  }
+
+  const webpOK = (() => { let r; return () => { if (r === undefined) { try { r = makeCanvas(1, 1).toDataURL("image/webp").indexOf("data:image/webp") === 0; } catch (e) { r = false; } } return r; }; })();
+  const toBlob = (c, type, q) => new Promise(res => c.toBlob(b => res(b), type, q));
+
+  // encode until it is small enough: lower the quality first, then shrink the picture a little
+  async function encode(canvas, type, maxKB) {
+    let c = canvas, blob = null, q = 0.92;
+    for (let pass = 0; pass < 4; pass++) {
+      const qs = type === "image/png" ? [undefined] : [0.92, 0.85, 0.78, 0.7, 0.62, 0.55];
+      for (q of qs) {
+        blob = await toBlob(c, type, q);
+        if (!blob) throw new Error("encode failed");
+        if (blob.size <= maxKB * 1024) return { blob, quality: q, canvas: c };
+      }
+      const n = makeCanvas(c.width * 0.85, c.height * 0.85);
+      n.getContext("2d").drawImage(c, 0, 0, n.width, n.height); c = n;
+    }
+    return { blob, quality: q, canvas: c };   // best effort
+  }
+
+  const readDataUrl = blob => new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(fr.result); fr.onerror = rej; fr.readAsDataURL(blob); });
+
+  function loadImage(file) {
+    return new Promise((res, rej) => {
+      const img = new Image();
+      const done = () => res(img);
+      img.onload = done; img.onerror = () => rej(new Error("load"));
+      if (global.URL && URL.createObjectURL) { const u = URL.createObjectURL(file); img.onload = () => { try { URL.revokeObjectURL(u); } catch (e) {} done(); }; img.src = u; }
+      else readDataUrl(file).then(d => { img.src = d; }, rej);
+    });
+  }
+
+  /* ------------------------------ styles ------------------------------ */
+  const CSS = `
+.cvp-ov{position:fixed;inset:0;z-index:99999;background:rgba(28,27,25,.66);backdrop-filter:blur(3px);display:flex;align-items:flex-end;justify-content:center;font-family:"Noto Sans Khmer",-apple-system,"Segoe UI",Roboto,sans-serif;color:#1c1b19;line-height:1.6}
+.cvp-box{--ink:#1c1b19;--paper:#faf8f4;--line:#e4e0d8;--muted:#7a756a;--accent:#8a5a3b;--accent-2:#3b5a4a;--sand:#efe9dd;--tint:#f3e8df;background:var(--paper);width:100%;max-width:480px;max-height:96vh;max-height:96dvh;display:flex;flex-direction:column;overflow:hidden;border-radius:20px 20px 0 0;box-shadow:0 -8px 40px rgba(0,0,0,.3);animation:cvp-up .22s ease-out}
+@keyframes cvp-up{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+@media(prefers-reduced-motion:reduce){.cvp-box{animation:none}.cvp-switch,.cvp-switch::after{transition:none!important}}
+@media(min-width:720px){.cvp-ov{align-items:center;padding:16px}.cvp-box{border-radius:18px;max-height:calc(100vh - 32px)}.cvp-box.cvp-wide{max-width:820px}}
+.cvp-hd{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px 10px 18px;border-bottom:1px solid var(--line);background:#fff}
+.cvp-ttl{display:flex;align-items:baseline;gap:8px}.cvp-ttl b{font-size:16px}.cvp-ttl small{font-size:12px;color:var(--muted)}
+.cvp-x{width:38px;height:38px;display:grid;place-items:center;border:0;border-radius:50%;background:var(--sand);color:var(--ink);cursor:pointer;padding:0}
+.cvp-bd{flex:1;min-height:0;overflow:auto;padding:16px 18px;display:flex;flex-direction:column;gap:14px}
+.cvp-ft{flex-shrink:0;display:flex;gap:10px;justify-content:flex-end;align-items:center;padding:12px 18px;padding-bottom:max(12px,env(safe-area-inset-bottom));border-top:1px solid var(--line);background:#fff}
+.cvp-k{font-size:14px;font-weight:600}.cvp-e{font-size:11.5px;color:var(--muted)}
+.cvp-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-align:center;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:12px;padding:8px 14px;min-height:46px;font:inherit;font-size:14px;cursor:pointer}
+.cvp-btn:hover{background:var(--sand)}
+.cvp-btn .cvp-k,.cvp-btn .cvp-e{display:inline}.cvp-btn .cvp-e{margin-left:6px;color:inherit;opacity:.75}
+.cvp-btn.cvp-pri{background:var(--accent);border-color:var(--accent);color:#fff;flex:1;max-width:320px}.cvp-btn.cvp-pri:hover{background:#774c31}
+.cvp-btn.cvp-ghost{border-color:transparent;background:transparent;color:var(--muted)}
+.cvp-btn.cvp-ib{width:46px;padding:0}
+.cvp-btn:disabled{opacity:.55;cursor:default}
+.cvp-btn:focus-visible,.cvp-x:focus-visible,.cvp-sw:focus-visible,.cvp-seg button:focus-visible,.cvp-card:focus-visible,.cvp-rm-top:focus-visible,.cvp-shutter:focus-visible,.cvp-chipbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.cvp-src{display:grid;gap:10px;grid-template-columns:1fr}
+.cvp-card{display:flex;align-items:center;gap:14px;text-align:left;padding:16px;border:1px solid var(--line);border-radius:16px;background:#fff;cursor:pointer;font:inherit;color:inherit}
+.cvp-card:hover{border-color:var(--accent)}.cvp-card .cvp-k,.cvp-card .cvp-e{display:block}
+.cvp-ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--sand);color:var(--accent);flex-shrink:0}
+@media(min-width:520px){.cvp-src{grid-template-columns:1fr 1fr}.cvp-card{flex-direction:column;align-items:flex-start;padding:20px 16px}}
+.cvp-tip,.cvp-priv{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;color:var(--muted)}.cvp-tip svg,.cvp-priv svg{flex-shrink:0;margin-top:3px;color:var(--accent-2)}
+.cvp-tip .cvp-k,.cvp-priv .cvp-k{font-size:12.5px;font-weight:500;color:var(--ink)}.cvp-tip .cvp-e,.cvp-priv .cvp-e{display:block}
+.cvp-stage{background:var(--ink);border-radius:16px;padding:18px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.cvp-frame{position:relative;line-height:0}
+.cvp-prev{display:block;border-radius:6px;touch-action:none;cursor:grab;background-color:#fff;background-image:linear-gradient(45deg,#ddd 25%,transparent 25%),linear-gradient(-45deg,#ddd 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#ddd 75%),linear-gradient(-45deg,transparent 75%,#ddd 75%);background-size:14px 14px;background-position:0 0,0 7px,7px -7px,-7px 0;box-shadow:0 6px 24px rgba(0,0,0,.5)}
+.cvp-guide{position:absolute;inset:8% 14%;border:2px dashed rgba(255,255,255,.85);border-radius:48% 48% 40% 40%/42% 42% 30% 30%;pointer-events:none}
+.cvp-chips{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap}
+.cvp-chip{font:inherit;font-size:12px;color:#e8e2d6;background:rgba(255,255,255,.12);border:0;border-radius:999px;padding:2px 12px;line-height:1.7}
+.cvp-chip .cvp-k,.cvp-chip .cvp-e{display:inline;font-size:12px;font-weight:500;color:inherit}.cvp-chip .cvp-e{margin-left:5px;opacity:.7}
+.cvp-chipbtn{cursor:pointer}.cvp-chipbtn[aria-pressed=true]{background:rgba(255,255,255,.28);color:#fff}
+.cvp-hint{text-align:center;line-height:1.5}.cvp-hint .cvp-k,.cvp-hint .cvp-e{display:block;font-size:12px;font-weight:400;color:#b9b3a7}.cvp-hint .cvp-e{font-size:11px;opacity:.8}
+.cvp-vid{position:relative;background:#000;border-radius:10px;overflow:hidden}
+.cvp-vid video{width:100%;height:100%;object-fit:cover;display:block}
+.cvp-edit{display:flex;flex-direction:column;gap:16px}
+.cvp-ctl{display:flex;flex-direction:column;gap:18px;min-width:0;flex:1}
+@media(min-width:720px){.cvp-edit{flex-direction:row;align-items:flex-start}.cvp-edit .cvp-stage{flex:0 0 380px;position:sticky;top:0}}
+.cvp-sec{display:flex;flex-direction:column;gap:8px}
+.cvp-lab .cvp-k{font-size:13px}.cvp-lab .cvp-e{margin-left:6px}
+.cvp-seg{display:flex;gap:8px}
+.cvp-seg button{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 6px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font:inherit;font-size:13px;cursor:pointer}
+.cvp-seg button.cvp-on{border-color:var(--accent);background:var(--tint);color:var(--accent);font-weight:600}
+.cvp-ar{display:block;height:22px;border:2px solid currentColor;border-radius:3px}
+.cvp-tools{display:flex;gap:8px;align-items:center}
+.cvp-tools input[type=range]{flex:1;min-width:0;accent-color:var(--accent)}
+.cvp-tools svg{color:var(--muted);flex-shrink:0}
+.cvp-t3 .cvp-btn{flex:1;flex-direction:column;gap:2px;padding:8px 4px;font-size:12.5px}.cvp-t3 .cvp-e{display:none}.cvp-t3 .cvp-k{font-size:12.5px;font-weight:500}
+.cvp-sws{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.cvp-sw{position:relative;width:38px;height:38px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);cursor:pointer;padding:0;display:grid;place-items:center}
+.cvp-sw svg{opacity:0}.cvp-sw.cvp-on{box-shadow:0 0 0 2px var(--accent)}.cvp-sw.cvp-on svg{opacity:1}
+.cvp-sw.cvp-tr{background-color:#fff;background-image:linear-gradient(45deg,#bbb 25%,transparent 25%,transparent 75%,#bbb 75%),linear-gradient(45deg,#bbb 25%,transparent 25%,transparent 75%,#bbb 75%);background-size:10px 10px;background-position:0 0,5px 5px}
+.cvp-cust{background:conic-gradient(#d33a3a,#e0a526,#4a9d5b,#2d6cdf,#9b4fc7,#d33a3a);overflow:hidden}
+.cvp-cust::after{content:"";position:absolute;inset:7px;border-radius:50%;background:var(--c,transparent);border:2px solid #fff;display:none}.cvp-cust.cvp-on::after{display:block}
+.cvp-cust input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;border:0;padding:0}
+.cvp-rm{border:1px solid var(--line);border-radius:14px;background:#fff;padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.cvp-rm-top{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:0;background:none;padding:0;font:inherit;color:inherit;cursor:pointer;border-radius:10px}
+.cvp-rm-top .cvp-tx{flex:1}.cvp-rm-top .cvp-k,.cvp-rm-top .cvp-e{display:block}
+.cvp-switch{width:46px;height:28px;border-radius:999px;background:#cfc9bd;position:relative;flex-shrink:0;transition:background .15s}
+.cvp-switch::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .15s}
+.cvp-rm-top[aria-checked=true] .cvp-switch{background:var(--accent-2)}.cvp-rm-top[aria-checked=true] .cvp-switch::after{transform:translateX(18px)}
+.cvp-note{font-size:12px;color:var(--muted)}.cvp-note .cvp-k,.cvp-note .cvp-e{display:inline;font-size:12px;font-weight:400}.cvp-note .cvp-e{margin-left:4px}
+.cvp-status{font-size:12.5px;color:#6b4329;background:var(--tint);border-radius:10px;padding:8px 12px}.cvp-status:empty{display:none}
+.cvp-status .cvp-k,.cvp-status .cvp-e{display:inline;font-size:12.5px;font-weight:500;color:inherit}.cvp-status .cvp-e{margin-left:5px;opacity:.8}
+.cvp-err{font-size:13px;color:#8f2d1f;background:#fbeae6;border-radius:12px;padding:10px 12px}
+.cvp-err .cvp-k,.cvp-err .cvp-e{display:block;font-size:13px;font-weight:500;color:inherit}.cvp-err .cvp-e{font-weight:400;opacity:.85}
+.cvp-ft.cvp-cam{justify-content:space-between}.cvp-cam .cvp-btn{width:104px;flex-direction:column;gap:0;padding:6px;font-size:12px;min-height:52px}.cvp-cam .cvp-btn .cvp-e{display:none}
+.cvp-shutter{width:66px;height:66px;border-radius:50%;border:3px solid var(--accent);background:var(--accent);box-shadow:inset 0 0 0 4px #fff;cursor:pointer;padding:0}
+.cvp-shutter:active{transform:scale(.95)}
+`;
+  function injectCss() { if (document.getElementById("cvp-css")) return; const s = document.createElement("style"); s.id = "cvp-css"; s.textContent = CSS; document.head.appendChild(s); }
+
+  const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+
+  /* ------------------------------ editor ------------------------------ */
+  function open(opts) {
+    opts = opts || {};
+    injectCss();
+    const aspects = (opts.aspects && opts.aspects.length ? opts.aspects : ["3x4", "4x6", "1x1"]).filter(k => SIZES[k]);
+    const S = {
+      base: null, rot: 0, flip: false, oriented: null, cut: null, cutOn: false, tol: 35,
+      zoom: 1, cx: 0, cy: 0, aspectKey: SIZES[opts.aspect] ? opts.aspect : aspects[0],
+      bg: opts.bg || "#ffffff", fw: 300, fh: 400, stream: null, facing: "user", token: 0,
+      camTok: 0,     // bumped every time the camera is stopped / restarted → a late getUserMedia() result is recognised as stale
+      busy: false    // true while "Use this photo" is working → no double click
+    };
+    const maxKB = opts.maxKB || 250;
+    const prevFocus = document.activeElement;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const ov = el("div", "cvp-ov"), box = el("div", "cvp-box"), hd = el("div", "cvp-hd"), bd = el("div", "cvp-bd"), ft = el("div", "cvp-ft");
+    ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true");
+    const tp = T.title.split(" / "), ttl = el("span", "cvp-ttl", "<b>" + tp[0] + "</b><small>" + tp[1] + "</small>"), xb = el("button", "cvp-x", I.x); xb.type = "button"; xb.setAttribute("aria-label", "close");
+    hd.append(ttl, xb); box.append(hd, bd, ft); ov.appendChild(box); document.body.appendChild(ov);
+
+    const fileIn = el("input"); fileIn.type = "file"; fileIn.accept = "image/*"; fileIn.style.display = "none";
+    const camIn = el("input"); camIn.type = "file"; camIn.accept = "image/*"; camIn.setAttribute("capture", "user"); camIn.style.display = "none";
+    ov.append(fileIn, camIn);
+
+    // timers live here so close() can clear them
+    let estTimer = null, cutTimer = null;
+
+    // Stops the camera AND invalidates any camera request that is still starting.
+    function stopStream() {
+      S.camTok++;
+      if (S.stream) { S.stream.getTracks().forEach(t => t.stop()); S.stream = null; }
+    }
+    function close(cancelled) {
+      stopStream(); S.token++;
+      clearTimeout(estTimer); clearTimeout(cutTimer);
+      document.removeEventListener("keydown", onKey, true);
+      if (ov.parentNode) ov.parentNode.removeChild(ov);
+      document.body.style.overflow = prevOverflow;
+      if (prevFocus && prevFocus.focus) try { prevFocus.focus(); } catch (e) {}
+      if (cancelled && opts.onCancel) opts.onCancel();
+    }
+    function onKey(e) { if (e.key === "Escape") { e.stopPropagation(); close(true); } }
+    document.addEventListener("keydown", onKey, true);
+    xb.onclick = () => close(true);
+
+    function setBody(nodes, footer, mode) {
+      stopStream(); bd.innerHTML = ""; ft.innerHTML = ""; bd.scrollTop = 0;
+      nodes.forEach(n => bd.appendChild(n)); (footer || []).forEach(n => ft.appendChild(n));
+      ft.style.display = footer && footer.length ? "" : "none";
+      box.classList.toggle("cvp-wide", mode === "wide"); ft.classList.toggle("cvp-cam", mode === "cam");
+    }
+    const btn = (label, cls, fn, icon) => { const b = el("button", "cvp-btn" + (cls ? " " + cls : ""), (icon || "") + (label ? '<span class="cvp-bt">' + lb(label) + "</span>" : "")); b.type = "button"; if (fn) b.onclick = fn; return b; };
+    const ibtn = (icon, label, fn) => { const b = btn("", "cvp-ib", fn, icon); b.setAttribute("aria-label", label); b.title = label; return b; };
+    const card = (icon, label, fn) => { const b = el("button", "cvp-card", '<span class="cvp-ic">' + icon + "</span><span>" + lb(label) + "</span>"); b.type = "button"; b.onclick = fn; return b; };
+    const lab = t => el("div", "cvp-lab", lb(t));
+
+    /* ---------- screen 1: choose a source ---------- */
+    function showSource(msg) {
+      const nodes = [];
+      if (msg) nodes.push(el("div", "cvp-err", lb(msg)));
+      const grid = el("div", "cvp-src"); grid.append(card(I.cam, T.camera, startCamera), card(I.img, T.gallery, () => fileIn.click()));
+      nodes.push(grid, el("div", "cvp-tip", I.tip + "<span>" + lb(T.tips) + "</span>"), el("div", "cvp-priv", I.lock + "<span>" + lb(T.privacy) + "</span>"));
+      setBody(nodes, []);
+    }
+    fileIn.onchange = () => { if (fileIn.files && fileIn.files[0]) useFile(fileIn.files[0]); fileIn.value = ""; };
+    camIn.onchange = () => { if (camIn.files && camIn.files[0]) useFile(camIn.files[0]); camIn.value = ""; };
+
+    /* ---------- screen 2: camera ---------- */
+    async function startCamera() {
+      if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) || (global.isSecureContext === false)) { camFallback(); return; }
+      const wrap = el("div", "cvp-vid"), video = el("video"), guide = el("div", "cvp-guide");
+      video.setAttribute("playsinline", ""); video.muted = true; video.autoplay = true;
+      const vw = Math.min(380, (global.innerWidth || 400) - 72), a = SIZES[S.aspectKey].a;
+      const vh = Math.min(vw / a, (global.innerHeight || 700) * 0.5), vwf = vh * a;
+      wrap.style.width = vwf + "px"; wrap.style.height = vh + "px";
+      wrap.append(video, guide);
+      const stage = el("div", "cvp-stage"); stage.append(wrap, el("div", "cvp-hint", lb(T.privacy)));
+      const shutter = el("button", "cvp-shutter"); shutter.type = "button"; shutter.setAttribute("aria-label", T.capture); shutter.title = T.capture; shutter.onclick = capture;
+      const sw = btn(T.switchCam, "", () => { S.facing = S.facing === "user" ? "environment" : "user"; startCamera(); }, I.swap);
+      setBody([stage], [btn(T.back, "", () => showSource(), I.back), shutter, sw], "cam");
+      const my = S.camTok;       // setBody() just bumped it; if it changes again, this request is stale
+      try {
+        const st = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: S.facing }, width: { ideal: 1280 }, height: { ideal: 1280 } }, audio: false });
+        if (my !== S.camTok) { st.getTracks().forEach(t => t.stop()); return; }   // user went Back / closed / switched meanwhile → turn this camera off
+        S.stream = st;
+        video.srcObject = st; video.style.transform = S.facing === "user" ? "scaleX(-1)" : "";
+        try { await video.play(); } catch (e) {}
+      } catch (e) { if (my === S.camTok) camFallback(); }
+      function capture() {
+        if (!video.videoWidth) return;
+        S.base = toBase(video, video.videoWidth, video.videoHeight, BASE_MAX);   // saved un-mirrored (true to life)
+        stopStream(); startEdit();
+      }
+    }
+    function camFallback() {
+      const grid = el("div", "cvp-src"); grid.append(card(I.cam, T.camera, () => camIn.click()), card(I.img, T.gallery, () => fileIn.click()));
+      setBody([el("div", "cvp-err", lb(T.camErr)), grid], [btn(T.back, "", () => showSource(), I.back)]);
+    }
+
+    /* ---------- load a file ---------- */
+    async function useFile(file) {
+      try { const img = await loadImage(file); S.base = toBase(img, img.naturalWidth || img.width, img.naturalHeight || img.height, BASE_MAX); startEdit(); }
+      catch (e) { showSource(T.loadErr); }
+    }
+
+    /* ---------- screen 3: edit ---------- */
+    let prev, pctx, info, status, zoomIn, cutBtn, tolRow, tolIn, aspBtns = {}, swBtns = [], customIn, custWrap, doneBtn;
+    function rebuildOriented() { S.oriented = orient(S.base, S.rot, S.flip); S.cut = null; S.cx = S.oriented.width / 2; S.cy = S.oriented.height / 2; }
+    function source() { return S.cut || S.oriented; }
+    function cur() { return SIZES[S.aspectKey]; }
+    function layoutPreview() {
+      const a = cur().a, wide = (global.innerWidth || 400) >= 720;
+      const pw = wide ? 340 : Math.min(380, (global.innerWidth || 400) - 72), maxH = (global.innerHeight || 700) * (wide ? 0.6 : 0.38);
+      let fw = pw, fh = fw / a; if (fh > maxH) { fh = maxH; fw = fh * a; }
+      S.fw = Math.round(fw); S.fh = Math.round(fh);
+      const dpr = Math.min(2, global.devicePixelRatio || 1);
+      prev.width = Math.round(S.fw * dpr); prev.height = Math.round(S.fh * dpr);
+      prev.style.width = S.fw + "px"; prev.style.height = S.fh + "px";
+    }
+    function rect() { const s = source(); const r = cropRect(s.width, s.height, cur().a, S.zoom, S.cx, S.cy); S.cx = r.x + r.w / 2; S.cy = r.y + r.h / 2; return r; }
+    function render() {
+      const r = rect();
+      drawCrop(pctx, source(), r, prev.width, prev.height, S.bg);
+      clearTimeout(estTimer); estTimer = setTimeout(estimate, 500);
+    }
+    function outSize() { const w = opts.outWidth || cur().w; return { w, h: Math.round(w / cur().a) }; }
+    async function estimate() {
+      const o = outSize(); info.textContent = o.w + "×" + o.h + " px";
+      try {
+        const c = makeCanvas(o.w, o.h); drawCrop(c.getContext("2d"), source(), rect(), o.w, o.h, S.bg);
+        const type = S.bg === "transparent" ? (webpOK() ? "image/webp" : "image/png") : "image/jpeg";
+        const b = await toBlob(c, type, 0.85);
+        if (b) info.textContent = o.w + "×" + o.h + " px · ≈ " + Math.max(1, Math.round(b.size / 1024)) + " KB";
+      } catch (e) {}
+    }
+    function setZoom(z) { S.zoom = clamp(z, 0.5, 4); zoomIn.value = String(Math.round(S.zoom * 100)); render(); }
+
+    function applyCut() {
+      clearTimeout(cutTimer); const my = ++S.token;
+      if (!S.cutOn) { S.cut = null; status.textContent = ""; render(); return; }
+      status.innerHTML = lb(T.working);
+      cutTimer = setTimeout(() => {
+        if (my !== S.token) return;
+        const o = S.oriented, id = o.getContext("2d").getImageData(0, 0, o.width, o.height);
+        const res = removeBackground(id, S.tol);
+        const c = makeCanvas(o.width, o.height);
+        const out = c.getContext("2d").createImageData(o.width, o.height); out.data.set(res.data.data); c.getContext("2d").putImageData(out, 0, 0);
+        S.cut = c;
+        status.innerHTML = res.ratio < 0.04 ? lb(T.noBg) : (res.ratio > 0.93 ? lb(T.allBg) : "");
+        render();
+      }, 30);
+    }
+    function pickBg(color) { S.bg = color; swBtns.forEach(b => b.classList.toggle("cvp-on", b.dataset.c === color)); if (custWrap) custWrap.classList.remove("cvp-on"); render(); }
+    const darkBg = c => { const m = /^#(..)(..)(..)$/.exec(c); if (!m) return false; const v = m.slice(1).map(h => parseInt(h, 16)); return (v[0] * 299 + v[1] * 587 + v[2] * 114) / 1000 < 140; };
+    const sec = (label, kids) => { const s = el("div", "cvp-sec"); s.append(lab(label)); kids.forEach(k => s.appendChild(k)); return s; };
+
+    function startEdit() {
+      S.rot = 0; S.flip = false; S.cutOn = false; S.zoom = 1; S.busy = false;
+      rebuildOriented();
+      prev = el("canvas", "cvp-prev"); pctx = prev.getContext("2d");
+      info = el("span", "cvp-chip"); status = el("div", "cvp-status");
+      layoutPreview();
+
+      // stage: dark surface, live preview, face guide, drag/pinch gestures
+      const frame = el("div", "cvp-frame"), guideEl = el("div", "cvp-guide"); frame.append(prev, guideEl);
+      const gtog = el("button", "cvp-chip cvp-chipbtn", lb(T.guide)); gtog.type = "button"; gtog.setAttribute("aria-pressed", "true");
+      gtog.onclick = () => { const on = gtog.getAttribute("aria-pressed") !== "true"; gtog.setAttribute("aria-pressed", String(on)); guideEl.style.display = on ? "" : "none"; };
+      const chips = el("div", "cvp-chips"); chips.append(gtog, info);
+      const stage = el("div", "cvp-stage"); stage.append(frame, chips, el("div", "cvp-hint", lb(T.hint)));
+      const ptrs = new Map(); let d0 = 0, z0 = 1;
+      const dist = () => { const p = [...ptrs.values()]; return Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y) || 1; };
+      prev.addEventListener("pointerdown", e => { try { prev.setPointerCapture(e.pointerId); } catch (x) {} ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY }); if (ptrs.size === 2) { d0 = dist(); z0 = S.zoom; } prev.style.cursor = "grabbing"; });
+      prev.addEventListener("pointermove", e => {
+        const p = ptrs.get(e.pointerId); if (!p) return;
+        if (ptrs.size === 1) { const r = rect(); S.cx -= (e.clientX - p.x) * (r.w / S.fw); S.cy -= (e.clientY - p.y) * (r.h / S.fh); render(); }
+        p.x = e.clientX; p.y = e.clientY;
+        if (ptrs.size === 2) setZoom(z0 * dist() / d0);
+      });
+      const up = e => { ptrs.delete(e.pointerId); prev.style.cursor = "grab"; };
+      prev.addEventListener("pointerup", up); prev.addEventListener("pointercancel", up); prev.addEventListener("pointerleave", up);
+      prev.addEventListener("wheel", e => { e.preventDefault(); setZoom(S.zoom * (e.deltaY < 0 ? 1.08 : 1 / 1.08)); }, { passive: false });
+
+      const ctl = el("div", "cvp-ctl");
+
+      // size presets, drawn as the actual frame shape
+      if (aspects.length > 1) {
+        const seg = el("div", "cvp-seg");
+        aspects.forEach(k => {
+          const b = el("button", k === S.aspectKey ? "cvp-on" : "", '<span class="cvp-ar"></span><span>' + SIZES[k].label + "</span>"); b.type = "button";
+          b.firstChild.style.aspectRatio = String(SIZES[k].a);
+          b.onclick = () => { S.aspectKey = k; Object.keys(aspBtns).forEach(x => aspBtns[x].classList.toggle("cvp-on", x === k)); layoutPreview(); render(); };
+          aspBtns[k] = b; seg.appendChild(b);
+        });
+        ctl.appendChild(sec(T.size, [seg]));
+      }
+
+      // zoom + rotate / flip
+      zoomIn = el("input"); zoomIn.type = "range"; zoomIn.min = "50"; zoomIn.max = "400"; zoomIn.value = "100"; zoomIn.setAttribute("aria-label", T.zoom);
+      zoomIn.oninput = () => setZoom(zoomIn.value / 100);
+      const zr = el("div", "cvp-tools"); zr.insertAdjacentHTML("beforeend", I.minus); zr.appendChild(zoomIn); zr.insertAdjacentHTML("beforeend", I.plus);
+      const turn = d => { S.rot = (S.rot + d + 4) % 4; rebuildOriented(); if (S.cutOn) applyCut(); else render(); };
+      const t3 = el("div", "cvp-tools cvp-t3");
+      t3.append(btn(T.rotL, "", () => turn(-1), I.rotL), btn(T.rotR, "", () => turn(1), I.rotR), btn(T.flip, "", () => { S.flip = !S.flip; rebuildOriented(); if (S.cutOn) applyCut(); else render(); }, I.flip));
+      ctl.appendChild(sec(T.adjust, [zr, t3]));
+
+      // background colour
+      const sws = el("div", "cvp-sws"); swBtns = [];
+      SWATCHES.forEach(c => {
+        const b = el("button", "cvp-sw" + (c === "transparent" ? " cvp-tr" : "") + (c === S.bg ? " cvp-on" : ""), I.checkB); b.type = "button"; b.dataset.c = c;
+        if (c !== "transparent") b.style.background = c; b.style.color = darkBg(c) ? "#fff" : "#1c1b19";
+        b.setAttribute("aria-label", c); b.onclick = () => pickBg(c); swBtns.push(b); sws.appendChild(b);
+      });
+      custWrap = el("label", "cvp-sw cvp-cust"); custWrap.title = T.custom;
+      customIn = el("input"); customIn.type = "color"; customIn.setAttribute("aria-label", T.custom); customIn.value = /^#[0-9a-f]{6}$/i.test(S.bg) ? S.bg : "#ffffff";
+      customIn.oninput = () => { S.bg = customIn.value; swBtns.forEach(b => b.classList.remove("cvp-on")); custWrap.classList.add("cvp-on"); custWrap.style.setProperty("--c", customIn.value); render(); };
+      custWrap.appendChild(customIn); sws.appendChild(custWrap);
+      ctl.appendChild(sec(T.bg, [sws]));
+
+      // remove background (switch + strength)
+      cutBtn = el("button", "cvp-rm-top", '<span class="cvp-ic">' + I.spark + '</span><span class="cvp-tx">' + lb(T.remove) + '</span><span class="cvp-switch"></span>');
+      cutBtn.type = "button"; cutBtn.setAttribute("role", "switch"); cutBtn.setAttribute("aria-checked", "false");
+      tolIn = el("input"); tolIn.type = "range"; tolIn.min = "5"; tolIn.max = "90"; tolIn.value = String(S.tol); tolIn.setAttribute("aria-label", T.strength);
+      tolIn.oninput = () => { S.tol = +tolIn.value; applyCut(); };
+      tolRow = el("div", "cvp-sec"); tolRow.style.display = "none"; const tr = el("div", "cvp-tools"); tr.appendChild(tolIn); tolRow.append(lab(T.strength), tr);
+      cutBtn.onclick = () => { S.cutOn = !S.cutOn; cutBtn.setAttribute("aria-checked", String(S.cutOn)); tolRow.style.display = S.cutOn ? "" : "none"; applyCut(); };
+      const rm = el("div", "cvp-rm"); rm.append(cutBtn, tolRow, status, el("div", "cvp-note", lb(T.removeHint)));
+      ctl.appendChild(rm);
+
+      const wrapEdit = el("div", "cvp-edit"); wrapEdit.append(stage, ctl);
+      doneBtn = btn(T.done, "cvp-pri", finish, I.check);
+      setBody([wrapEdit], [btn(T.again, "cvp-ghost", () => { S.cutOn = false; clearTimeout(cutTimer); S.token++; showSource(); }, I.cam.replace(/width="24" height="24"/, 'width="18" height="18"')), doneBtn], "wide");
+      render();
+    }
+
+    async function finish() {
+      if (S.busy) return;                       // already working → ignore a second click
+      S.busy = true; if (doneBtn) doneBtn.disabled = true;
+      const o = outSize(), c = makeCanvas(o.w, o.h);
+      drawCrop(c.getContext("2d"), source(), rect(), o.w, o.h, S.bg);
+      const type = S.bg === "transparent" ? (webpOK() ? "image/webp" : "image/png") : "image/jpeg";
+      try {
+        const r = await encode(c, type, maxKB), url = await readDataUrl(r.blob);
+        const out = { width: r.canvas.width, height: r.canvas.height, kb: Math.round(r.blob.size / 1024), format: r.blob.type, blob: r.blob };
+        close(false);
+        if (opts.onDone) opts.onDone(url, out);
+      } catch (e) {
+        S.busy = false; if (doneBtn) doneBtn.disabled = false;
+        status.innerHTML = lb(T.loadErr);
+      }
+    }
+
+    /* ---------- start ---------- */
+    if (opts.file) useFile(opts.file); else showSource();
+    return { close: () => close(true) };
+  }
+
+  /* ------------------------------ plug into an existing <input type="file"> ------------------------------ */
+  function setInputFile(input, blob, name) {
+    const ext = blob.type === "image/png" ? "png" : (blob.type === "image/webp" ? "webp" : "jpg");
+    const f = new File([blob], (name || "photo") + "." + ext, { type: blob.type });
+    const dt = new DataTransfer(); dt.items.add(f); input.files = dt.files;
+    input.__cvpPass = true; input.dispatchEvent(new Event("change", { bubbles: true }));
+  }
+
+  function attach(input, opts) {
+    if (!input || input.__cvpAttached) return;
+    input.__cvpAttached = true; opts = opts || {};
+    input.addEventListener("change", function (e) {
+      if (input.__cvpPass) { input.__cvpPass = false; return; }          // the edited picture: let the site's own code see it
+      const f = input.files && input.files[0]; if (!f) return;
+      e.stopImmediatePropagation(); e.preventDefault();                  // the raw picture: edit it first
+      open(Object.assign({}, opts, { file: f, onDone: (url, info) => { setInputFile(input, info.blob, "photo"); if (opts.onDone) opts.onDone(url, info); }, onCancel: () => { input.value = ""; if (opts.onCancel) opts.onCancel(); } }));
+    }, true);
+    if (opts.button !== false && input.parentNode) {
+      const b = el("button", "cvp-btn", T.openBtn); b.type = "button"; b.style.margin = "6px 0";
+      b.onclick = () => open(Object.assign({}, opts, { file: null, onDone: (url, info) => { setInputFile(input, info.blob, "photo"); if (opts.onDone) opts.onDone(url, info); } }));
+      injectCss(); input.parentNode.insertBefore(b, input.nextSibling);
+    }
+  }
+
+  global.CVPhoto = { open, attach, _core: { cropRect, drawCrop, orient, removeBackground, encode, toBase, makeCanvas, SIZES } };
+})(typeof window !== "undefined" ? window : globalThis);
+</script>
+<script>/* config.js — URLs and storage keys. Edit these first when you move to a new Worker / Apps Script. */
+
+const AI_URL = 'https://cv-ai.konkhmer406424.workers.dev/ai';   // <-- put your Worker URL here
+
+// ---- Payment gate (Bakong Relay KHQR auto-unlock) ----
+// Same Google Apps Script Web App URL as before (ends in /exec). It now also
+// handles ?action=createPayment and ?action=checkStatus — see the separate
+// bakong-relay-backend.gs file for what to add on the Apps Script side.
+const CODE_CHECK_URL = 'https://script.google.com/macros/s/AKfycbzcaIg0U0p2kg1zdoq6TjPsD5so18-45qVpw9e4H4PEJlbcGtvDBO8rKGTpVWJ5JOKdWQ/exec';
+const UNLOCK_STORAGE_KEY = 'cvBuilderUnlocked_v2'; // v2: unlock is now bound to code + Full Name
+const OLD_UNLOCK_STORAGE_KEY = 'cvBuilderUnlocked_v1'; // old flag (not tied to any code/name) — discarded
+const PENDING_NAME_KEY = 'cvBuilderPendingName_v1';
+const UNLOCK_DAYS = 30;
+const PENDING_MD5_KEY = 'cvBuilderPendingMd5_v1';
+const POLL_INTERVAL_MS = 3000;
+const POLL_MAX_TRIES = 180; // ~9 minutes — KHQR codes expire around 10 minutes
+
+const CV_DATA_KEY = 'cvBuilderData_v1';
+</script>
+<script>/* core.js — Core: shared state, $ helper, text/date helpers */
+
+document.querySelectorAll('.acc-header').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    btn.closest('.acc-item').classList.toggle('open');
+  });
+});
+
+let state = {
+  tpl: 't10',
+  scale: 1,
+  photo: null,
+  mode: 'cv',
+  clTpl: 'cl1',
+  clCompany: '', clHiringManager: '', clPosition: '', clDate: '', clHighlight: '',
+  fullName:'', jobTitle:'', email:'', phone:'', location:'', linkedin:'', summary:'',
+  exp: [{role:'',company:'',startDate:'',endDate:'',current:false,desc:''}],
+  edu: [{degree:'',school:'',dates:''}],
+  skills: '',
+  languages: '',
+  certifications: '',
+  interests: '',
+  refs: [{name:'',role:'',contact:''}],
+  custom: []
+};
+
+const $ = id => document.getElementById(id);
+
+
+function escapeHtml(s){ return (s||'').replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+function escapeAttr(s){ return escapeHtml(s).replace(/"/g,'&quot;'); }
+
+const MONTH_NAMES_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MONTH_NAMES_KH = ['មករា','កុម្ភៈ','មីនា','មេសា','ឧសភា','មិថុនា','កក្កដា','សីហា','កញ្ញា','តុលា','វិច្ឆិកា','ធ្នូ'];
+const KHMER_TEMPLATES = ['t16','t17','t18','t19','t20'];
+function isKhmerTemplate(){
+  return KHMER_TEMPLATES.includes(state.tpl);
+}
+function formatMonthYear(ym){
+  if(!ym) return '';
+  const parts = ym.split('-');
+  const y = parseInt(parts[0],10), m = parseInt(parts[1],10);
+  if(!y || !m) return '';
+  const names = isKhmerTemplate() ? MONTH_NAMES_KH : MONTH_NAMES_EN;
+  return `${names[m-1]} ${y}`;
+}
+function currentYm(){
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+}
+function monthsBetween(startYm, endYm){
+  const [sy,sm] = startYm.split('-').map(Number);
+  const [ey,em] = endYm.split('-').map(Number);
+  return (ey - sy) * 12 + (em - sm) + 1;
+}
+function formatDuration(totalMonths){
+  if(totalMonths < 1) return '';
+  const yrs = Math.floor(totalMonths / 12);
+  const mos = totalMonths % 12;
+  const parts = [];
+  const kh = isKhmerTemplate();
+  if(yrs > 0) parts.push(kh ? `${yrs} ឆ្នាំ` : `${yrs} yr${yrs > 1 ? 's' : ''}`);
+  if(mos > 0) parts.push(kh ? `${mos} ខែ` : `${mos} mo${mos > 1 ? 's' : ''}`);
+  if(parts.length === 0) parts.push(kh ? '< ១ ខែ' : '< 1 mo');
+  return parts.join(' ');
+}
+function formatExpDateRange(item){
+  const startLabel = formatMonthYear(item.startDate);
+  if(!startLabel) return '';
+  const endYm = item.current ? currentYm() : item.endDate;
+  const endLabel = item.current ? (isKhmerTemplate() ? 'បច្ចុប្បន្ន' : 'Present') : formatMonthYear(item.endDate);
+  if(!endLabel) return startLabel;
+  const dur = formatDuration(monthsBetween(item.startDate, endYm));
+  return dur ? `${startLabel} – ${endLabel} (${dur})` : `${startLabel} – ${endLabel}`;
+}
+</script>
+<script>/* ai.js — AI helper bar (translate / improve text) — talks to the Cloudflare Worker */
+
+// ---- AI helper (Cloudflare Worker /ai — the API key never touches this page) ----
+// Templates 1–15 = English CV, templates 16–20 = Khmer CV.
+function langMode(){
+  const n = parseInt(String(state.tpl).replace(/\D/g, ''), 10);
+  return (n >= 16 && n <= 20) ? 'km' : 'en';
+}
+const AI_BTN_TRANSLATE =
+  '<button type="button" class="ai-btn" data-ai="to_english">🇬🇧 ខ្មែរ → English</button>' +
+  '<button type="button" class="ai-btn" data-ai="to_khmer">🇰🇭 English → ខ្មែរ</button>';
+const AI_BTN_TAIL =
+  '<button type="button" class="ai-btn" data-ai="undo" style="display:none;">↶ ត្រឡប់ / Undo</button>' +
+  '<span class="ai-msg"></span>';
+const AI_BAR_HTML = AI_BTN_TRANSLATE +
+  '<button type="button" class="ai-btn" data-ai="fix">✓ កែអក្ខរាវិរុទ្ធ / Fix</button>' +
+  '<button type="button" class="ai-btn" data-ai="improve">✨ កែសម្រួល / Improve</button>' + AI_BTN_TAIL;
+const AI_BAR_MINI_HTML = AI_BTN_TRANSLATE + AI_BTN_TAIL;
+// For forms that are rebuilt by JS: sel = CSS selector of the field, kind = title | list | lines | text
+function aiBarFor(sel, kind, mini){
+  return '<div class="ai-bar" data-sel=\'' + sel + '\' data-kind="' + kind + '">' + (mini ? AI_BAR_MINI_HTML : AI_BAR_HTML) + '</div>';
+}
+const AI_ERRORS = {
+  unlock_required: 'សូមដោះសោ (Unlock) ជាមុនសិន / Unlock first to use AI',
+  total_limit: 'ប្រើគ្រប់ចំនួន AI សរុបសម្រាប់ Code នេះហើយ / You have used all AI requests included with this code',
+  daily_limit: 'ប្រើគ្រប់កំណត់ប្រចាំថ្ងៃហើយ សូមសាកល្បងថ្ងៃស្អែក / Daily AI limit reached — try again tomorrow',
+  too_long: 'អត្ថបទវែងពេក / Text is too long',
+  empty_text: 'សូមវាយអត្ថបទជាមុន / Type some text first',
+  upstream_error: 'AI មានបញ្ហា សូមសាកល្បងម្ដងទៀត / AI error, please try again',
+  upstream_unreachable: 'AI មានបញ្ហា សូមសាកល្បងម្ដងទៀត / AI error, please try again',
+  empty_result: 'AI មិនបានឆ្លើយ សូមសាកល្បងម្ដងទៀត / AI returned nothing, try again'
+};
+const aiPrev = new WeakMap();   // field -> text before the last AI change (for Undo)
+async function runAi(bar, btn){
+  const ta = bar.dataset.sel ? document.querySelector(bar.dataset.sel) : null; if(!ta) return;
+  const msg = bar.querySelector('.ai-msg'), undoBtn = bar.querySelector('[data-ai="undo"]');
+  const setMsg = (m, err) => { msg.textContent = m || ''; msg.className = 'ai-msg' + (err ? ' err' : ''); };
+  const action = btn.dataset.ai;
+  if(action === 'undo'){
+    if(aiPrev.has(ta)){ ta.value = aiPrev.get(ta); ta.dispatchEvent(new Event('input', {bubbles:true})); aiPrev.delete(ta); undoBtn.style.display = 'none'; setMsg(''); }
+    return;
+  }
+  const text = ta.value.trim();
+  if(!text){ setMsg(AI_ERRORS.empty_text, true); return; }
+  if(!isUnlocked()){ setMsg(AI_ERRORS.unlock_required, true); showPayModal(); return; }
+  const d = readUnlock();
+  const btns = bar.querySelectorAll('button'); btns.forEach(b => b.disabled = true);
+  setMsg('កំពុងដំណើរការ… / Working…');
+  const ctl = new AbortController(), timer = setTimeout(() => ctl.abort(), 45000);
+  try{
+    const res = await fetch(AI_URL, {
+      method: 'POST', signal: ctl.signal,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: d.code, fullName: d.name, action, text, kind: bar.dataset.kind || 'text' })
+    });
+    const data = await res.json().catch(() => ({}));
+    if(!res.ok || !data.text){
+      if(data.error === 'unlock_required') showPayModal();
+      setMsg(AI_ERRORS[data.error] || 'មានបញ្ហា / Something went wrong', true);
+    } else {
+      aiPrev.set(ta, ta.value);
+      ta.value = data.text;
+      ta.dispatchEvent(new Event('input', {bubbles:true}));   // updates state + preview + autosave
+      undoBtn.style.display = '';
+      setMsg('');
+    }
+  }catch(e){
+    setMsg('មានបញ្ហាតភ្ជាប់ / Connection error', true);
+  }finally{
+    clearTimeout(timer); btns.forEach(b => b.disabled = false);
+  }
+}
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.ai-bar [data-ai]');
+  if(btn) runAi(btn.closest('.ai-bar'), btn);
+});
+document.querySelectorAll('.ai-bar:empty').forEach(b => { b.innerHTML = b.dataset.mini ? AI_BAR_MINI_HTML : AI_BAR_HTML; });
+</script>
+<script>/* inputs.js — Basic form inputs + language reminder notes */
+
+// ---- Language reminder on every input section (EN for templates 1–15, KH for 16–20) ----
+const LANG_NOTE = {
+  en: '⚠️ សូមបញ្ចូលព័ត៌មានជាភាសាអង់គ្លេស / Please enter this information in English (Templates 1–15).',
+  km: '⚠️ សូមបញ្ចូលព័ត៌មានជាភាសាខ្មែរ / Please enter this information in Khmer (Templates 16–20).'
+};
+let langNoteMode = '';
+function makeLangNote(){ const d = document.createElement('div'); d.className = 'lang-note'; return d; }
+document.querySelectorAll('.acc-item[data-acc]:not([data-acc="photo"]) > .acc-body').forEach(body => body.insertBefore(makeLangNote(), body.firstChild));
+try{ const c = $('clCompany'); const lab = c.previousElementSibling; c.parentElement.insertBefore(makeLangNote(), lab || c); }catch(e){}
+function applyLangMode(){
+  const m = langMode();
+  if(m === langNoteMode) return;
+  langNoteMode = m;
+  document.body.dataset.langMode = m;
+  document.querySelectorAll('.lang-note').forEach(n => { n.textContent = LANG_NOTE[m]; n.className = 'lang-note ' + m; });
+}
+applyLangMode();
+
+function bindBasic(id, key){
+  $(id).addEventListener('input', e => { state[key] = e.target.value; render(); });
+}
+['fullName','jobTitle','email','phone','location','linkedin'].forEach(k => bindBasic(k,k));
+['clCompany','clHiringManager','clPosition','clDate','clHighlight'].forEach(k => bindBasic(k,k));
+$('summary').addEventListener('input', e => { state.summary = e.target.value; render(); });
+$('skills').addEventListener('input', e => { state.skills = e.target.value; render(); });
+$('languages').addEventListener('input', e => { state.languages = e.target.value; render(); });
+$('certifications').addEventListener('input', e => { state.certifications = e.target.value; render(); });
+$('interests').addEventListener('input', e => { state.interests = e.target.value; render(); });
+</script>
+<script>/* photo.js — Photo button glue (editor itself is cv-photo.js) */
+
+// ---- Photo (camera / crop / background — cv-photo.js) ----
+function setPhoto(url){ state.photo = url; updatePhotoThumb(); render(); }
+function openPhotoEditor(){
+  if(window.CVPhoto){
+    // Local (t1) and Classic (t10) use a 3x4 box; the other templates use a square/round photo.
+    const portrait = (state.tpl === 't1' || state.tpl === 't10');
+    CVPhoto.open({ aspect: portrait ? '3x4' : '1x1', maxKB: 250, onDone: url => setPhoto(url) });
+    return;
+  }
+  // Fallback if cv-photo.js did not load: plain file picker (original behaviour)
+  const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*';
+  inp.onchange = () => { const f = inp.files[0]; if(!f) return; const r = new FileReader(); r.onload = ev => setPhoto(ev.target.result); r.readAsDataURL(f); };
+  inp.click();
+}
+$('photoBtn').addEventListener('click', openPhotoEditor);
+$('removePhoto').addEventListener('click', ()=>{ setPhoto(null); });
+function updatePhotoThumb(){
+  const t = $('photoThumb');
+  if(state.photo){
+    const img = document.createElement('img');
+    img.className = 'photo-thumb'; img.id = 'photoThumb'; img.alt = 'thumb'; img.src = state.photo;
+    t.replaceWith(img);
+  } else if(t.tagName === 'IMG'){
+    const d = document.createElement('div');
+    d.className = 'photo-thumb-empty'; d.id = 'photoThumb'; d.textContent = 'No photo';
+    t.replaceWith(d);
+  }
+  $('removePhoto').style.display = state.photo ? 'block' : 'none';
+}
+</script>
+<script>/* pickers.js — Template / mode / cover-letter / text-scale pickers */
+
+// Template picker
+document.querySelectorAll('.tpl-swatch').forEach(el=>{
+  el.addEventListener('click', ()=>{
+    document.querySelectorAll('.tpl-swatch').forEach(s=>s.classList.remove('active'));
+    el.classList.add('active');
+    state.tpl = el.dataset.tpl;
+    render();
+  });
+});
+// Cover Letter: hidden as a subtle "tip" toggle at the end of the Template section,
+// plus small tabs above the preview so switching back and forth is always easy.
+function applyModeVisibility(){
+  const isCL = state.mode === 'cl';
+  document.querySelectorAll('.cv-only').forEach(el => el.style.display = isCL ? 'none' : '');
+  if($('clDetails').open !== isCL) $('clDetails').open = isCL;
+  $('previewTabCv').classList.toggle('active', !isCL);
+  $('previewTabCl').classList.toggle('active', isCL);
+}
+function switchToMode(mode){
+  const wantOpen = mode === 'cl';
+  if($('clDetails').open !== wantOpen){
+    $('clDetails').open = wantOpen; // fires the 'toggle' handler below, which sets state.mode + renders
+  }
+}
+$('clDetails').addEventListener('toggle', ()=>{
+  state.mode = $('clDetails').open ? 'cl' : 'cv';
+  applyModeVisibility();
+  render();
+});
+$('previewTabCv').addEventListener('click', ()=> switchToMode('cv'));
+$('previewTabCl').addEventListener('click', ()=> switchToMode('cl'));
+
+// Cover letter template picker
+document.querySelectorAll('#clTemplatePicker [data-cltpl]').forEach(el=>{
+  el.addEventListener('click', ()=>{
+    document.querySelectorAll('#clTemplatePicker [data-cltpl]').forEach(s=>s.classList.remove('active'));
+    el.classList.add('active');
+    state.clTpl = el.dataset.cltpl;
+    render();
+  });
+});
+
+// Scale picker
+document.querySelectorAll('.scale-btn').forEach(el=>{
+  el.addEventListener('click', ()=>{
+    document.querySelectorAll('.scale-btn').forEach(s=>s.classList.remove('active'));
+    el.classList.add('active');
+    state.scale = parseFloat(el.dataset.scale);
+    render();
+  });
+});
+</script>
+<script>/* entries.js — Repeating form sections: experience, education, references, custom sections */
+
+// ---- Experience entries ----
+function renderExpForm(){
+  const wrap = $('expList');
+  wrap.innerHTML = '';
+  state.exp.forEach((item, i)=>{
+    const div = document.createElement('div');
+    div.className = 'entry';
+    div.innerHTML = `
+      ${state.exp.length>1 ? `<button class="entry-remove" data-i="${i}" data-type="exp">×</button>` : ''}
+      <label>តួនាទីការងារ / Role</label>
+      <input type="text" data-field="role" data-i="${i}" value="${escapeAttr(item.role)}" placeholder="Media Executive">
+      ${aiBarFor('#expList input[data-field="role"][data-i="'+i+'"]','title',true)}
+      <label>ក្រុមហ៊ុន / Company</label>
+      <input type="text" data-field="company" data-i="${i}" value="${escapeAttr(item.company)}" placeholder="ABC Company">
+      <div class="row2">
+        <div><label>ថ្ងៃចាប់ផ្ដើម / Start Date</label>
+          <input type="month" data-field="startDate" data-i="${i}" value="${escapeAttr(item.startDate)}"></div>
+        <div><label>ថ្ងៃបញ្ចប់ / End Date</label>
+          <input type="month" data-field="endDate" data-i="${i}" value="${escapeAttr(item.endDate)}" ${item.current ? 'disabled' : ''}></div>
+      </div>
+      <label style="display:flex;align-items:center;gap:6px;margin-top:8px;">
+        <input type="checkbox" data-field="current" data-i="${i}" data-type="checkbox" style="width:auto;" ${item.current ? 'checked' : ''}>
+        <span style="margin:0;">កំពុងធ្វើការនៅទីនេះ / Currently working here</span>
+      </label>
+      <label>ការពិពណ៌នា / Description</label>
+      <textarea data-field="desc" data-i="${i}" placeholder="One achievement per line — each line becomes a bullet point">${escapeHtml(item.desc)}</textarea>
+      ${aiBarFor('#expList textarea[data-field="desc"][data-i="'+i+'"]','lines',false)}
+    `;
+    wrap.appendChild(div);
+  });
+  wrap.querySelectorAll('input[type=text],input[type=month],textarea').forEach(el=>{
+    el.addEventListener('input', e=>{
+      const i = e.target.dataset.i, field = e.target.dataset.field;
+      state.exp[i][field] = e.target.value;
+      render();
+    });
+  });
+  wrap.querySelectorAll('input[type=checkbox]').forEach(el=>{
+    el.addEventListener('change', e=>{
+      const i = e.target.dataset.i, field = e.target.dataset.field;
+      state.exp[i][field] = e.target.checked;
+      renderExpForm(); render();
+    });
+  });
+  wrap.querySelectorAll('.entry-remove').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      state.exp.splice(Number(e.target.dataset.i),1);
+      renderExpForm(); render();
+    });
+  });
+}
+$('addExp').addEventListener('click', ()=>{
+  state.exp.push({role:'',company:'',startDate:'',endDate:'',current:false,desc:''});
+  renderExpForm(); render();
+});
+
+// ---- Education entries ----
+function renderEduForm(){
+  const wrap = $('eduList');
+  wrap.innerHTML = '';
+  state.edu.forEach((item, i)=>{
+    const div = document.createElement('div');
+    div.className = 'entry';
+    div.innerHTML = `
+      ${state.edu.length>1 ? `<button class="entry-remove" data-i="${i}" data-type="edu">×</button>` : ''}
+      <label>សញ្ញាបត្រ / Degree</label>
+      <input type="text" data-field="degree" data-i="${i}" value="${escapeAttr(item.degree)}" placeholder="BA in Marketing">
+      <div class="row2">
+        <div><label>សាលា / School</label>
+          <input type="text" data-field="school" data-i="${i}" value="${escapeAttr(item.school)}" placeholder="RUPP"></div>
+        <div><label>កាលបរិច្ឆេទ / Dates</label>
+          <input type="text" data-field="dates" data-i="${i}" value="${escapeAttr(item.dates)}" placeholder="2018 – 2022"></div>
+      </div>
+    `;
+    wrap.appendChild(div);
+  });
+  wrap.querySelectorAll('input').forEach(el=>{
+    el.addEventListener('input', e=>{
+      const i = e.target.dataset.i, field = e.target.dataset.field;
+      state.edu[i][field] = e.target.value;
+      render();
+    });
+  });
+  wrap.querySelectorAll('.entry-remove').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      state.edu.splice(Number(e.target.dataset.i),1);
+      renderEduForm(); render();
+    });
+  });
+}
+$('addEdu').addEventListener('click', ()=>{
+  state.edu.push({degree:'',school:'',dates:''});
+  renderEduForm(); render();
+});
+
+// ---- References ----
+function renderRefForm(){
+  const wrap = $('refList');
+  wrap.innerHTML = '';
+  state.refs.forEach((item, i)=>{
+    const div = document.createElement('div');
+    div.className = 'entry';
+    div.innerHTML = `
+      ${state.refs.length>1 ? `<button class="entry-remove" data-i="${i}" data-type="ref">×</button>` : ''}
+      <label>ឈ្មោះ / Name</label>
+      <input type="text" data-field="name" data-i="${i}" value="${escapeAttr(item.name)}" placeholder="Chan Sopheak">
+      <label>តួនាទី/ទំនាក់ទំនង / Position / Relation</label>
+      <input type="text" data-field="role" data-i="${i}" value="${escapeAttr(item.role)}" placeholder="Manager at ABC Company">
+      ${aiBarFor('#refList input[data-field="role"][data-i="'+i+'"]','title',true)}
+      <label>ទំនាក់ទំនង / Contact</label>
+      <input type="text" data-field="contact" data-i="${i}" value="${escapeAttr(item.contact)}" placeholder="+855 12 345 678 / email">
+    `;
+    wrap.appendChild(div);
+  });
+  wrap.querySelectorAll('input').forEach(el=>{
+    el.addEventListener('input', e=>{
+      const i = e.target.dataset.i, field = e.target.dataset.field;
+      state.refs[i][field] = e.target.value;
+      render();
+    });
+  });
+  wrap.querySelectorAll('.entry-remove').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      state.refs.splice(Number(e.target.dataset.i),1);
+      renderRefForm(); render();
+    });
+  });
+}
+$('addRef').addEventListener('click', ()=>{
+  state.refs.push({name:'',role:'',contact:''});
+  renderRefForm(); render();
+});
+
+// ---- Custom sections ----
+function renderCustomForm(){
+  const wrap = $('customList');
+  wrap.innerHTML = '';
+  state.custom.forEach((item, i)=>{
+    const div = document.createElement('div');
+    div.className = 'entry';
+    div.innerHTML = `
+      <button class="entry-remove" data-i="${i}" data-type="custom">×</button>
+      <label>ចំណងជើងផ្នែក / Section Title</label>
+      <input type="text" data-field="title" data-i="${i}" value="${escapeAttr(item.title)}" placeholder="Height, Weight, Hobby...">
+      ${aiBarFor('#customList input[data-field="title"][data-i="'+i+'"]','title',true)}
+      <label>បំបែកដោយសញ្ញាក្បៀស (,) / Comma-separated list</label>
+      <input type="text" data-field="content" data-i="${i}" value="${escapeAttr(item.content)}" placeholder="170cm, 60kg">
+      ${aiBarFor('#customList input[data-field="content"][data-i="'+i+'"]','list',true)}
+    `;
+    wrap.appendChild(div);
+  });
+  wrap.querySelectorAll('input').forEach(el=>{
+    el.addEventListener('input', e=>{
+      const i = e.target.dataset.i, field = e.target.dataset.field;
+      state.custom[i][field] = e.target.value;
+      render();
+    });
+  });
+  wrap.querySelectorAll('.entry-remove').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      state.custom.splice(Number(e.target.dataset.i),1);
+      renderCustomForm(); render();
+    });
+  });
+}
+$('addCustom').addEventListener('click', ()=>{
+  state.custom.push({title:'',content:''});
+  renderCustomForm(); render();
+});
+</script>
+<script>/* letter.js — Cover letter: content generation + rendering */
+
+// ---- Cover Letter: content generation (auto-filled from the same data as the CV) ----
+function clFirstExp(){ return state.exp.find(x=>x.role||x.company) || null; }
+function clSkillsList(n){ return state.skills.split(',').map(s=>s.trim()).filter(Boolean).slice(0,n); }
+function clToday(){
+  return new Date().toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
+}
+function buildCoverLetterContent(){
+  const name = state.fullName || 'Your Name';
+  const position = state.clPosition.trim() || state.jobTitle.trim() || 'this position';
+  const company = state.clCompany.trim() || 'your company';
+  const hiring = state.clHiringManager.trim();
+  const salutation = hiring ? `Dear ${hiring},` : 'Dear Hiring Manager,';
+  const exp = clFirstExp();
+  const expLine = exp ? `${exp.role || 'my role'} at ${exp.company || 'my previous company'}` : 'my recent professional experience';
+  const skills = clSkillsList(4);
+  const skillsLine = skills.length ? skills.join(', ') : 'a strong and relevant skill set';
+  const summary = state.summary.trim();
+  const highlight = state.clHighlight.trim();
+  const firstDescLine = (exp && exp.desc) ? exp.desc.split('\n')[0].trim().replace(/^[-•]\s*/, '') : '';
+
+  const variants = {
+    cl1: [
+      `I am writing to apply for the ${position} position at ${company}. With a background in ${state.jobTitle.trim() || 'this field'} and hands-on experience as ${expLine}, I believe I would be a strong fit for your team.`,
+      `${summary || `My core strengths include ${skillsLine}, which I have applied directly in previous roles to deliver real results.`}${highlight ? ' ' + highlight : ''}`,
+      `I would welcome the chance to discuss how I can contribute to ${company}. Thank you for your time and consideration — I look forward to hearing from you.`
+    ],
+    cl2: [
+      `I am writing to express my interest in the ${position} role at ${company}. I believe my professional background and skill set make me a strong candidate for this opportunity.`,
+      `${summary || `Over the course of my career, I have developed expertise as ${expLine}, building strong capabilities in ${skillsLine}.`}${highlight ? ' ' + highlight : ''}`,
+      `I am confident that my experience and dedication would allow me to contribute meaningfully to your team at ${company}. I am particularly drawn to this role because it aligns closely with both my skills and my career goals.`,
+      `Thank you for considering my application. I have attached my resume for your review and would welcome the opportunity to discuss my qualifications further at your convenience.`
+    ],
+    cl3: [
+      `My name is ${name}, and I would like to apply for the ${position} position at ${company}.`,
+      `I have experience working as ${expLine}. I am good at ${skillsLine}.`,
+      `${highlight || `I work hard, I learn quickly, and I want to help ${company} grow.`}`,
+      `Thank you for reading my letter. I hope to talk with you soon.`
+    ],
+    cl4: [
+      `I am excited to submit my application for the ${position} position at ${company}. ${summary || `With a solid foundation as ${expLine}, I have built a track record of delivering measurable results and growing steadily in my field.`}`,
+      `In my most recent role${exp && exp.company ? ` at ${exp.company}` : ''}, I ${firstDescLine ? firstDescLine.toLowerCase() : 'took on responsibilities that strengthened my expertise and delivered clear value to the organization'}. This experience sharpened my abilities in ${skillsLine}, which I understand are central to success in this role.`,
+      `${highlight || `Beyond technical skills, I bring strong communication, adaptability, and a genuine commitment to quality — qualities I believe are essential for the ${position} role.`}`,
+      `I am confident that my background positions me to make an immediate and lasting contribution to ${company}, and I am eager to bring that same energy and reliability to your team.`,
+      `Thank you very much for taking the time to review my application. I have attached my resume for further detail and would greatly welcome the opportunity for an interview at your convenience.`
+    ],
+    cl5: [
+      `Hi${hiring ? ' ' + hiring : ''}, I'm ${name}, and I'd love to be considered for the ${position} role at ${company}!`,
+      `${summary || `I've spent my career working as ${expLine}, and I genuinely enjoy the kind of work this role involves.`}`,
+      `Here's a quick snapshot of what I bring:`,
+      `${highlight || `I'm someone who takes ownership, learns fast, and enjoys collaborating with a team that cares about doing great work.`}`,
+      `Thanks so much for considering my application — I'd love the chance to chat more about how I could contribute to ${company}.`
+    ]
+  };
+
+  return {salutation, variants, skills, name, position, company, hiring};
+}
+function renderCoverLetter(){
+  const r = $('resume');
+  r.className = 'letter ' + state.clTpl + (isUnlocked() ? '' : ' watermarked');
+  r.style.setProperty('--scale', state.scale);
+
+  const {salutation, variants, skills, name, company, hiring} = buildCoverLetterContent();
+  const paras = variants[state.clTpl] || variants.cl2;
+  const contactBits = [state.email, state.phone, state.location, state.linkedin].filter(Boolean);
+  const contactLine = contactBits.map(escapeHtml).join('&nbsp;&nbsp;•&nbsp;&nbsp;');
+  const dateLine = state.clDate.trim() || clToday();
+  const recipientLines = [escapeHtml(hiring || 'Hiring Manager'), escapeHtml(company)].join('<br>');
+
+  let bodyParasHtml;
+  if(state.clTpl === 'cl5'){
+    const bulletSkills = skills.length ? skills : ['adaptability','collaboration','problem-solving'];
+    bodyParasHtml = `
+      <p>${escapeHtml(paras[0])}</p>
+      <p>${escapeHtml(paras[1])}</p>
+      <p>${escapeHtml(paras[2])}</p>
+      <ul class="letter-bullets">${bulletSkills.slice(0,3).map(s=>`<li>${escapeHtml(s)}</li>`).join('')}</ul>
+      <p>${escapeHtml(paras[3])}</p>
+      <p>${escapeHtml(paras[4])}</p>
+    `;
+  } else {
+    bodyParasHtml = paras.map(p=>`<p>${escapeHtml(p)}</p>`).join('');
+  }
+
+  r.innerHTML = `
+    <div class="letter-head">
+      <div class="letter-sender">
+        <div class="ls-name">${escapeHtml(name)}</div>
+        ${contactLine ? `<div class="ls-contact">${contactLine}</div>` : ''}
+      </div>
+      <div class="letter-date">${escapeHtml(dateLine)}</div>
+      <div class="letter-recipient">${recipientLines}</div>
+    </div>
+    <div class="letter-body">
+      <p class="salutation">${escapeHtml(salutation)}</p>
+      ${bodyParasHtml}
+      <p class="closing">Sincerely,<br>${escapeHtml(name)}</p>
+    </div>
+  `;
+  saveState();
+}
+</script>
+<script>/* render.js — CV preview rendering (all 20 templates) */
+
+function render(){
+  applyLangMode();
+  if(state.mode === 'cl'){ renderCoverLetter(); return; }
+  const r = $('resume');
+  r.className = state.tpl + (isUnlocked() ? '' : ' watermarked');
+  r.style.setProperty('--scale', state.scale);
+
+  const contactBits = [state.email, state.phone, state.location, state.linkedin].filter(Boolean);
+  const skillsArr = state.skills.split(',').map(s=>s.trim()).filter(Boolean);
+
+  const contactHtml = `<div class="contact-line">${contactBits.map(b=>`<span>${escapeHtml(b)}</span>`).join('')}</div>`;
+  const photoHtml = state.photo
+    ? `<div class="photo-wrap"><img class="photo" src="${state.photo}" alt="Photo"></div>`
+    : `<div class="photo-wrap"><div class="photo photo-placeholder">Photo</div></div>`;
+  const headerHtml = `
+    <div class="head-block${state.photo ? '' : ' no-photo'}">
+      ${photoHtml}
+      <div class="head-text">
+        <h2 class="name">${escapeHtml(state.fullName) || 'Your Name'}</h2>
+        <p class="title">${escapeHtml(state.jobTitle) || 'Professional Title'}</p>
+        ${contactHtml}
+      </div>
+    </div>
+  `;
+  const summaryHtml = state.summary ? `<p class="summary">${escapeHtml(state.summary)}</p>` : '';
+
+  // Templates t16–t20 are fully Khmer-language resumes: section headings render in Khmer
+  // instead of English. All other templates keep the original English headings.
+  const KHMER_TPLS = new Set(['t16','t17','t18','t19','t20']);
+  const L = KHMER_TPLS.has(state.tpl) ? {
+    exp:'បទពិសោធន៍ការងារ', edu:'ការសិក្សា', skills:'ជំនាញ', lang:'ភាសា',
+    cert:'វិញ្ញាបនបត្រ', interest:'ចំណូលចិត្ត', ref:'អ្នកយោង'
+  } : {
+    exp:'Experience', edu:'Education', skills:'Skills', lang:'Languages',
+    cert:'Certifications', interest:'Interests', ref:'References'
+  };
+
+  const expHtml = state.exp.some(x=>x.role||x.company) ? `
+    <section class="block">
+      <h3>${L.exp}</h3>
+      ${state.exp.filter(x=>x.role||x.company).map(x=>`
+        <div class="item">
+          <div class="item-top">
+            <span class="item-role">${escapeHtml(x.role)}</span>
+            <span class="item-date">${formatExpDateRange(x)}</span>
+          </div>
+          <div class="item-sub">${escapeHtml(x.company)}</div>
+          ${x.desc ? `<ul class="item-desc-list">${x.desc.split('\n').map(l=>l.trim()).filter(Boolean).map(l=>`<li>${escapeHtml(l)}</li>`).join('')}</ul>` : ''}
+        </div>
+      `).join('')}
+    </section>` : '';
+
+  const eduHtml = state.edu.some(x=>x.degree||x.school) ? `
+    <section class="block">
+      <h3>${L.edu}</h3>
+      ${state.edu.filter(x=>x.degree||x.school).map(x=>`
+        <div class="item">
+          <div class="item-top">
+            <span class="item-role">${escapeHtml(x.degree)}</span>
+            <span class="item-date">${escapeHtml(x.dates)}</span>
+          </div>
+          <div class="item-sub">${escapeHtml(x.school)}</div>
+        </div>
+      `).join('')}
+    </section>` : '';
+
+  const skillsHtml = skillsArr.length ? `
+    <section class="block">
+      <h3>${L.skills}</h3>
+      <div class="skills-list">${skillsArr.map(s=>`<span class="skill-tag">${escapeHtml(s)}</span>`).join('')}</div>
+    </section>` : '';
+
+  const langArr = state.languages.split(',').map(s=>s.trim()).filter(Boolean);
+  const languagesHtml = langArr.length ? `
+    <section class="block">
+      <h3>${L.lang}</h3>
+      <div class="skills-list">${langArr.map(s=>`<span class="skill-tag">${escapeHtml(s)}</span>`).join('')}</div>
+    </section>` : '';
+
+  const certArr = state.certifications.split('\n').map(s=>s.trim()).filter(Boolean);
+  const certHtml = certArr.length ? `
+    <section class="block">
+      <h3>${L.cert}</h3>
+      <ul class="plain-list">${certArr.map(s=>`<li>${escapeHtml(s)}</li>`).join('')}</ul>
+    </section>` : '';
+
+  const interestArr = state.interests.split(',').map(s=>s.trim()).filter(Boolean);
+  const interestsHtml = interestArr.length ? `
+    <section class="block">
+      <h3>${L.interest}</h3>
+      <div class="skills-list">${interestArr.map(s=>`<span class="skill-tag">${escapeHtml(s)}</span>`).join('')}</div>
+    </section>` : '';
+
+  const refsHtml = state.refs.some(x=>x.name||x.role||x.contact) ? `
+    <section class="block">
+      <h3>${L.ref}</h3>
+      ${state.refs.filter(x=>x.name||x.role||x.contact).map(x=>`
+        <div class="item">
+          <div class="item-top"><span class="item-role">${escapeHtml(x.name)}</span></div>
+          <div class="item-sub">${escapeHtml(x.role)}</div>
+          ${x.contact ? `<div class="item-desc">${escapeHtml(x.contact)}</div>` : ''}
+        </div>
+      `).join('')}
+    </section>` : '';
+
+  const customArr = state.custom.filter(c=>c.title && c.content);
+  const customHtml = customArr.map(c=>{
+    const items = c.content.split(',').map(s=>s.trim()).filter(Boolean);
+    return `
+    <section class="block">
+      <h3>${escapeHtml(c.title)}</h3>
+      <div class="skills-list">${items.map(s=>`<span class="skill-tag">${escapeHtml(s)}</span>`).join('')}</div>
+    </section>`;
+  }).join('');
+
+  const extrasHtml = languagesHtml + certHtml + interestsHtml + customHtml + refsHtml;
+
+  if (state.tpl === 't2' || state.tpl === 't3' || state.tpl === 't7' || state.tpl === 't15' || state.tpl === 't19'){
+    r.innerHTML = `
+      <div class="side">
+        ${headerHtml}
+        ${skillsHtml}
+        ${languagesHtml}
+        ${interestsHtml}
+        ${customHtml}
+      </div>
+      <div class="main">
+        ${summaryHtml}
+        ${expHtml}
+        ${eduHtml}
+        ${certHtml}
+        ${refsHtml}
+      </div>
+    `;
+    requestAnimationFrame(()=>{
+      const sideEl = r.querySelector('.side');
+      const mainEl = r.querySelector('.main');
+      if(sideEl && mainEl){
+        sideEl.style.minHeight = mainEl.offsetHeight + 'px';
+      }
+    });
+  } else if (state.tpl === 't4' || state.tpl === 't5' || state.tpl === 't8' || state.tpl === 't9' || state.tpl === 't11' || state.tpl === 't14' || state.tpl === 't17' || state.tpl === 't20'){
+    r.innerHTML = `
+      <div class="head">${headerHtml}</div>
+      <div class="body">
+        ${summaryHtml}
+        ${expHtml}
+        ${eduHtml}
+        ${skillsHtml}
+        ${extrasHtml}
+      </div>
+    `;
+  } else {
+    r.innerHTML = `
+      ${headerHtml}
+      ${summaryHtml}
+      ${expHtml}
+      ${eduHtml}
+      ${skillsHtml}
+      ${extrasHtml}
+    `;
+  }
+  saveState();
+}
+</script>
+<script>/* storage.js — Saving / loading / clearing the CV data in this browser */
+
+function blankState(){
+  return {
+    tpl:'t10', scale:1, photo:null,
+    mode:'cv', clTpl:'cl1',
+    clCompany:'', clHiringManager:'', clPosition:'', clDate:'', clHighlight:'',
+    fullName:'', jobTitle:'', email:'', phone:'', location:'', linkedin:'', summary:'',
+    exp:[{role:'',company:'',startDate:'',endDate:'',current:false,desc:''}],
+    edu:[{degree:'',school:'',dates:''}],
+    skills:'', languages:'', certifications:'', interests:'',
+    refs:[{name:'',role:'',contact:''}],
+    custom:[]
+  };
+}
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(CV_DATA_KEY);
+    if(raw) return Object.assign(blankState(), JSON.parse(raw));
+  }catch(e){}
+  return blankState();
+}
+function saveState(){
+  try{ localStorage.setItem(CV_DATA_KEY, JSON.stringify(state)); }catch(e){ console.warn('Could not save CV data', e); }
+}
+function refreshAllForms(){
+  populateFormFromState();
+  renderExpForm();
+  renderEduForm();
+  renderRefForm();
+  renderCustomForm();
+  render();
+}
+
+function populateFormFromState(){
+  ['fullName','jobTitle','email','phone','location','linkedin'].forEach(k=>{
+    if($(k)) $(k).value = state[k] || '';
+  });
+  ['clCompany','clHiringManager','clPosition','clDate','clHighlight'].forEach(k=>{
+    if($(k)) $(k).value = state[k] || '';
+  });
+  if($('summary')) $('summary').value = state.summary || '';
+  if($('skills')) $('skills').value = state.skills || '';
+  if($('languages')) $('languages').value = state.languages || '';
+  if($('certifications')) $('certifications').value = state.certifications || '';
+  if($('interests')) $('interests').value = state.interests || '';
+
+  document.querySelectorAll('.tpl-swatch').forEach(s=>{
+    s.classList.toggle('active', s.dataset.tpl === state.tpl);
+  });
+  const activeSwatch = document.querySelector('.tpl-swatch.active');
+  if(activeSwatch) activeSwatch.scrollIntoView({block:'nearest', inline:'center'});
+  document.querySelectorAll('.scale-btn').forEach(s=>{
+    s.classList.toggle('active', parseFloat(s.dataset.scale) === state.scale);
+  });
+  document.querySelectorAll('#clTemplatePicker [data-cltpl]').forEach(s=>{
+    s.classList.toggle('active', s.dataset.cltpl === state.clTpl);
+  });
+  applyModeVisibility();
+
+  updatePhotoThumb();
+}
+$('clearDataBtn').addEventListener('click', (e)=>{
+  e.preventDefault();
+  if(confirm('សម្អាតទិន្នន័យ CV នេះ? មិនអាចត្រឡប់វិញបានទេ។ / Clear all CV data? This cannot be undone.')){
+    Object.assign(state, blankState());
+    saveState();
+    refreshAllForms();
+  }
+});
+</script>
+<script>/* unlock.js — Payment gate: unlock check (code + name, 30 days) */
+
+try{ localStorage.removeItem(OLD_UNLOCK_STORAGE_KEY); }catch(e){}
+
+// Same normalisation idea as the server: NFC, drop zero-width chars, lowercase, collapse spaces.
+function normName(str){
+  return (str || '').toString().normalize('NFC')
+    .replace(/[\u200B-\u200D\uFEFF]/g, '')
+    .trim().toLowerCase().replace(/\s+/g, ' ');
+}
+function readUnlock(){
+  try{
+    const raw = localStorage.getItem(UNLOCK_STORAGE_KEY);
+    if(!raw) return null;
+    const d = JSON.parse(raw);
+    return (d && typeof d === 'object') ? d : null;
+  }catch(e){ return null; }
+}
+// Unlocked ONLY if a valid code is stored, it has not expired, AND the
+// current "Full Name" field matches the name the code was bound to.
+// Changing the name therefore locks the download again.
+function isUnlocked(){
+  const d = readUnlock();
+  if(!d || !d.code || !d.name || !d.expiresAt) return false;
+  if(Date.now() >= d.expiresAt) return false;
+  return normName(d.name) === normName(state.fullName);
+}
+function setUnlocked(code, name){
+  try{
+    const expiresAt = Date.now() + UNLOCK_DAYS * 24 * 60 * 60 * 1000;
+    localStorage.setItem(UNLOCK_STORAGE_KEY, JSON.stringify({
+      code: (code || '').toString().trim(),
+      name: (name || '').toString().trim(),
+      unlockedAt: Date.now(),
+      expiresAt
+    }));
+  }catch(e){}
+  render();
+}
+function clearUnlocked(){
+  try{ localStorage.removeItem(UNLOCK_STORAGE_KEY); }catch(e){}
+  render();
+}
+// Asks the server whether the stored code + name are still valid (30-day limit, name match).
+// Returns 'ok' | 'denied' | 'offline'.
+async function verifyUnlockOnServer(d){
+  try{
+    const res = await fetch(CODE_CHECK_URL + '?code=' + encodeURIComponent(d.code) + '&name=' + encodeURIComponent(d.name));
+    const data = await res.json();
+    return data.success === true ? 'ok' : 'denied';
+  }catch(e){ return 'offline'; }
+}
+// Runs in the background on page load so downloads stay instant (no await before print()).
+async function backgroundVerifyUnlock(){
+  const d = readUnlock();
+  if(!d) return;
+  const r = await verifyUnlockOnServer(d);
+  if(r === 'denied') clearUnlocked();
+}
+</script>
+<script>/* download.js — Download choice, pay modal steps, print + watermark failsafe */
+
+// ---- Step switching inside the pay modal ----
+let pollTimer = null;
+function stopPolling(){
+  if(pollTimer){ clearTimeout(pollTimer); pollTimer = null; }
+}
+function showPayStep(step){
+  $('payStepPay').style.display = step === 'pay' ? '' : 'none';
+  $('payStepQr').style.display = step === 'qr' ? '' : 'none';
+  $('payStepSuccess').style.display = step === 'success' ? '' : 'none';
+  $('payStepManual').style.display = step === 'manual' ? '' : 'none';
+  if(step !== 'qr') stopPolling();
+}
+function showPayModal(){
+  $('abaPayError').style.display = 'none';
+  $('payWaitError').style.display = 'none';
+  $('unlockError').style.display = 'none';
+  $('unlockCodeInput').value = '';
+  showPayStep('pay');
+  $('payModalOverlay').style.display = 'flex';
+}
+function hidePayModal(){
+  stopPolling();
+  $('payModalOverlay').style.display = 'none';
+}
+
+function showDownloadChoice(){
+  $('downloadChoiceOverlay').style.display = 'flex';
+}
+function hideDownloadChoice(){
+  $('downloadChoiceOverlay').style.display = 'none';
+}
+$('printBtn').addEventListener('click', showDownloadChoice);
+$('dlChoiceCancel').addEventListener('click', hideDownloadChoice);
+$('downloadChoiceOverlay').addEventListener('click', (e)=>{
+  if(e.target.id === 'downloadChoiceOverlay') hideDownloadChoice();
+});
+
+// Builds the full #resume markup for a given mode ('cv' or 'cl') without
+// disturbing the mode the user is actually looking at, by switching state.mode
+// just long enough to render, then restoring it.
+function buildResumeHtmlForMode(mode){
+  const prevMode = state.mode;
+  state.mode = mode;
+  render();
+  const html = $('resume').outerHTML;
+  state.mode = prevMode;
+  return html;
+}
+
+let pendingDownloadAction = localStorage.getItem('cvBuilderPendingAction_v1') || 'cv';
+if(!['cv','cl','both'].includes(pendingDownloadAction)) pendingDownloadAction = 'cv'; // drop old 'export'/'import' values
+
+function proceedToPrint(action){
+  hideDownloadChoice();
+  pendingDownloadAction = action;
+  try{ localStorage.setItem('cvBuilderPendingAction_v1', action); }catch(e){}
+  if(!isUnlocked()){
+    showPayModal();
+    return;
+  }
+  runDownloadAction(action);
+}
+function runDownloadAction(action){
+  if(action === 'cv'){
+    if(state.mode !== 'cv'){ state.mode = 'cv'; applyModeVisibility(); render(); }
+    window.print();
+  } else if(action === 'cl'){
+    if(state.mode !== 'cl'){ state.mode = 'cl'; applyModeVisibility(); render(); }
+    window.print();
+  } else if(action === 'both'){
+    const cvHtml = buildResumeHtmlForMode('cv');
+    const clHtml = buildResumeHtmlForMode('cl');
+    render(); // restore the view the user was actually on
+    $('printBothWrap').innerHTML = `<div>${cvHtml}</div><div>${clHtml}</div>`;
+    document.body.classList.add('printing-both');
+    window.print();
+  }
+}
+$('dlChoiceCv').addEventListener('click', ()=> proceedToPrint('cv'));
+$('dlChoiceCl').addEventListener('click', ()=> proceedToPrint('cl'));
+$('dlChoiceBoth').addEventListener('click', ()=> proceedToPrint('both'));
+
+// ---- Watermark failsafe: fires before ANY print (button, Ctrl+P, browser menu, right-click) ----
+// A user could bypass the button above entirely (DevTools, Ctrl+P, etc), so we re-check the
+// unlock status every single time the browser is about to print, no matter how it was triggered.
+// querySelectorAll (not getElementById) is used deliberately: when printing "Both", the print
+// area temporarily contains two #resume-style pages, and the watermark must cover every one of them.
+function addPrintWatermark(){
+  document.querySelectorAll('#resume').forEach(resume=>{
+    if(!resume || resume.querySelector('.print-watermark')) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'print-watermark';
+    const label = 'NOT PAID / មិនទាន់ទូទាត់';
+    let html = '';
+    for(let i = 0; i < 30; i++){ html += `<span>${label}</span>`; }
+    wrap.innerHTML = html;
+    resume.appendChild(wrap);
+  });
+}
+function removePrintWatermark(){
+  document.querySelectorAll('.print-watermark').forEach(wm => wm.remove());
+}
+window.addEventListener('beforeprint', ()=>{
+  if(!isUnlocked()){
+    addPrintWatermark();
+  } else {
+    removePrintWatermark();
+  }
+});
+window.addEventListener('afterprint', ()=>{
+  removePrintWatermark();
+  if(document.body.classList.contains('printing-both')){
+    document.body.classList.remove('printing-both');
+    $('printBothWrap').innerHTML = '';
+  }
+});
+$('payModalCloseBtn').addEventListener('click', hidePayModal);
+$('payModalOverlay').addEventListener('click', (e)=>{
+  if(e.target.id === 'payModalOverlay') hidePayModal();
+});
+
+// ---- Step navigation buttons ----
+$('showManualCodeBtn').addEventListener('click', ()=> showPayStep('manual'));
+$('waitingShowManualBtn').addEventListener('click', ()=> showPayStep('manual'));
+$('backToPayBtn').addEventListener('click', ()=> showPayStep('pay'));
+</script>
+<script>/* khqr.js — KHQR payment: create QR, poll status, copy code, manual unlock code */
+
+// ---- Bakong Relay: generate a KHQR code for this order ----
+async function generateQr(){
+  $('abaPayError').style.display = 'none';
+  $('payWaitError').style.display = 'none';
+  $('qrRetryBtn').style.display = 'none';
+  $('qrStatusText').textContent = 'កំពុងរង់ចាំការទូទាត់... / Waiting for payment...';
+  $('genQrBtn').disabled = true;
+  $('genQrBtn').textContent = 'កំពុងរៀបចំ... / Preparing...';
+  const GENERIC_PAY_ERR = 'មានបញ្ហា សូមសាកល្បងម្ដងទៀត / Something went wrong, please try again';
+  const rawName = (state.fullName || '').trim();
+  if(!rawName){
+    $('abaPayError').textContent = 'សូមវាយ "ឈ្មោះពេញ" នៅផ្នែកខាងលើជាមុនសិន / Please enter your Full Name above first';
+    $('abaPayError').style.display = 'block';
+    $('genQrBtn').disabled = false;
+    $('genQrBtn').textContent = 'បង្កើត KHQR ទូទាត់ / Generate Payment QR';
+    return;
+  }
+  $('abaPayError').textContent = GENERIC_PAY_ERR;
+  try{
+    const ownerName = encodeURIComponent(rawName);
+    try{ sessionStorage.setItem(PENDING_NAME_KEY, rawName); }catch(e){}
+    const res = await fetch(CODE_CHECK_URL + '?action=createPayment&amount=2&name=' + ownerName);
+    const data = await res.json();
+    if(!data.success || !data.md5 || !data.image){
+      throw new Error(data.reason || 'createPayment failed');
+    }
+    try{ sessionStorage.setItem(PENDING_MD5_KEY, data.md5); }catch(e){}
+    $('qrImage').src = data.image;
+    showPayStep('qr');
+    pollPaymentStatus(data.md5, POLL_MAX_TRIES);
+  }catch(err){
+    $('abaPayError').style.display = 'block';
+  }
+  $('genQrBtn').disabled = false;
+  $('genQrBtn').textContent = 'បង្កើត KHQR ទូទាត់ / Generate Payment QR';
+}
+$('genQrBtn').addEventListener('click', generateQr);
+$('qrRetryBtn').addEventListener('click', generateQr);
+$('successContinueBtn').addEventListener('click', ()=>{
+  hidePayModal();
+  runDownloadAction(pendingDownloadAction);
+});
+
+// ---- Copy the unlock code to the clipboard ----
+$('copyCodeBtn').addEventListener('click', async ()=>{
+  const code = ($('successCodeText').textContent || '').trim();
+  const btn = $('copyCodeBtn');
+  if(!code || code === '----') return;
+  let ok = false;
+  try{
+    await navigator.clipboard.writeText(code);
+    ok = true;
+  }catch(e){
+    // Fallback for browsers/webviews without the async clipboard API
+    try{
+      const ta = document.createElement('textarea');
+      ta.value = code;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+    }catch(e2){ ok = false; }
+  }
+  const original = '📋 ចម្លង Code / Copy code';
+  btn.textContent = ok ? '✓ បានចម្លង / Copied' : 'សូមចុចលើ code ហើយចម្លងដោយដៃ / Please copy the code manually';
+  setTimeout(()=>{ btn.textContent = original; }, 2000);
+});
+
+// ---- Bakong Relay: poll for confirmation after the QR is shown ----
+function pollPaymentStatus(md5, triesLeft){
+  fetch(CODE_CHECK_URL + '?action=checkStatus&md5=' + encodeURIComponent(md5))
+    .then(res => res.json())
+    .then(data=>{
+      if(data.success){
+        try{ sessionStorage.removeItem(PENDING_MD5_KEY); }catch(e){}
+        let paidName = '';
+        try{ paidName = sessionStorage.getItem(PENDING_NAME_KEY) || ''; }catch(e){}
+        setUnlocked(data.code, paidName || (state.fullName || '').trim());
+        $('successCodeText').textContent = data.code || '----';
+        showPayStep('success');
+        return;
+      }
+      if(data.status === 'expired' || triesLeft <= 0){
+        $('payWaitError').style.display = 'block';
+        $('qrRetryBtn').style.display = 'block';
+        $('qrStatusText').textContent = '';
+        try{ sessionStorage.removeItem(PENDING_MD5_KEY); }catch(e){}
+        return;
+      }
+      if(data.status === 'scanned'){
+        $('qrStatusText').textContent = 'បានស្កេន — កំពុងបញ្ជាក់ការទូទាត់... / Scanned — confirming payment...';
+      }
+      pollTimer = setTimeout(()=> pollPaymentStatus(md5, triesLeft - 1), POLL_INTERVAL_MS);
+    })
+    .catch(()=>{
+      if(triesLeft <= 0){
+        $('payWaitError').style.display = 'block';
+        $('qrRetryBtn').style.display = 'block';
+        return;
+      }
+      pollTimer = setTimeout(()=> pollPaymentStatus(md5, triesLeft - 1), POLL_INTERVAL_MS);
+    });
+}
+
+// On load: if a QR was pending before the tab was closed/refreshed, resume
+// polling it (but we have no image to re-show, so just fall back to letting
+// the person tap "Generate Payment QR" again if it's actually gone).
+(function resumePendingIfAny(){
+  let md5;
+  try{ md5 = sessionStorage.getItem(PENDING_MD5_KEY); }catch(e){}
+  if(!md5 || isUnlocked()) return;
+  let pendingName = '';
+  try{ pendingName = sessionStorage.getItem(PENDING_NAME_KEY) || ''; }catch(e){}
+  try{ sessionStorage.removeItem(PENDING_MD5_KEY); }catch(e){}
+  fetch(CODE_CHECK_URL + '?action=checkStatus&md5=' + encodeURIComponent(md5))
+    .then(res => res.json())
+    .then(data=>{
+      if(data.success && data.code){
+        setUnlocked(data.code, pendingName || (state.fullName || '').trim());
+      }
+    })
+    .catch(()=>{});
+})();
+
+// ---- Manual unlock-code fallback (unchanged from before) ----
+$('unlockSubmitBtn').addEventListener('click', async ()=>{
+  const entered = $('unlockCodeInput').value.trim();
+  if(!entered) return;
+  $('unlockError').style.display = 'none';
+  $('unlockSubmitBtn').disabled = true;
+  $('unlockSubmitBtn').textContent = 'កំពុងពិនិត្យ... / Checking...';
+  try{
+    const typedName = (state.fullName || '').trim();
+    const ownerName = encodeURIComponent(typedName);
+    const res = await fetch(CODE_CHECK_URL + '?code=' + encodeURIComponent(entered) + '&name=' + ownerName);
+    const data = await res.json();
+    if(data.success === true){
+      setUnlocked(entered, typedName);
+      hidePayModal();
+      runDownloadAction(pendingDownloadAction);
+    } else {
+      if(data.reason === 'name_mismatch'){
+        $('unlockError').textContent = 'Code នេះភ្ជាប់ជាមួយ CV ផ្សេង — សូមប្រាកដថាបានវាយ "ឈ្មោះពេញ" ដូចលើកមុនត្រឹមត្រូវ / This code is bound to a different name — make sure "Full Name" above matches what you used before';
+      } else if(data.reason === 'missing_name'){
+        $('unlockError').textContent = 'សូមវាយ "ឈ្មោះពេញ" នៅផ្នែកខាងលើជាមុនសិន / Please enter your Full Name above first';
+      } else if(data.reason === 'expired'){
+        $('unlockError').textContent = 'Code នេះផុតកំណត់ 30 ថ្ងៃហើយ / This code has expired (30 days)';
+      } else if(data.reason === 'missing_code'){
+        $('unlockError').textContent = 'សូមវាយ Unlock Code / Please enter a code';
+      } else {
+        $('unlockError').textContent = 'Code មិនត្រឹមត្រូវ / Invalid code';
+      }
+      $('unlockError').style.display = 'block';
+    }
+  }catch(err){
+    $('unlockError').textContent = 'មានបញ្ហាតភ្ជាប់ សូមសាកល្បងម្ដងទៀត / Connection error, please try again';
+    $('unlockError').style.display = 'block';
+  }
+  $('unlockSubmitBtn').disabled = false;
+  $('unlockSubmitBtn').textContent = 'ដោះសោ Download';
+});
+$('unlockCodeInput').addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter') $('unlockSubmitBtn').click();
+});
+</script>
+<script>/* layout.js — Resizable panels, phone preview fit, Edit/Preview tabs */
+
+const resizer = $('resizer');
+const appEl = document.querySelector('.app');
+const isPhoneLayout = () => window.matchMedia('(max-width:900px)').matches;
+if(resizer && appEl){
+  let dragging = false;
+  const limits = () => isPhoneLayout()
+    ? { min: 110, max: Math.max(160, window.innerWidth - 110) }
+    : { min: 280, max: 700 };
+  resizer.addEventListener('mousedown', (e)=>{
+    dragging = true;
+    resizer.classList.add('dragging');
+    document.body.style.userSelect = 'none';
+    e.preventDefault();
+  });
+  window.addEventListener('mousemove', (e)=>{
+    if(!dragging) return;
+    const L = limits(); const w = Math.min(L.max, Math.max(L.min, e.clientX));
+    appEl.style.setProperty('--editor-w', w + 'px');
+  });
+  window.addEventListener('mouseup', ()=>{
+    if(!dragging) return;
+    dragging = false;
+    resizer.classList.remove('dragging');
+    document.body.style.userSelect = '';
+  });
+  // touch support
+  resizer.addEventListener('touchstart', (e)=>{
+    dragging = true;
+    resizer.classList.add('dragging');
+  }, {passive:true});
+  window.addEventListener('touchmove', (e)=>{
+    if(!dragging) return;
+    const x = e.touches[0].clientX;
+    const L = limits(); const w = Math.min(L.max, Math.max(L.min, x));
+    appEl.style.setProperty('--editor-w', w + 'px');
+  }, {passive:true});
+  window.addEventListener('touchend', ()=>{
+    dragging = false;
+    resizer.classList.remove('dragging');
+  });
+}
+
+// ---- Phone layout: shrink the A4 preview to fit the right-hand column ----
+let _fitRaf = 0, _lastFit = '';
+function fitPreview(){
+  if(_fitRaf) return;
+  _fitRaf = requestAnimationFrame(()=>{
+    _fitRaf = 0;
+    const wrap = document.querySelector('.preview-wrap');
+    const col = document.querySelector('.preview-col');
+    if(!wrap || !col) return;
+    if(!isPhoneLayout()){
+      if(_lastFit){ col.style.removeProperty('--fit'); _lastFit = ''; }
+      return;
+    }
+    const cs = getComputedStyle(wrap);
+    const avail = wrap.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    if(avail <= 0) return; // preview tab hidden
+    const v = Math.max(0.15, avail / 794).toFixed(3);
+    if(v !== _lastFit){ _lastFit = v; col.style.setProperty('--fit', v); }
+  });
+}
+window.addEventListener('resize', fitPreview);
+window.addEventListener('orientationchange', fitPreview);
+if(window.ResizeObserver){ new ResizeObserver(fitPreview).observe(document.querySelector('.preview-wrap')); }
+
+// ---- Phone: Edit / Preview tabs ----
+function setMobileView(v){
+  document.body.classList.toggle('show-edit', v==='edit');
+  document.body.classList.toggle('show-preview', v==='preview');
+  $('mTabEdit').classList.toggle('active', v==='edit');
+  $('mTabPreview').classList.toggle('active', v==='preview');
+  window.scrollTo(0,0);
+  if(v==='preview') fitPreview();
+}
+$('mTabEdit').addEventListener('click', ()=>setMobileView('edit'));
+$('mTabPreview').addEventListener('click', ()=>setMobileView('preview'));
+</script>
+<script>/* main.js — Start-up: load saved data and draw the first render */
+
+Object.assign(state, loadState());
+populateFormFromState();
+renderExpForm();
+renderEduForm();
+renderRefForm();
+renderCustomForm();
+render();
+backgroundVerifyUnlock();
+fitPreview();
+</script>
+</body>
+</html>

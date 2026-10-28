@@ -1,0 +1,48 @@
+/* responsive.css — Phone / tablet layout (Edit | Preview tabs) */
+  /* ===== PHONE / TABLET: top tabs (Edit | Preview), one panel at a time ===== */
+  .mobile-tabs{display:none;}
+  @media screen and (max-width:900px){
+    html,body{height:100%;}
+    .mobile-tabs{
+      display:flex; position:sticky; top:0; z-index:50;
+      background:#fff; border-bottom:1px solid var(--line);
+      font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    }
+    .mobile-tab{
+      flex:1; background:none; border:none; padding:14px 8px;
+      font-family:inherit; font-size:15px; font-weight:600;
+      color:var(--muted); cursor:pointer;
+      border-bottom:3px solid transparent;
+    }
+    .mobile-tab.active{color:var(--accent); border-bottom-color:var(--accent);}
+    .app{display:block; min-height:0;}
+    .resizer{display:none;}
+    .editor{
+      max-height:none; height:auto; border-right:none;
+      padding:18px 16px 80px; overflow:visible;
+    }
+    .preview-wrap{
+      max-height:none; height:auto; display:block;
+      padding:10px 8px 60px; overflow:visible;
+    }
+    body.show-edit .preview-wrap{display:none;}
+    body.show-preview .editor{display:none;}
+    .preview-col{width:100%; max-width:100%;}
+    input[type=text],input[type=email],input[type=tel],textarea,select{font-size:16px;}
+    /* Keep the real A4 layout (794px) and shrink it to the screen width.
+       --fit is calculated by fitPreview() below. */
+    #resume{
+      zoom:var(--fit, .45);
+      width:794px; min-height:1123px;
+    }
+  }
+  #resume{ position:relative !important; overflow:hidden !important; }
+  #resume.watermarked::before{
+    content:"PREVIEW — CV BUILDER — ©LTMEDIA\APREVIEW — CV BUILDER — ©LTMEDIA\APREVIEW — CV BUILDER — ©LTMEDIA\APREVIEW — CV BUILDER — ©LTMEDIA\APREVIEW — CV BUILDER — ©LTMEDIA";
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif; font-weight:600; font-size:28px;
+    color:rgba(0,0,0,.08); transform:rotate(-30deg);
+    pointer-events:none; z-index:5; text-align:center; white-space:pre-wrap; line-height:10;
+  }
+  @media print{ #resume.watermarked::before{ content:none; } }

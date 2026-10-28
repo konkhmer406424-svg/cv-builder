@@ -1,0 +1,348 @@
+/* base.css — Colours, page grid, editor panel and form controls */
+  :root{
+    --ink:#1c1b19;
+    --paper:#faf8f4;
+    --panel:#ffffff;
+    --line:#e4e0d8;
+    --muted:#7a756a;
+    --accent:#8a5a3b;
+    --accent-2:#3b5a4a;
+    --sand:#efe9dd;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Iowan Old Style','Georgia','Noto Sans Khmer',serif;
+    background:var(--sand);
+    color:var(--ink);
+    min-height:100vh;
+  }
+  .app{
+    display:grid;
+    grid-template-columns:var(--editor-w, 400px) 6px 1fr;
+    min-height:100vh;
+  }
+  .resizer{
+    cursor:col-resize;
+    background:var(--line);
+    position:relative;
+  }
+  .resizer:hover, .resizer.dragging{
+    background:var(--accent);
+  }
+  .resizer::after{
+    content:'';
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    width:2px; height:32px;
+    background:rgba(255,255,255,.6);
+    border-radius:2px;
+  }
+  /* ---------- LEFT: FORM ---------- */
+  .editor{
+    background:var(--panel);
+    border-right:1px solid var(--line);
+    padding:28px 26px 60px;
+    overflow-y:auto;
+    max-height:100vh;
+  }
+  .brand-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:22px;
+  }
+  .brand-text{
+    display:flex;
+    flex-direction:column;
+  }
+  .brand{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans Khmer',sans-serif;
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:.06em;
+    color:var(--muted);
+    margin-bottom:2px;
+  }
+  .editor h1{
+    font-size:19px;
+    margin:0;
+    font-weight:600;
+  }
+  .brand-logo{
+    height:56px;
+    width:auto;
+    flex-shrink:0;
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:5px;
+    background:#fff;
+    box-shadow:0 1px 3px rgba(0,0,0,.08);
+  }
+  .templates{
+    display:flex;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    gap:8px;
+    margin-bottom:10px;
+    padding-bottom:8px;
+    scrollbar-width:thin;
+  }
+  .templates::-webkit-scrollbar{height:6px;}
+  .templates::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px;}
+  .templates::-webkit-scrollbar-thumb:hover{background:var(--accent);}
+  .tpl-swatch{
+    cursor:pointer;
+    border:2px solid var(--line);
+    border-radius:6px;
+    padding:6px 4px;
+    text-align:center;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:10px;
+    color:var(--muted);
+    background:var(--paper);
+    transition:border-color .15s, color .15s;
+    flex:0 0 78px;
+  }
+  .tpl-swatch .dot{
+    width:100%;
+    height:22px;
+    border-radius:3px;
+    margin-bottom:5px;
+  }
+  .tpl-swatch.active{
+    border-color:var(--ink);
+    color:var(--ink);
+    font-weight:600;
+  }
+  .t1 .dot{background:linear-gradient(90deg,#1d4d7a 30%,#eaf1f7 30%);}
+  .t2 .dot{background:linear-gradient(90deg,#22303c 35%,#f2f5f4 35%);}
+  .t3 .dot{background:linear-gradient(90deg,#eaf1f7 40%,#ffffff 40%);border:1px solid #c3d8e8;}
+  .t4 .dot{background:linear-gradient(90deg,#8a3b3b,#c97b4a);}
+  .t5 .dot{background:#ffffff;border-bottom:3px solid #1d4d7a;}
+  .t6 .dot{background:#ffffff;border:1px solid #444;}
+  .t7 .dot{background:linear-gradient(90deg,#e4e4e4 35%,#ffffff 35%);border:1px solid #ccc;}
+  .t8 .dot{background:linear-gradient(135deg,#6a3ea1 40%,#ff8a3d 40%);}
+  .t9 .dot{background:linear-gradient(90deg,#1d7a6e,#3dbfa8);}
+  .t10 .dot{background:#ffffff;border:1px solid #1c1b19;border-top:3px solid #1c1b19;}
+  .t11 .dot{background:linear-gradient(90deg,#0f1f33 70%,#c9a24b 70%);}
+  .t12 .dot{background:#0d2b1f;}
+  .t13 .dot{background:#ffffff;border:1px solid #999;}
+  .t14 .dot{background:#f5f5f2;border-radius:50%;}
+  .t15 .dot{background:linear-gradient(90deg,#ffe8a3 40%,#ffffff 40%);}
+  .t16 .dot{background:linear-gradient(90deg,#0b3d91 60%,#a01d26 60%);}
+  .t17 .dot{background:#0b2a5b;border-bottom:3px solid #d4af37;}
+  .t18 .dot{background:linear-gradient(90deg,#5c1420,#a97b2f);}
+  .t19 .dot{background:#0d3b2e;border:1px solid #d4af37;}
+  .t20 .dot{background:linear-gradient(120deg,#7a1f2b,#c9932f);}
+  .tpl-hint{
+    grid-column:1 / -1;
+  }
+
+  fieldset{
+    border:none;
+    padding:0;
+    margin:0 0 26px;
+  }
+  legend{
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--accent);
+    font-weight:700;
+    margin-bottom:10px;
+    padding:0;
+  }
+  label{
+    display:block;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:11px;
+    color:var(--muted);
+    margin:10px 0 4px;
+  }
+  input[type=text],input[type=email],input[type=tel],textarea{
+    width:100%;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:13.5px;
+    padding:8px 10px;
+    border:1px solid var(--line);
+    border-radius:5px;
+    background:var(--paper);
+    color:var(--ink);
+  }
+  input:focus,textarea:focus{
+    outline:none;
+    border-color:var(--accent);
+    background:#fff;
+  }
+  textarea{resize:vertical;min-height:56px;font-family:-apple-system,'Noto Sans Khmer',sans-serif;line-height:1.45;}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .entry{
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:12px 12px 4px;
+    margin-bottom:12px;
+    background:var(--paper);
+    position:relative;
+  }
+  .entry-remove{
+    position:absolute;
+    top:8px; right:8px;
+    background:none;
+    border:none;
+    color:var(--muted);
+    font-size:16px;
+    cursor:pointer;
+    line-height:1;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+  }
+  .entry-remove:hover{color:#a33;}
+  .add-btn{
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--accent);
+    background:none;
+    border:1px dashed var(--accent);
+    border-radius:6px;
+    padding:7px 12px;
+    cursor:pointer;
+    width:100%;
+    margin-top:2px;
+  }
+  .add-btn:hover{background:rgba(138,90,59,.07);}
+  .print-btn{
+    width:100%;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:14px;
+    font-weight:700;
+    color:#fff;
+    background:var(--ink);
+    border:none;
+    border-radius:7px;
+    padding:13px;
+    cursor:pointer;
+    margin-top:6px;
+  }
+  .print-btn:hover{background:#000;}
+  .acc-item{
+    border:1px solid var(--line);
+    border-radius:8px;
+    margin-bottom:10px;
+    overflow:hidden;
+    background:var(--paper);
+  }
+  .acc-header{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:12px 14px;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--accent);
+    font-weight:700;
+    text-align:left;
+  }
+  .acc-header:hover{background:rgba(138,90,59,.05);}
+  .acc-caret{
+    color:var(--muted);
+    font-size:11px;
+    transition:transform .2s ease;
+  }
+  .acc-item.open .acc-caret{transform:rotate(180deg);}
+  .acc-body{display:none;padding:0 14px 16px;}
+  .acc-item.open .acc-body{display:block;}
+  .tpl-section{margin:22px 0 18px;}
+  .tpl-label{
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--accent);
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .hint{
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:11px;
+    color:var(--muted);
+    margin-top:6px;
+    line-height:1.5;
+  }
+  details.hint-toggle{margin-top:4px;}
+  details.hint-toggle summary{
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:11px;
+    color:var(--accent);
+    cursor:pointer;
+    list-style:none;
+    user-select:none;
+  }
+  details.hint-toggle summary::-webkit-details-marker{display:none;}
+  details.hint-toggle summary::before{content:"ⓘ ជំនួយ / Tip";}
+  details.hint-toggle[open] summary::before{content:"ⓘ លាក់ / Hide";}
+  details.hint-toggle.cl-hint-toggle{margin-top:14px;padding-top:10px;border-top:1px dashed var(--line);}
+  details.hint-toggle.cl-hint-toggle summary::before{content:"ⓘ Generate Cover Letter";}
+  details.hint-toggle.cl-hint-toggle[open] summary::before{content:"ⓘ Hide Cover Letter";}
+  .cl-hint-body{margin-top:10px;}
+  .photo-row{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+  .photo-thumb-empty{
+    width:56px;height:56px;border-radius:8px;flex-shrink:0;
+    border:1px dashed var(--line);
+    display:flex;align-items:center;justify-content:center;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;font-size:9px;color:var(--muted);
+    text-align:center;
+  }
+  .photo-thumb{width:56px;height:56px;border-radius:8px;object-fit:cover;flex-shrink:0;}
+  input[type=file]{font-family:-apple-system,'Noto Sans Khmer',sans-serif;font-size:11.5px;width:100%;}
+
+  .scale-picker{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+  }
+  .cl-tpl-swatch{
+    cursor:pointer;
+    border:2px solid var(--line);
+    border-radius:6px;
+    padding:6px 4px;
+    text-align:center;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:10px;
+    color:var(--muted);
+    background:var(--paper);
+    transition:border-color .15s, color .15s;
+    flex:0 0 78px;
+  }
+  .cl-tpl-swatch .dot{width:100%;height:22px;border-radius:3px;margin-bottom:5px;}
+  .cl-tpl-swatch.active{border-color:var(--ink);color:var(--ink);font-weight:600;}
+  .cl1dot{background:linear-gradient(90deg,#8a5a3b 45%,#efe9dd 45%);}
+  .cl2dot{background:#ffffff;border:1px solid #999;}
+  .cl3dot{background:#f5f5f2;}
+  .cl4dot{background:linear-gradient(90deg,#efe9dd 50%,#ffffff 50%);border-top:3px solid #1c1b19;}
+  .cl5dot{background:linear-gradient(120deg,#3b5a4a,#8a5a3b);}
+  .scale-btn{
+    cursor:pointer;
+    border:2px solid var(--line);
+    border-radius:6px;
+    padding:9px 4px;
+    text-align:center;
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:12px;
+    color:var(--muted);
+    background:var(--paper);
+  }
+  .scale-btn.active{
+    border-color:var(--ink);
+    color:var(--ink);
+    font-weight:700;
+    background:#fff;
+  }

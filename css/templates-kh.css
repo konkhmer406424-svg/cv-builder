@@ -1,0 +1,132 @@
+/* templates-kh.css — CV templates 16–20 (Khmer) and Khmer heading sizes */
+  /* ===== TEMPLATE 16: Official Khmer Blue (label-row government-form style) ===== */
+  #resume.t16{font-family:'Khmer OS Siemreap','Khmer OS Battambang','Noto Sans Khmer',Georgia,'Times New Roman',serif;}
+  #resume.t16 .head-block{display:block;}
+  #resume.t16 .photo-wrap{float:right;margin-left:calc(18px * var(--scale));margin-top:4px;}
+  #resume.t16 .head-text{display:block;text-align:left;border-bottom:2px solid #0b3d91;padding-bottom:calc(10px * var(--scale));margin-bottom:calc(8px * var(--scale));}
+  #resume.t16 .name{color:#0b3d91;font-weight:700;text-transform:uppercase;letter-spacing:.03em;}
+  #resume.t16 .title{color:#a01d26;font-style:normal;font-weight:600;}
+  #resume.t16 .contact-line{color:#333;}
+  #resume.t16 .photo{width:3cm;height:4cm;border-radius:0;border:2px solid #0b3d91;object-fit:cover;}
+  #resume.t16 .photo-placeholder{width:3cm;height:4cm;border-radius:0;border:2px solid #0b3d91;color:#0b3d91;font-size:10px;}
+  #resume.t16 .block h3{color:#fff;background:#0b3d91;text-align:left;padding:calc(5px * var(--scale)) calc(10px * var(--scale));border-bottom:3px solid #a01d26;letter-spacing:.04em;}
+  #resume.t16 .skill-tag{background:#eaf0fb;color:#0b3d91;border-radius:3px;border:1px solid #c3d3ee;}
+  #resume.t16 .item-role, #resume.t16 .item-sub{color:#1c1b19;}
+
+  /* ===== TEMPLATE 17: Royal Government Banner (formal Kingdom-style header) ===== */
+  #resume.t17{padding:0;font-family:'Khmer OS Siemreap','Khmer OS Battambang','Noto Sans Khmer',Georgia,'Times New Roman',serif;}
+  #resume.t17 .head{background:#0b2a5b;color:#fff;padding:calc(30px * var(--scale)) 40px calc(22px * var(--scale));border-bottom:4px solid #d4af37;position:relative;}
+  #resume.t17 .head::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#a01d26,#d4af37,#0b2a5b);}
+  #resume.t17 .head-text{display:block;text-align:center;}
+  #resume.t17 .head .name{color:#fff;text-transform:uppercase;letter-spacing:.05em;}
+  #resume.t17 .head .title{color:#d4af37;font-style:normal;font-weight:600;}
+  #resume.t17 .head .contact-line{color:#dbe4f5;justify-content:center;}
+  #resume.t17 .photo{width:calc(100px * var(--scale));height:calc(100px * var(--scale));border-radius:4px;border:3px solid #d4af37;}
+  #resume.t17 .photo-placeholder{border-radius:4px;border-color:#d4af37;color:#d4af37;}
+  #resume.t17 .body{padding:26px 40px 40px;}
+  #resume.t17 .block h3{color:#0b2a5b;border-bottom:2px solid #d4af37;text-align:left;}
+  #resume.t17 .skill-tag{background:#f3ecd8;color:#7a611f;border-radius:2px;}
+
+  /* ===== TEMPLATE 18: Khmer Classic (warm maroon & gold, elegant serif) ===== */
+  #resume.t18{font-family:'Khmer OS Siemreap','Khmer OS Battambang','Noto Sans Khmer',Georgia,serif;}
+  #resume.t18 .head-text{border-top:3px double #8a1c2e;padding-top:calc(10px * var(--scale));}
+  #resume.t18 .name{color:#5c1420;font-weight:700;}
+  #resume.t18 .title{color:#a97b2f;font-style:normal;}
+  #resume.t18 .photo{width:calc(108px * var(--scale));height:calc(108px * var(--scale));border-radius:6px;border:3px solid #a97b2f;}
+  #resume.t18 .photo-placeholder{border-radius:6px;border-color:#a97b2f;color:#a97b2f;}
+  #resume.t18 .block h3{color:#5c1420;border-bottom:2px solid #a97b2f;}
+  #resume.t18 .skill-tag{background:#f6ece0;color:#5c1420;border-radius:12px;}
+
+  /* ===== TEMPLATE 19: Khmer Fresh Green (sidebar, Khmer labels, fresh-graduate friendly) ===== */
+  #resume.t19{padding:0;display:grid;grid-template-columns:230px 1fr;font-family:'Khmer OS Siemreap','Noto Sans Khmer',-apple-system,sans-serif;}
+  #resume.t19 .side{background:#0d3b2e;color:#eaf4ef;padding:34px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;}
+  #resume.t19 .side .head-block{flex-direction:column;align-items:center;gap:calc(14px * var(--scale));}
+  #resume.t19 .side .name{color:#fff;font-size:calc(20px * var(--scale));}
+  #resume.t19 .side .title{color:#d4af37;font-style:normal;}
+  #resume.t19 .side .contact-line{flex-direction:column;align-items:center;color:#cfe3da;gap:calc(6px * var(--scale));margin-top:calc(14px * var(--scale));}
+  #resume.t19 .side h3{color:#d4af37;border-bottom:1px solid #1e5a46;}
+  #resume.t19 .side .skill-tag{background:#144a3a;color:#eaf4ef;}
+  #resume.t19 .side .skills-list{justify-content:center;}
+  #resume.t19 .side section.block{width:100%;}
+  #resume.t19 .side .photo{width:calc(96px * var(--scale));height:calc(96px * var(--scale));border:3px solid #d4af37;}
+  #resume.t19 .side .photo-placeholder{border-color:#d4af37;color:#cfe3da;}
+  #resume.t19 .main{padding:34px 30px;}
+  #resume.t19 .main h3{color:#0d3b2e;}
+  #resume.t19 .main .summary{margin-top:0;}
+
+  /* ===== TEMPLATE 20: Khmer Silk (silk-weave gradient header, elegant) ===== */
+  #resume.t20{padding:0;font-family:'Khmer OS Siemreap','Noto Sans Khmer',Georgia,serif;}
+  #resume.t20 .head{background:linear-gradient(120deg,#7a1f2b 0%,#a9502b 55%,#c9932f 100%);color:#fff;padding:34px 40px 26px;position:relative;}
+  #resume.t20 .head::after{content:'';position:absolute;left:0;right:0;bottom:0;height:6px;background:repeating-linear-gradient(90deg,#d4af37 0 10px,#7a1f2b 10px 20px);}
+  #resume.t20 .head-text{display:block;text-align:center;}
+  #resume.t20 .head .name{color:#fff;}
+  #resume.t20 .head .title{color:#ffe6c2;font-style:normal;}
+  #resume.t20 .head .contact-line{color:#ffe6c2;justify-content:center;}
+  #resume.t20 .photo{width:calc(96px * var(--scale));height:calc(96px * var(--scale));border-radius:50%;border:4px solid #ffe6c2;}
+  #resume.t20 .photo-placeholder{border-radius:50%;border-color:#ffe6c2;color:#ffe6c2;}
+  #resume.t20 .body{padding:26px 40px 40px;}
+  #resume.t20 .block h3{color:#7a1f2b;border-bottom:2px solid #d4af37;}
+  #resume.t20 .skill-tag{background:#fbeee0;color:#7a1f2b;border-radius:20px;}
+
+  /* ===== Khmer-language templates (t16–t20): heading sizing ===== */
+  #resume.t16 .block h3,
+  #resume.t17 .block h3,
+  #resume.t18 .block h3,
+  #resume.t19 .block h3,
+  #resume.t20 .block h3{
+    font-size:calc(16px * var(--scale));
+    letter-spacing:.01em;
+    text-transform:none;
+  }
+  @media print{
+    /* Print backgrounds/colours exactly as on screen, without the user having to tick "Background graphics" */
+    html, body, #resume, #resume *, #printBothWrap, #printBothWrap *{
+      -webkit-print-color-adjust:exact;
+      print-color-adjust:exact;
+    }
+    body{background:#fff;}
+    .no-print{display:none !important;}
+    .app{display:block;}
+    .preview-wrap{padding:0;display:block;max-height:none;overflow:visible;}
+    #resume{
+      box-shadow:none; width:auto; min-height:0;
+      margin:0; padding:0 !important;
+    }
+    /* Plain float, no forced full-page min-height. The earlier float+min-height(297mm)
+       combo pushed the whole sidebar onto a blank next page the instant it overflowed
+       by a hair, and table/table-cell (tried next) made Chrome fragment the layout into
+       extra pages too. Letting .side be exactly as tall as its own content is the only
+       approach that paginates reliably. Trade-off: the sidebar's background color only
+       extends as far as its own content, not artificially down to the page bottom. */
+    #resume.t2, #resume.t3, #resume.t7, #resume.t15, #resume.t19{ display:block; }
+    #resume.t2 .side, #resume.t3 .side, #resume.t7 .side, #resume.t15 .side, #resume.t19 .side{ float:left; }
+    #resume.t2 .side{ width:250px; }
+    #resume.t3 .side{ width:228px; }
+    #resume.t7 .side{ width:210px; }
+    #resume.t15 .side{ width:230px; }
+    #resume.t19 .side{ width:230px; }
+    /* BLANK-PAGE FIX: render() sets an inline min-height on .side equal to the on-screen height of
+       .main (>= 1123px, because the screen grid stretches it to #resume's min-height). That is taller
+       than one printable A4 page (~274mm after the page margins and the 20px preview padding), so the
+       floated sidebar overflowed onto a second, blank-looking page. !important overrides that inline
+       value. 270mm keeps the sidebar colour running almost to the bottom of page 1 with a safety gap;
+       lower it (e.g. 260mm) if some browser still adds an empty page. */
+    #resume.t2 .side, #resume.t3 .side, #resume.t7 .side, #resume.t15 .side, #resume.t19 .side{ min-height:270mm !important; }
+    #resume.t2 .main{ margin-left:250px; }
+    #resume.t3 .main{ margin-left:228px; }
+    #resume.t7 .main{ margin-left:210px; }
+    #resume.t15 .main{ margin-left:230px; }
+    #resume.t19 .main{ margin-left:230px; }
+    @page{
+      size:A4; margin:12mm 0;
+    }
+    @page :first{
+      margin-top:0;
+    }
+    #resume.cl4 .letter-head{ margin:0 0 20px; padding:0; background:none; }
+    body.printing-both .preview-wrap{display:none !important;}
+    body.printing-both #printBothWrap{display:block !important;}
+    #printBothWrap > div{page-break-after:always;}
+    #printBothWrap > div:last-child{page-break-after:auto;}
+  }
+  #printBothWrap{display:none;}

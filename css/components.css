@@ -1,0 +1,14 @@
+/* components.css — Photo button + AI helper bar */
+  /* ---- Photo button + AI helper bar ---- */
+  .photo-btn{font-family:-apple-system,'Noto Sans Khmer',sans-serif;font-size:12.5px;font-weight:600;color:var(--accent);background:none;border:1px dashed var(--accent);border-radius:6px;padding:8px 12px;cursor:pointer;flex:1;}
+  .photo-btn:hover{background:rgba(138,90,59,.07);}
+  .ai-bar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:4px 0 10px;}
+  .ai-bar .ai-btn{font-family:-apple-system,'Noto Sans Khmer',sans-serif;font-size:11.5px;font-weight:600;color:var(--accent);background:none;border:1px solid var(--accent);border-radius:999px;padding:4px 10px;cursor:pointer;}
+  .ai-bar .ai-btn:hover{background:rgba(138,90,59,.07);}
+  .ai-bar .ai-btn:disabled{opacity:.5;cursor:default;}
+  .ai-bar .ai-msg{font-size:11.5px;color:var(--muted);flex-basis:100%;}
+  .ai-bar .ai-msg.err{color:#a33;}
+  body[data-lang-mode="km"] .ai-bar .ai-btn[data-ai="to_english"],
+  body[data-lang-mode="en"] .ai-bar .ai-btn[data-ai="to_khmer"]{display:none;}
+  .lang-note{font-size:12px;line-height:1.5;border-radius:6px;padding:7px 10px;margin:0 0 10px;background:#fff6e0;border:1px solid #f0d9a0;color:#7a5a12;}
+  .lang-note.km{background:#e8f3ff;border-color:#b9d6f5;color:#1d4d7a;}

@@ -1,0 +1,223 @@
+/* templates-en.css — CV templates 1–15 (English) */
+  /* ===== TEMPLATE 1: Local Standard (Cambodia-style, photo top-right) ===== */
+  #resume.t1{font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.t1 .head-block{display:block;}
+  #resume.t1 .photo-wrap{float:right;margin-left:calc(18px * var(--scale));}
+  #resume.t1 .head-text{display:block;}
+  #resume.t1 .name{color:#173a5c;font-size:calc(25px * var(--scale));font-weight:700;}
+  #resume.t1 .title{color:var(--muted);font-style:normal;}
+  #resume.t1 .photo{width:2.8cm;height:3.6cm;border-radius:2px;border:3px solid #1d4d7a;object-fit:cover;}
+  #resume.t1 .photo-placeholder{width:2.8cm;height:3.6cm;border-radius:2px;border:2px dashed #1d4d7a;color:#1d4d7a;font-size:10px;}
+  #resume.t1 .block h3{color:#173a5c;border-bottom:2px solid #1d4d7a;}
+  #resume.t1 .skill-tag{background:#eaf1f7;color:#173a5c;border-radius:4px;}
+
+  /* ===== TEMPLATE 2: Modern Sidebar ===== */
+  #resume.t2{padding:0;display:grid;grid-template-columns:250px 1fr;font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.t2 .side{background:#22303c;color:#eef1ef;padding:34px 20px;display:flex;flex-direction:column;align-items:center;text-align:left;}
+  #resume.t2 .side .head-block{flex-direction:column;align-items:center;gap:calc(16px * var(--scale));}
+  #resume.t2 .side .name{color:#fff;font-size:calc(22px * var(--scale));font-family:'Iowan Old Style',Georgia,'Noto Sans Khmer',serif;text-align:center;}
+  #resume.t2 .side .title{color:#a9c2b6;font-style:normal;font-size:calc(12.5px * var(--scale));margin-top:calc(4px * var(--scale));text-align:center;}
+  #resume.t2 .side .contact-line{flex-direction:column;align-items:flex-start;color:#cfd8d4;font-size:calc(11px * var(--scale));gap:calc(8px * var(--scale));margin-top:calc(20px * var(--scale));}
+  #resume.t2 .side h3{color:#a9c2b6;border-bottom:1px solid #3a4b47;font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.t2 .side .skill-tag{background:#2e3f3a;color:#eef1ef;}
+  #resume.t2 .side .skills-list{justify-content:flex-start;}
+  #resume.t2 .side section.block{width:100%;}
+  #resume.t2 .side .photo{width:calc(130px * var(--scale));height:calc(130px * var(--scale));}
+  #resume.t2 .side .photo-placeholder{width:calc(130px * var(--scale));height:calc(130px * var(--scale));border-color:#3a4b47;color:#cfd8d4;}
+  #resume.t2 .main{padding:34px 30px;}
+  #resume.t2 .main h3{color:#22303c;}
+  #resume.t2 .main .plain-list{color:var(--ink);}
+
+  /* ===== TEMPLATE 3: Corporate Blue Sidebar (common Cambodia job-portal style) ===== */
+  #resume.t3{padding:0;display:grid;grid-template-columns:228px 1fr;font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.t3 .side{background:#eaf1f7;color:#1c2b38;padding:34px 18px;border-right:1px solid #d3e2ee;display:flex;flex-direction:column;align-items:center;text-align:left;}
+  #resume.t3 .side .head-block{flex-direction:column;align-items:center;gap:calc(14px * var(--scale));}
+  #resume.t3 .side .name{color:#173a5c;font-size:calc(20px * var(--scale));text-align:center;}
+  #resume.t3 .side .title{color:#4a6b85;font-style:normal;font-size:calc(12px * var(--scale));text-align:center;}
+  #resume.t3 .side .contact-line{flex-direction:column;align-items:flex-start;color:#3c5872;font-size:calc(11px * var(--scale));gap:calc(7px * var(--scale));margin-top:calc(16px * var(--scale));}
+  #resume.t3 .side h3{color:#173a5c;border-bottom:1px solid #c3d8e8;font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.t3 .side .skill-tag{background:#d9e7f2;color:#173a5c;}
+  #resume.t3 .side .skills-list{justify-content:flex-start;}
+  #resume.t3 .side section.block{width:100%;}
+  #resume.t3 .side .photo{width:calc(115px * var(--scale));height:calc(115px * var(--scale));border-radius:8px;}
+  #resume.t3 .side .photo-placeholder{width:calc(115px * var(--scale));height:calc(115px * var(--scale));border-radius:8px;border-color:#a9c5da;color:#4a6b85;}
+  #resume.t3 .main{padding:34px 28px;}
+  #resume.t3 .main h3{color:#173a5c;}
+  #resume.t3 .main .plain-list{color:var(--ink);}
+
+  /* ===== TEMPLATE 4: Bold Header ===== */
+  #resume.t4{padding:0;font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.t4 .head{background:linear-gradient(120deg,#8a3b3b,#c97b4a);color:#fff;padding:34px 40px 24px;}
+  #resume.t4 .head .head-block{justify-content:space-between;align-items:center;}
+  #resume.t4 .head .photo-wrap{order:2;}
+  #resume.t4 .head .head-text{order:1;}
+  #resume.t4 .head .name{color:#fff;font-family:Georgia,'Noto Sans Khmer',serif;}
+  #resume.t4 .head .title{color:#fbe4d6;}
+  #resume.t4 .head .contact-line{color:#fbe4d6;}
+  #resume.t4 .photo{width:calc(120px * var(--scale));height:calc(120px * var(--scale));border:3px solid rgba(255,255,255,.55);}
+  #resume.t4 .photo-placeholder{border-color:rgba(255,255,255,.55);color:#fbe4d6;}
+  #resume.t4 .body{padding:24px 40px 34px;}
+  #resume.t4 .block h3{color:#8a3b3b;}
+  #resume.t4 .skill-tag{background:#f6e2d5;color:#7a3b28;}
+
+  /* ===== TEMPLATE 5: Simple Professional (blue banner, ATS-friendly, photo optional) ===== */
+  #resume.t5{font-family:-apple-system,'Noto Sans Khmer',sans-serif;padding:0;}
+  #resume.t5 .head{padding:34px 40px 18px;border-bottom:3px solid #1d4d7a;}
+  #resume.t5 .head .head-block{flex-direction:row;align-items:center;gap:calc(20px * var(--scale));}
+  #resume.t5 .photo{width:calc(96px * var(--scale));height:calc(96px * var(--scale));border-radius:50%;object-fit:cover;}
+  #resume.t5 .photo-placeholder{width:calc(96px * var(--scale));height:calc(96px * var(--scale));border-radius:50%;border-color:#1d4d7a;color:#1d4d7a;}
+  #resume.t5 .name{color:#173a5c;font-size:calc(25px * var(--scale));letter-spacing:0;}
+  #resume.t5 .title{font-style:normal;font-size:calc(13px * var(--scale));}
+  #resume.t5 .body{padding:20px 40px 34px;}
+  #resume.t5 .block h3{color:#1d4d7a;}
+  #resume.t5 .plain-list{color:var(--ink);}
+  #resume.t5 .skill-tag{background:#eaf1f7;color:#173a5c;border-radius:4px;}
+  #resume.t2 .main .summary, #resume.t3 .main .summary{margin-top:0;}
+  #resume.t7 .summary, #resume.t4 .summary, #resume.t5 .summary, #resume.t6 .summary, #resume.t9 .summary, #resume.t10 .summary, #resume.t11 .summary, #resume.t14 .summary, #resume.t17 .summary, #resume.t20 .summary{margin-top:-5px;}
+
+  /* ===== TEMPLATE 6: Minimal ATS (pure black & white, ATS-safe) ===== */
+  #resume.t6{font-family:Georgia,'Times New Roman','Noto Sans Khmer',serif;}
+  #resume.t6 .name{color:#000;font-weight:700;letter-spacing:0;}
+  #resume.t6 .title{color:#333;font-style:normal;}
+  #resume.t6 .head-block{flex-direction:row;align-items:flex-start;}
+  #resume.t6 .photo, #resume.t6 .photo-placeholder{width:calc(74px * var(--scale));height:calc(74px * var(--scale));border-radius:4px;}
+  #resume.t6 .photo{object-fit:cover;}
+  #resume.t6 .photo-placeholder{border:1px solid #999;color:#777;}
+  #resume.t6 .block h3{color:#000;border-bottom:1.5px solid #000;letter-spacing:.08em;}
+  #resume.t6 .skill-tag{background:none;color:#000;padding:0;border-radius:0;}
+  #resume.t6 .skill-tag::after{content:',';}
+  #resume.t6 .skill-tag:last-child::after{content:'';}
+  #resume.t6 .skills-list{gap:4px;}
+  #resume.t6 .item-role, #resume.t6 .item-sub{color:#000;}
+  #resume.t6 .summary{margin-top:5px;}
+
+  /* ===== TEMPLATE 7: Compact ATS (plain grayscale two-column) ===== */
+  #resume.t7{padding:0;display:grid;grid-template-columns:210px 1fr;font-family:Georgia,'Times New Roman','Noto Sans Khmer',serif;}
+  #resume.t7 .side{background:#f2f1ee;color:#2a2926;padding:34px 20px;border-right:1px solid #ddd9d0;display:flex;flex-direction:column;align-items:center;text-align:left;}
+  #resume.t7 .side .head-block{flex-direction:column;align-items:center;gap:calc(12px * var(--scale));}
+  #resume.t7 .side .name{color:#1c1b19;font-size:calc(19px * var(--scale));text-align:center;}
+  #resume.t7 .side .title{color:#555;font-style:normal;font-size:calc(11.5px * var(--scale));text-align:center;}
+  #resume.t7 .side .contact-line{flex-direction:column;align-items:flex-start;color:#444;font-size:calc(10.5px * var(--scale));gap:calc(6px * var(--scale));margin-top:calc(16px * var(--scale));}
+  #resume.t7 .side h3{color:#1c1b19;border-bottom:1px solid #ccc;font-family:Georgia,'Noto Sans Khmer',serif;}
+  #resume.t7 .side .skill-tag{background:none;color:#2a2926;padding:0;border-radius:0;}
+  #resume.t7 .side .skill-tag::after{content:',';}
+  #resume.t7 .side .skill-tag:last-child::after{content:'';}
+  #resume.t7 .side .photo{width:calc(84px * var(--scale));height:calc(84px * var(--scale));border-radius:6px;}
+  #resume.t7 .side .photo-placeholder{width:calc(84px * var(--scale));height:calc(84px * var(--scale));border-radius:6px;border-color:#bbb;color:#777;}
+  #resume.t7 .main{padding:34px 28px;}
+  #resume.t7 .main h3{color:#1c1b19;border-bottom:1px solid #ccc;}
+  #resume.t7 .main .plain-list{color:var(--ink);}
+
+  /* ===== TEMPLATE 8: Creative Splash (bold diagonal color block) ===== */
+  #resume.t8{padding:0;font-family:-apple-system,'Noto Sans Khmer',sans-serif;position:relative;overflow:hidden;}
+  #resume.t8 .head{position:relative;padding:34px 40px 26px;background:#6a3ea1;overflow:hidden;}
+  #resume.t8 .head::after{content:'';position:absolute;top:0;right:0;width:55%;height:100%;background:#ff8a3d;clip-path:polygon(35% 0, 100% 0, 100% 100%, 0% 100%);z-index:0;}
+  #resume.t8 .head .head-text{position:relative;z-index:1;display:block;align-items:center;padding:0 10px 0;}
+  #resume.t8 .head .name{color:#fff;font-family:Georgia,'Noto Sans Khmer',serif;}
+  #resume.t8 .head .title{color:#f2e6ff;}
+  #resume.t8 .head .contact-line{color:#f2e6ff;}
+  #resume.t8 .photo{width:calc(92px * var(--scale));height:calc(92px * var(--scale));border:4px solid #fff;}
+  #resume.t8 .photo-placeholder{border:4px dashed rgba(255,255,255,.7);color:#fff;}
+  #resume.t8 .body{padding:26px 40px 46px;}
+  #resume.t8 .block h3{color:#6a3ea1;}
+  #resume.t8 .skill-tag{background:#f2e6ff;color:#6a3ea1;border-radius:20px;}
+  #resume.t8 .skill-tag:nth-child(3n+2){background:#ffe6d1;color:#c2601a;}
+  #resume.t8 .skill-tag:nth-child(3n){background:#e0f7f0;color:#1d7a6e;}
+  #resume.t8 .summary{margin-top:-5px;}
+
+  /* ===== TEMPLATE 9: Timeline (vertical timeline for experience) ===== */
+  #resume.t9{padding:0;font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.t9 .head{background:linear-gradient(120deg,#1d7a6e,#3dbfa8);color:#fff;padding:34px 40px 24px;}
+  #resume.t9 .head-text{display:block; text-align:center;padding:0 50px 0;}
+  #resume.t9 .head .name{color:#fff;font-family:Georgia,'Noto Sans Khmer',serif;}
+  #resume.t9 .head .title{color:#dff7f0;}
+  #resume.t9 .head .contact-line{color:#dff7f0; justify-content:center;}
+  #resume.t9 .photo{width:calc(92px * var(--scale));height:calc(92px * var(--scale));border:3px solid rgba(255,255,255,.6);}
+  #resume.t9 .photo-placeholder{border-color:rgba(255,255,255,.6);color:#dff7f0;}
+  #resume.t9 .body{padding:24px 40px 40px;}
+  #resume.t9 .block h3{color:#1d7a6e;}
+  #resume.t9 .skill-tag{background:#e0f7f0;color:#1d7a6e;}
+  #resume.t9 .item{position:relative;padding-left:calc(18px * var(--scale));margin-bottom:calc(16px * var(--scale));}
+  #resume.t9 .item::before{content:'';position:absolute;left:0;top:5px;width:8px;height:8px;border-radius:50%;background:#3dbfa8;}
+  #resume.t9 .item::after{content:'';position:absolute;left:3px;top:14px;bottom:-16px;width:2px;background:#cdeee7;}
+  #resume.t9 .item:last-child::after{display:none;}
+
+  /* ===== TEMPLATE 10: Formal Khmer (official/government style, black & white) ===== */
+  #resume.t10{font-family:Georgia,'Times New Roman','Noto Sans Khmer',serif;}
+  #resume.t10 .head-block{display:block;}
+  #resume.t10 .photo-wrap{float:right; margin-left:calc(18px * var(--scale)); margin-top:10px;}
+  #resume.t10 .head-text{display:block; text-align:center;}
+  #resume.t10 .contact-line{justify-content:center;}
+  #resume.t10 .name{color:#000;font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
+  #resume.t10 .title{color:#333;font-style:italic;}
+  #resume.t10 .photo{width:3.2cm;height:4.2cm;border-radius:0;border:1.5px solid #000;object-fit:cover;}
+  #resume.t10 .photo-placeholder{width:3.2cm;height:4.2cm;border-radius:0;border:1.5px solid #000;color:#555;font-size:10px;}
+  #resume.t10 .summary{text-align:justify; margin-top:8px}
+  #resume.t10 .block h3{color:#000;text-align:center;border-bottom:none;border-top:1px solid #000;border-bottom:1px solid #000;padding:4px 0;letter-spacing:.1em;}
+  #resume.t10 .skill-tag{background:none;color:#000;padding:0;border-radius:0;}
+  #resume.t10 .skill-tag::after{content:' • ';}
+  #resume.t10 .skill-tag:last-child::after{content:'';}
+  #resume.t10 .item-role, #resume.t10 .item-sub{color:#000;}
+
+  /* ===== TEMPLATE 11: Elegant Executive (navy & gold, senior/formal) ===== */
+  #resume.t11{padding:0;font-family:Georgia,'Times New Roman','Noto Sans Khmer',serif;}
+  #resume.t11 .head{background:#0f1f33;color:#fff;padding:34px 40px 24px;border-bottom:3px solid #c9a24b;}
+  #resume.t11 .head-text{display:block; text-align:center;padding:0 50px 0;}
+  #resume.t11 .head .name{color:#fff;letter-spacing:.03em;}
+  #resume.t11 .head .title{color:#c9a24b;font-style:italic;}
+  #resume.t11 .head .contact-line{color:#cfd6e0; justify-content:center;}
+  #resume.t11 .photo{width:calc(92px * var(--scale));height:calc(92px * var(--scale));border-radius:4px;border:2px solid #c9a24b;}
+  #resume.t11 .photo-placeholder{border-radius:4px;border-color:#c9a24b;color:#c9a24b;}
+  #resume.t11 .body{padding:26px 40px 40px;}
+  #resume.t11 .block h3{color:#0f1f33;border-bottom:1px solid #c9a24b;}
+  #resume.t11 .skill-tag{background:#f4ecd8;color:#7a611f;border-radius:2px;}
+
+  /* ===== TEMPLATE 12: Tech/Developer (monospace accents, terminal green) ===== */
+  #resume.t12{font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.t12 .name{color:#0d2b1f;font-family:'Courier New','Noto Sans Khmer',monospace;font-weight:700;}
+  #resume.t12 .title{color:#1a7a4c;font-family:'Courier New','Noto Sans Khmer',monospace;font-style:normal;}
+  #resume.t12 .title::before{content:'> ';}
+  #resume.t12 .block h3{color:#1a7a4c;font-family:'Courier New','Noto Sans Khmer',monospace;border-bottom:1px dashed #1a7a4c;}
+  #resume.t12 .block h3::before{content:'# ';}
+  #resume.t12 .skill-tag{background:#0d2b1f;color:#7ee6b4;border-radius:3px;font-family:'Courier New','Noto Sans Khmer',monospace;}
+  #resume.t12 .item-role{font-family:'Courier New','Noto Sans Khmer',monospace;}
+
+  /* ===== TEMPLATE 13: Academic (formal, publications-style, minimal color) ===== */
+  #resume.t13{font-family:Georgia,'Times New Roman','Noto Sans Khmer',serif;}
+  #resume.t13 .head-block{flex-direction:column;align-items:flex-start;}
+  #resume.t13 .photo, #resume.t13 .photo-placeholder{display:none;}
+  #resume.t13 .name{color:#1c1b19;font-weight:700;border-bottom:2px solid #1c1b19;padding-bottom:4px;display:inline-block;}
+  #resume.t13 .title{color:#555;font-style:italic;}
+  #resume.t13 .block h3{color:#1c1b19;font-variant:small-caps;font-size:calc(13px * var(--scale));border-bottom:1px solid #999;}
+  #resume.t13 .skill-tag{background:none;color:#1c1b19;padding:0;border-radius:0;}
+  #resume.t13 .skill-tag::after{content:'; ';}
+  #resume.t13 .skill-tag:last-child::after{content:'';}
+  #resume.t13 .item-desc-list{font-style:normal;}
+
+  /* ===== TEMPLATE 14: Portfolio (large centered photo, minimalist) ===== */
+  #resume.t14{padding:0;font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.t14 .head{padding:44px 40px 20px;text-align:center;}
+  #resume.t14 .head-block{flex-direction:column;align-items:center;}
+  #resume.t14 .photo{width:calc(120px * var(--scale));height:calc(120px * var(--scale));}
+  #resume.t14 .photo-placeholder{width:calc(120px * var(--scale));height:calc(120px * var(--scale));}
+  #resume.t14 .name{text-align:center;}
+  #resume.t14 .title{text-align:center;}
+  #resume.t14 .contact-line{justify-content:center;}
+  #resume.t14 .body{padding:0px 40px 20px;}
+  #resume.t14 .block h3{text-align:center;letter-spacing:.15em;}
+  #resume.t14 .skills-list{justify-content:center;}
+
+  /* ===== TEMPLATE 15: Fresh Graduate (bright, friendly, education-forward) ===== */
+  #resume.t15{padding:0;display:grid;grid-template-columns:230px 1fr;font-family:-apple-system,'Noto Sans Khmer',sans-serif;}
+  #resume.t15 .side{background:#ffe8a3;color:#3a2e05;padding:34px 22px;display:flex;flex-direction:column;align-items:center;text-align:center;}
+  #resume.t15 .side .head-block{flex-direction:column;align-items:center;gap:calc(14px * var(--scale));}
+  #resume.t15 .side .name{color:#3a2e05;font-size:calc(20px * var(--scale));}
+  #resume.t15 .side .title{color:#6b5a1e;font-style:normal;}
+  #resume.t15 .side .contact-line{flex-direction:column;align-items:center;color:#6b5a1e;gap:calc(6px * var(--scale));margin-top:calc(14px * var(--scale));}
+  #resume.t15 .side h3{color:#3a2e05;border-bottom:1px solid #d9b95c;}
+  #resume.t15 .side .skill-tag{background:#fff3d1;color:#6b5a1e;}
+  #resume.t15 .side .photo{width:calc(90px * var(--scale));height:calc(90px * var(--scale));border:3px solid #fff;}
+  #resume.t15 .side .photo-placeholder{border-color:#fff;color:#6b5a1e;}
+  #resume.t15 .main{padding:34px 30px;}
+  #resume.t15 .main h3{color:#3a2e05;}
+  #resume.t15 .main .summary{margin-top:0;}
