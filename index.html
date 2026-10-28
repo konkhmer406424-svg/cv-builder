@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CV Builder — Bunlai Media</title>
+<title>CV Builder</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -913,6 +913,20 @@
     pointer-events:none; z-index:5; text-align:center; white-space:pre-wrap; line-height:10;
   }
   @media print{ #resume.watermarked::before{ content:none; } }
+
+  /* ---- Photo button + AI helper bar ---- */
+  .photo-btn{font-family:-apple-system,'Noto Sans Khmer',sans-serif;font-size:12.5px;font-weight:600;color:var(--accent);background:none;border:1px dashed var(--accent);border-radius:6px;padding:8px 12px;cursor:pointer;flex:1;}
+  .photo-btn:hover{background:rgba(138,90,59,.07);}
+  .ai-bar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:4px 0 10px;}
+  .ai-bar .ai-btn{font-family:-apple-system,'Noto Sans Khmer',sans-serif;font-size:11.5px;font-weight:600;color:var(--accent);background:none;border:1px solid var(--accent);border-radius:999px;padding:4px 10px;cursor:pointer;}
+  .ai-bar .ai-btn:hover{background:rgba(138,90,59,.07);}
+  .ai-bar .ai-btn:disabled{opacity:.5;cursor:default;}
+  .ai-bar .ai-msg{font-size:11.5px;color:var(--muted);flex-basis:100%;}
+  .ai-bar .ai-msg.err{color:#a33;}
+  body[data-lang-mode="km"] .ai-bar .ai-btn[data-ai="to_english"],
+  body[data-lang-mode="en"] .ai-bar .ai-btn[data-ai="to_khmer"]{display:none;}
+  .lang-note{font-size:12px;line-height:1.5;border-radius:6px;padding:7px 10px;margin:0 0 10px;background:#fff6e0;border:1px solid #f0d9a0;color:#7a5a12;}
+  .lang-note.km{background:#e8f3ff;border-color:#b9d6f5;color:#1d4d7a;}
 </style>
 </head>
 <body class="show-edit">
@@ -974,7 +988,7 @@
           <div class="hint">All 5 templates auto-fill from your name, contact info, experience, skills and summary above — plus the details below.</div>
 
           <label>Company Name</label>
-          <input type="text" id="clCompany" placeholder="Bunlai Media Co., Ltd.">
+          <input type="text" id="clCompany" placeholder="ABC Company Co., Ltd.">
           <label>Position You're Applying For</label>
           <input type="text" id="clPosition" placeholder="Digital Marketing Manager">
           <div class="row2">
@@ -989,6 +1003,7 @@
           </div>
           <label>Key Highlight to Mention (optional)</label>
           <textarea id="clHighlight" placeholder="e.g. Led a campaign that grew leads by 40% in 3 months..."></textarea>
+          <div class="ai-bar" data-sel="#clHighlight" data-kind="text"></div>
           <div class="hint">Leave any of these blank and the letter will fall back to sensible defaults (e.g. your Job Title above, or "Hiring Manager").</div>
         </div>
       </details>
@@ -1013,7 +1028,7 @@
       <div class="acc-body">
         <div class="photo-row">
           <div class="photo-thumb-empty" id="photoThumb">No photo</div>
-          <input type="file" id="photoInput" accept="image/*">
+          <button type="button" class="photo-btn" id="photoBtn">📷 ថត / កែរូប  Take / Edit photo</button>
         </div>
         <button class="add-btn" id="removePhoto" type="button" style="display:none;">លុបរូបថត / Remove photo</button>
         <details class="hint-toggle"><summary></summary><div class="hint">ជំនួយ៖ សម្រាប់ទម្រង់ "Local" ប្រើរូបថតបញ្ឈរ (3×4cm) / Tip: for the "Local" template, use a portrait photo — it will be cropped to a standard 3×4cm ID-photo box.</div></details>
@@ -1027,6 +1042,7 @@
         <input type="text" id="fullName" placeholder="Sok Dara">
         <label>តួនាទី / Professional Title</label>
         <input type="text" id="jobTitle" placeholder="Digital Marketing Manager">
+        <div class="ai-bar" data-sel="#jobTitle" data-kind="title" data-mini="1"></div>
         <div class="row2">
           <div>
             <label>អ៊ីមែល / Email</label>
@@ -1043,6 +1059,7 @@
         <input type="text" id="linkedin" placeholder="linkedin.com/in/sokdara">
         <label>សេចក្ដីសង្ខេប / Summary</label>
         <textarea id="summary" placeholder="A short 2-3 sentence professional summary..."></textarea>
+        <div class="ai-bar" data-sel="#summary" data-kind="text"></div>
       </div>
     </div>
 
@@ -1067,6 +1084,7 @@
       <div class="acc-body">
         <label>បំបែកដោយសញ្ញាក្បៀស (,) / Comma-separated list</label>
         <input type="text" id="skills" placeholder="Facebook Ads, TikTok Ads, Media Planning, Excel">
+        <div class="ai-bar" data-sel="#skills" data-kind="list" data-mini="1"></div>
       </div>
     </div>
 
@@ -1083,6 +1101,7 @@
       <div class="acc-body">
         <label>មួយបន្ទាត់មួយ / One per line</label>
         <textarea id="certifications" placeholder="Google Ads Certification, 2024"></textarea>
+        <div class="ai-bar" data-sel="#certifications" data-kind="lines" data-mini="1"></div>
       </div>
     </div>
 
@@ -1091,6 +1110,7 @@
       <div class="acc-body">
         <label>បំបែកដោយសញ្ញាក្បៀស (,) / Comma-separated list</label>
         <input type="text" id="interests" placeholder="Photography, Football, Reading">
+        <div class="ai-bar" data-sel="#interests" data-kind="list" data-mini="1"></div>
       </div>
     </div>
 
@@ -1195,6 +1215,7 @@
 </div>
 
 
+<script src="cv-photo.js"></script>
 <script>
 document.querySelectorAll('.acc-header').forEach(btn=>{
   btn.addEventListener('click', ()=>{
@@ -1222,6 +1243,100 @@ let state = {
 
 const $ = id => document.getElementById(id);
 
+// ---- AI helper (Cloudflare Worker /ai — the API key never touches this page) ----
+const AI_URL = 'https://YOUR-WORKER.YOUR-ACCOUNT.workers.dev/ai';   // <-- put your Worker URL here
+// Templates 1–15 = English CV, templates 16–20 = Khmer CV.
+function langMode(){
+  const n = parseInt(String(state.tpl).replace(/\D/g, ''), 10);
+  return (n >= 16 && n <= 20) ? 'km' : 'en';
+}
+const AI_BTN_TRANSLATE =
+  '<button type="button" class="ai-btn" data-ai="to_english">🇬🇧 ខ្មែរ → English</button>' +
+  '<button type="button" class="ai-btn" data-ai="to_khmer">🇰🇭 English → ខ្មែរ</button>';
+const AI_BTN_TAIL =
+  '<button type="button" class="ai-btn" data-ai="undo" style="display:none;">↶ ត្រឡប់ / Undo</button>' +
+  '<span class="ai-msg"></span>';
+const AI_BAR_HTML = AI_BTN_TRANSLATE +
+  '<button type="button" class="ai-btn" data-ai="fix">✓ កែអក្ខរាវិរុទ្ធ / Fix</button>' +
+  '<button type="button" class="ai-btn" data-ai="improve">✨ កែសម្រួល / Improve</button>' + AI_BTN_TAIL;
+const AI_BAR_MINI_HTML = AI_BTN_TRANSLATE + AI_BTN_TAIL;
+// For forms that are rebuilt by JS: sel = CSS selector of the field, kind = title | list | lines | text
+function aiBarFor(sel, kind, mini){
+  return '<div class="ai-bar" data-sel=\'' + sel + '\' data-kind="' + kind + '">' + (mini ? AI_BAR_MINI_HTML : AI_BAR_HTML) + '</div>';
+}
+const AI_ERRORS = {
+  unlock_required: 'សូមដោះសោ (Unlock) ជាមុនសិន / Unlock first to use AI',
+  daily_limit: 'ប្រើគ្រប់កំណត់ប្រចាំថ្ងៃហើយ សូមសាកល្បងថ្ងៃស្អែក / Daily AI limit reached — try again tomorrow',
+  too_long: 'អត្ថបទវែងពេក / Text is too long',
+  empty_text: 'សូមវាយអត្ថបទជាមុន / Type some text first',
+  upstream_error: 'AI មានបញ្ហា សូមសាកល្បងម្ដងទៀត / AI error, please try again',
+  upstream_unreachable: 'AI មានបញ្ហា សូមសាកល្បងម្ដងទៀត / AI error, please try again',
+  empty_result: 'AI មិនបានឆ្លើយ សូមសាកល្បងម្ដងទៀត / AI returned nothing, try again'
+};
+const aiPrev = new WeakMap();   // field -> text before the last AI change (for Undo)
+async function runAi(bar, btn){
+  const ta = bar.dataset.sel ? document.querySelector(bar.dataset.sel) : null; if(!ta) return;
+  const msg = bar.querySelector('.ai-msg'), undoBtn = bar.querySelector('[data-ai="undo"]');
+  const setMsg = (m, err) => { msg.textContent = m || ''; msg.className = 'ai-msg' + (err ? ' err' : ''); };
+  const action = btn.dataset.ai;
+  if(action === 'undo'){
+    if(aiPrev.has(ta)){ ta.value = aiPrev.get(ta); ta.dispatchEvent(new Event('input', {bubbles:true})); aiPrev.delete(ta); undoBtn.style.display = 'none'; setMsg(''); }
+    return;
+  }
+  const text = ta.value.trim();
+  if(!text){ setMsg(AI_ERRORS.empty_text, true); return; }
+  if(!isUnlocked()){ setMsg(AI_ERRORS.unlock_required, true); showPayModal(); return; }
+  const d = readUnlock();
+  const btns = bar.querySelectorAll('button'); btns.forEach(b => b.disabled = true);
+  setMsg('កំពុងដំណើរការ… / Working…');
+  const ctl = new AbortController(), timer = setTimeout(() => ctl.abort(), 45000);
+  try{
+    const res = await fetch(AI_URL, {
+      method: 'POST', signal: ctl.signal,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: d.code, fullName: d.name, action, text, kind: bar.dataset.kind || 'text' })
+    });
+    const data = await res.json().catch(() => ({}));
+    if(!res.ok || !data.text){
+      if(data.error === 'unlock_required') showPayModal();
+      setMsg(AI_ERRORS[data.error] || 'មានបញ្ហា / Something went wrong', true);
+    } else {
+      aiPrev.set(ta, ta.value);
+      ta.value = data.text;
+      ta.dispatchEvent(new Event('input', {bubbles:true}));   // updates state + preview + autosave
+      undoBtn.style.display = '';
+      setMsg('');
+    }
+  }catch(e){
+    setMsg('មានបញ្ហាតភ្ជាប់ / Connection error', true);
+  }finally{
+    clearTimeout(timer); btns.forEach(b => b.disabled = false);
+  }
+}
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.ai-bar [data-ai]');
+  if(btn) runAi(btn.closest('.ai-bar'), btn);
+});
+document.querySelectorAll('.ai-bar:empty').forEach(b => { b.innerHTML = b.dataset.mini ? AI_BAR_MINI_HTML : AI_BAR_HTML; });
+
+// ---- Language reminder on every input section (EN for templates 1–15, KH for 16–20) ----
+const LANG_NOTE = {
+  en: '⚠️ សូមបញ្ចូលព័ត៌មានជាភាសាអង់គ្លេស / Please enter this information in English (Templates 1–15).',
+  km: '⚠️ សូមបញ្ចូលព័ត៌មានជាភាសាខ្មែរ / Please enter this information in Khmer (Templates 16–20).'
+};
+let langNoteMode = '';
+function makeLangNote(){ const d = document.createElement('div'); d.className = 'lang-note'; return d; }
+document.querySelectorAll('.acc-item[data-acc]:not([data-acc="photo"]) > .acc-body').forEach(body => body.insertBefore(makeLangNote(), body.firstChild));
+try{ const c = $('clCompany'); const lab = c.previousElementSibling; c.parentElement.insertBefore(makeLangNote(), lab || c); }catch(e){}
+function applyLangMode(){
+  const m = langMode();
+  if(m === langNoteMode) return;
+  langNoteMode = m;
+  document.body.dataset.langMode = m;
+  document.querySelectorAll('.lang-note').forEach(n => { n.textContent = LANG_NOTE[m]; n.className = 'lang-note ' + m; });
+}
+applyLangMode();
+
 function bindBasic(id, key){
   $(id).addEventListener('input', e => { state[key] = e.target.value; render(); });
 }
@@ -1233,40 +1348,34 @@ $('languages').addEventListener('input', e => { state.languages = e.target.value
 $('certifications').addEventListener('input', e => { state.certifications = e.target.value; render(); });
 $('interests').addEventListener('input', e => { state.interests = e.target.value; render(); });
 
-// ---- Photo upload ----
-$('photoInput').addEventListener('change', e=>{
-  const file = e.target.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    state.photo = ev.target.result;
-    updatePhotoThumb();
-    render();
-  };
-  reader.readAsDataURL(file);
-});
-$('removePhoto').addEventListener('click', ()=>{
-  state.photo = null;
-  $('photoInput').value = '';
-  updatePhotoThumb();
-  render();
-});
-function updatePhotoThumb(){
-  const wrap = $('photoThumb').parentElement;
-  if(state.photo){
-    wrap.innerHTML = `<img class="photo-thumb" src="${state.photo}" alt="thumb" id="photoThumb"><input type="file" id="photoInput" accept="image/*">`;
-    $('removePhoto').style.display = 'block';
-  } else {
-    wrap.innerHTML = `<div class="photo-thumb-empty" id="photoThumb">No photo</div><input type="file" id="photoInput" accept="image/*">`;
-    $('removePhoto').style.display = 'none';
+// ---- Photo (camera / crop / background — cv-photo.js) ----
+function setPhoto(url){ state.photo = url; updatePhotoThumb(); render(); }
+function openPhotoEditor(){
+  if(window.CVPhoto){
+    // Local (t1) and Classic (t10) use a 3x4 box; the other templates use a square/round photo.
+    const portrait = (state.tpl === 't1' || state.tpl === 't10');
+    CVPhoto.open({ aspect: portrait ? '3x4' : '1x1', maxKB: 250, onDone: url => setPhoto(url) });
+    return;
   }
-  $('photoInput').addEventListener('change', e=>{
-    const file = e.target.files[0];
-    if(!file) return;
-    const reader = new FileReader();
-    reader.onload = ev => { state.photo = ev.target.result; updatePhotoThumb(); render(); };
-    reader.readAsDataURL(file);
-  });
+  // Fallback if cv-photo.js did not load: plain file picker (original behaviour)
+  const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*';
+  inp.onchange = () => { const f = inp.files[0]; if(!f) return; const r = new FileReader(); r.onload = ev => setPhoto(ev.target.result); r.readAsDataURL(f); };
+  inp.click();
+}
+$('photoBtn').addEventListener('click', openPhotoEditor);
+$('removePhoto').addEventListener('click', ()=>{ setPhoto(null); });
+function updatePhotoThumb(){
+  const t = $('photoThumb');
+  if(state.photo){
+    const img = document.createElement('img');
+    img.className = 'photo-thumb'; img.id = 'photoThumb'; img.alt = 'thumb'; img.src = state.photo;
+    t.replaceWith(img);
+  } else if(t.tagName === 'IMG'){
+    const d = document.createElement('div');
+    d.className = 'photo-thumb-empty'; d.id = 'photoThumb'; d.textContent = 'No photo';
+    t.replaceWith(d);
+  }
+  $('removePhoto').style.display = state.photo ? 'block' : 'none';
 }
 
 // Template picker
@@ -1332,8 +1441,9 @@ function renderExpForm(){
       ${state.exp.length>1 ? `<button class="entry-remove" data-i="${i}" data-type="exp">×</button>` : ''}
       <label>តួនាទីការងារ / Role</label>
       <input type="text" data-field="role" data-i="${i}" value="${escapeAttr(item.role)}" placeholder="Media Executive">
+      ${aiBarFor('#expList input[data-field="role"][data-i="'+i+'"]','title',true)}
       <label>ក្រុមហ៊ុន / Company</label>
-      <input type="text" data-field="company" data-i="${i}" value="${escapeAttr(item.company)}" placeholder="FCB & Prakit">
+      <input type="text" data-field="company" data-i="${i}" value="${escapeAttr(item.company)}" placeholder="ABC Company">
       <div class="row2">
         <div><label>ថ្ងៃចាប់ផ្ដើម / Start Date</label>
           <input type="month" data-field="startDate" data-i="${i}" value="${escapeAttr(item.startDate)}"></div>
@@ -1346,6 +1456,7 @@ function renderExpForm(){
       </label>
       <label>ការពិពណ៌នា / Description</label>
       <textarea data-field="desc" data-i="${i}" placeholder="One achievement per line — each line becomes a bullet point">${escapeHtml(item.desc)}</textarea>
+      ${aiBarFor('#expList textarea[data-field="desc"][data-i="'+i+'"]','lines',false)}
     `;
     wrap.appendChild(div);
   });
@@ -1426,7 +1537,8 @@ function renderRefForm(){
       <label>ឈ្មោះ / Name</label>
       <input type="text" data-field="name" data-i="${i}" value="${escapeAttr(item.name)}" placeholder="Chan Sopheak">
       <label>តួនាទី/ទំនាក់ទំនង / Position / Relation</label>
-      <input type="text" data-field="role" data-i="${i}" value="${escapeAttr(item.role)}" placeholder="Manager at FCB & Prakit">
+      <input type="text" data-field="role" data-i="${i}" value="${escapeAttr(item.role)}" placeholder="Manager at ABC Company">
+      ${aiBarFor('#refList input[data-field="role"][data-i="'+i+'"]','title',true)}
       <label>ទំនាក់ទំនង / Contact</label>
       <input type="text" data-field="contact" data-i="${i}" value="${escapeAttr(item.contact)}" placeholder="+855 12 345 678 / email">
     `;
@@ -1462,8 +1574,10 @@ function renderCustomForm(){
       <button class="entry-remove" data-i="${i}" data-type="custom">×</button>
       <label>ចំណងជើងផ្នែក / Section Title</label>
       <input type="text" data-field="title" data-i="${i}" value="${escapeAttr(item.title)}" placeholder="Height, Weight, Hobby...">
+      ${aiBarFor('#customList input[data-field="title"][data-i="'+i+'"]','title',true)}
       <label>បំបែកដោយសញ្ញាក្បៀស (,) / Comma-separated list</label>
       <input type="text" data-field="content" data-i="${i}" value="${escapeAttr(item.content)}" placeholder="170cm, 60kg">
+      ${aiBarFor('#customList input[data-field="content"][data-i="'+i+'"]','list',true)}
     `;
     wrap.appendChild(div);
   });
@@ -1635,6 +1749,7 @@ function renderCoverLetter(){
 }
 
 function render(){
+  applyLangMode();
   if(state.mode === 'cl'){ renderCoverLetter(); return; }
   const r = $('resume');
   r.className = state.tpl + (isUnlocked() ? '' : ' watermarked');
