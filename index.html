@@ -234,6 +234,29 @@
       </div>
     </div>
 
+    <div class="acc-item cv-only" data-acc="coach" id="coachPanel">
+      <button type="button" class="acc-header"><span>✨ ពិនិត្យ CV និងត្រៀមសម្ភាសន៍ / CV Check &amp; Interview Prep</span><span class="acc-caret">▾</span></button>
+      <div class="acc-body">
+        <div class="coach-title">១) ពិនិត្យព័ត៌មានខ្វះខាត / Check for missing info <span class="coach-free">ឥតគិតថ្លៃ / free</span></div>
+        <button type="button" class="add-btn" id="coachCheckBtn">🔍 ពិនិត្យ CV / Check my CV</button>
+        <div id="coachCheckOut"></div>
+        <button type="button" class="add-btn" id="coachGapsBtn">🤖 AI សួរសំណួរដើម្បីបន្ថែមព័ត៌មាន / AI: what should I add?</button>
+        <div id="coachGapsOut" class="coach-result" style="display:none;"></div>
+        <div class="hint">AI គ្រាន់តែសួរសំណួរ — អ្នកជាអ្នកឆ្លើយ ហើយបន្ថែមក្នុង CV ដោយខ្លួនឯង / The AI only asks questions — you answer them and add the real details yourself.</div>
+
+        <div class="coach-title" style="margin-top:18px;">២) ត្រៀមសម្ភាសន៍ / Interview prep</div>
+        <label class="coach-label" for="coachPosition">តួនាទីដែលចង់ដាក់ពាក្យ / Position you apply for</label>
+        <input type="text" id="coachPosition" placeholder="Digital Marketing Manager">
+        <label class="coach-label" for="coachLang">ភាសា / Language</label>
+        <select id="coachLang"><option value="km">ខ្មែរ</option><option value="en">English</option></select>
+        <button type="button" class="add-btn" id="coachInterviewBtn">🎤 បង្កើតសំណួរសម្ភាសន៍ / Generate interview questions</button>
+        <div id="coachInterviewOut" class="coach-result" style="display:none;"></div>
+        <button type="button" class="add-btn" id="coachCopyBtn" style="display:none;">📋 ចម្លង / Copy</button>
+        <div class="ai-msg" id="coachMsg"></div>
+        <div class="hint">ព័ត៌មានទំនាក់ទំនង (ឈ្មោះ អ៊ីមែល ទូរស័ព្ទ) មិនត្រូវបានផ្ញើទៅ AI ទេ / Your contact details are never sent to the AI. Needs Unlock; each use counts toward your AI limit.</div>
+      </div>
+    </div>
+
   </div>
 
   <div class="resizer no-print" id="resizer"></div>
@@ -273,7 +296,12 @@
     <!-- Step 1: intro -->
     <div id="payStepPay">
       <h2 style="margin:0 0 4px;font-size:19px;color:var(--ink);">សូមទូទាត់ដើម្បីទាញយក</h2>
-      <p style="margin:0 0 20px;font-size:13px;color:var(--muted);">Pay to unlock 30-day download access — <strong>$2</strong></p>
+      <p style="margin:0 0 12px;font-size:13px;color:var(--muted);">Pay to unlock 30-day download access — <strong id="payPrice">$1.99</strong></p>
+      <ul style="margin:0 0 20px;padding:0;list-style:none;text-align:left;font-size:12.5px;line-height:1.7;color:var(--ink);">
+        <li>✅ ទម្រង់ CV ៤ ប្លុក ២០ ទម្រង់ ជ្រើសរើសងាយស្រួល / 20 templates, easy to choose</li>
+        <li>✅ AI ជំនួយ៖ ខ្មែរ → English កែអក្ខរាវិរុទ្ធ និងកែសម្រួល / AI: Khmer → English, Fix &amp; Improve</li>
+        <li>✅ ទាញយក CV និងសំបុត្រ ៣០ ថ្ងៃ / CV &amp; cover letter downloads for 30 days</li>
+      </ul>
       <button id="genQrBtn" type="button" class="print-btn" style="width:100%;">បង្កើត KHQR ទូទាត់ / Generate Payment QR</button>
       <p id="abaPayError" style="color:#a33;font-size:12px;margin:10px 0 0;display:none;">មានបញ្ហា សូមសាកល្បងម្ដងទៀត / Something went wrong, please try again</p>
       <button type="button" id="showManualCodeBtn" style="width:100%;margin-top:14px;background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline;font-family:-apple-system,sans-serif;">មាន Unlock Code រួចហើយ?</button>
@@ -333,6 +361,7 @@
 <script src="js/unlock.js"></script>
 <script src="js/download.js"></script>
 <script src="js/khqr.js"></script>
+<script src="js/coach.js"></script>
 <script src="js/layout.js"></script>
 <script src="js/main.js"></script>
 <script src="js/pwa.js"></script>

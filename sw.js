@@ -3,12 +3,12 @@
    - Google Fonts: cached after first load.
    - Payment / AI / Apps Script calls are never touched.
    When you add or rename a file, add it to PRECACHE and bump CACHE ("cv-builder-v2", ...). */
-const CACHE = 'cv-builder-v1';
+const CACHE = 'cv-builder-v2';
 const PRECACHE = [
   './', 'index.html', 'manifest.webmanifest',
   'css/base.css', 'css/preview.css', 'css/templates-en.css', 'css/templates-kh.css', 'css/responsive.css', 'css/components.css',
   'js/cv-photo.js', 'js/config.js', 'js/core.js', 'js/ai.js', 'js/inputs.js', 'js/photo.js', 'js/pickers.js', 'js/entries.js',
-  'js/letter.js', 'js/render.js', 'js/storage.js', 'js/unlock.js', 'js/download.js', 'js/khqr.js', 'js/layout.js', 'js/main.js', 'js/pwa.js',
+  'js/letter.js', 'js/render.js', 'js/storage.js', 'js/unlock.js', 'js/download.js', 'js/khqr.js', 'js/coach.js', 'js/layout.js', 'js/main.js', 'js/pwa.js',
   'assets/logo.png',
   'assets/icons/icon-192.png', 'assets/icons/icon-512.png', 'assets/icons/icon-maskable-512.png', 'assets/icons/apple-touch-icon.png', 'assets/icons/favicon-64.png'
 ];

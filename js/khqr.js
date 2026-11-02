@@ -1,4 +1,5 @@
 /* khqr.js — KHQR payment: create QR, poll status, copy code, manual unlock code */
+if($('payPrice')) $('payPrice').textContent = '$' + PRICE_USD.toFixed(2);
 
 // ---- Bakong Relay: generate a KHQR code for this order ----
 async function generateQr(){
@@ -21,7 +22,7 @@ async function generateQr(){
   try{
     const ownerName = encodeURIComponent(rawName);
     try{ sessionStorage.setItem(PENDING_NAME_KEY, rawName); }catch(e){}
-    const res = await fetch(CODE_CHECK_URL + '?action=createPayment&amount=2&name=' + ownerName);
+    const res = await fetch(CODE_CHECK_URL + '?action=createPayment&amount=' + PRICE_USD + '&name=' + ownerName);
     const data = await res.json();
     if(!data.success || !data.md5 || !data.image){
       throw new Error(data.reason || 'createPayment failed');

@@ -10,6 +10,7 @@ const CODE_CHECK_URL = 'https://script.google.com/macros/s/AKfycbzcaIg0U0p2kg1zd
 const UNLOCK_STORAGE_KEY = 'cvBuilderUnlocked_v2'; // v2: unlock is now bound to code + Full Name
 const OLD_UNLOCK_STORAGE_KEY = 'cvBuilderUnlocked_v1'; // old flag (not tied to any code/name) — discarded
 const PENDING_NAME_KEY = 'cvBuilderPendingName_v1';
+const PRICE_USD = 1.99;   // price shown in the pay modal AND sent to Apps Script (createPayment). Keep the Apps Script amount check in sync!
 const UNLOCK_DAYS = 30;
 const PENDING_MD5_KEY = 'cvBuilderPendingMd5_v1';
 const POLL_INTERVAL_MS = 3000;
