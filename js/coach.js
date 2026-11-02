@@ -90,8 +90,26 @@ function coachGoto(acc, focusId){
   else if(item) item.scrollIntoView({block:'start', behavior:'smooth'});
 }
 
+// ---------- UI: result card under the action row ----------
+const COACH_BTNS = ['coachCheckBtn','coachGapsBtn','coachInterviewBtn'];
+function coachOpen(title, activeId){
+  $('coachCard').style.display = 'block';
+  $('coachCardTitle').textContent = title;
+  $('coachCheckOut').textContent = '';
+  $('coachText').style.display = 'none'; $('coachText').textContent = '';
+  $('coachCopyBtn').style.display = 'none';
+  $('coachHint').style.display = 'none';
+  $('coachMsg').className = 'ai-msg'; $('coachMsg').textContent = '';
+  COACH_BTNS.forEach(id => $(id).classList.toggle('on', id === activeId));
+  try{ $('coachCard').scrollIntoView({block:'nearest', behavior:'smooth'}); }catch(e){}
+}
+function coachClose(){
+  $('coachCard').style.display = 'none';
+  COACH_BTNS.forEach(id => $(id).classList.remove('on'));
+}
 function coachShowCheck(){
-  const out = $('coachCheckOut'); out.textContent = '';
+  coachOpen('ពិនិត្យ CV / CV check', 'coachCheckBtn');
+  const out = $('coachCheckOut');
   const items = coachCheck();
   const must = items.filter(i => i.lvl === 'must'), tips = items.filter(i => i.lvl === 'tip');
   const head = document.createElement('div'); head.className = 'coach-head';
@@ -130,28 +148,42 @@ function coachErr(code){
   if(code === 'network') return 'មានបញ្ហាតភ្ជាប់ / Connection error';
   return (typeof AI_ERRORS !== 'undefined' && AI_ERRORS[code]) || 'មានបញ្ហា / Something went wrong';
 }
-async function coachRun(btn, action, extra, outId, showCopy){
-  const out = $(outId), msg = $('coachMsg');
-  const all = document.querySelectorAll('#coachPanel button'); all.forEach(b => b.disabled = true);
-  msg.className = 'ai-msg'; msg.textContent = 'កំពុងដំណើរការ… / Working…';
+async function coachRun(btnId, action, extra, title){
+  coachOpen(title, btnId);
+  $('coachHint').style.display = '';
+  const msg = $('coachMsg'), btns = COACH_BTNS.map($);
+  btns.forEach(b => b.disabled = true);
+  msg.textContent = 'កំពុងដំណើរការ… / Working…';
   const r = await coachAi(action, extra);
-  all.forEach(b => b.disabled = false);
+  btns.forEach(b => b.disabled = false);
   if(r.error){ msg.className = 'ai-msg err'; msg.textContent = coachErr(r.error); return; }
-  out.textContent = r.text;                       // textContent: AI output is never inserted as HTML
-  out.style.display = 'block';
-  if(showCopy) $('coachCopyBtn').style.display = '';
+  $('coachText').textContent = r.text;             // textContent: AI output is never inserted as HTML
+  $('coachText').style.display = 'block';
+  $('coachCopyBtn').style.display = '';
   msg.textContent = (typeof r.remaining === 'number') ? `នៅសល់ ${r.remaining} ដង AI / ${r.remaining} AI uses left` : '';
 }
 
+// ---------- Language toggle (Khmer on top / English below; click to switch) ----------
+let coachLang = null, coachLangManual = false;
+function coachLangNow(){ return coachLang || langMode(); }
+function coachSyncLang(){
+  if(!coachLangManual) coachLang = langMode();     // follows the template until the person clicks the toggle
+  document.querySelectorAll('#coachLangBtn .lang-opt').forEach(o => o.classList.toggle('on', o.dataset.l === coachLang));
+}
+$('coachLangBtn').addEventListener('click', () => { coachLang = coachLangNow() === 'km' ? 'en' : 'km'; coachLangManual = true; coachSyncLang(); });
+document.querySelectorAll('.tpl-swatch').forEach(el => el.addEventListener('click', coachSyncLang));
+
+// ---------- Buttons ----------
 $('coachCheckBtn').addEventListener('click', coachShowCheck);
-$('coachGapsBtn').addEventListener('click', e => coachRun(e.currentTarget, 'gaps', {lang: langMode()}, 'coachGapsOut', false));
-$('coachInterviewBtn').addEventListener('click', e => {
-  const position = $('coachPosition').value.trim() || state.jobTitle;
-  coachRun(e.currentTarget, 'interview', {lang: $('coachLang').value, position}, 'coachInterviewOut', true);
-});
+$('coachGapsBtn').addEventListener('click', () =>
+  coachRun('coachGapsBtn', 'gaps', {lang: coachLangNow()}, 'សំណួរដើម្បីបន្ថែមព័ត៌មាន / Questions to improve your CV'));
+$('coachInterviewBtn').addEventListener('click', () =>
+  // Target position: the Cover Letter "Position" if filled, otherwise the CV job title (no extra input needed).
+  coachRun('coachInterviewBtn', 'interview', {lang: coachLangNow(), position: (state.clPosition || state.jobTitle || '').trim()}, 'សំណួរសម្ភាសន៍ / Interview questions'));
+$('coachCloseBtn').addEventListener('click', coachClose);
 $('coachCopyBtn').addEventListener('click', async () => {
-  const t = $('coachInterviewOut').textContent; if(!t) return;
-  try{ await navigator.clipboard.writeText(t); $('coachMsg').textContent = '📋 បានចម្លង / Copied'; }
-  catch(e){ const r = document.createRange(); r.selectNodeContents($('coachInterviewOut')); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); }
+  const t = $('coachText').textContent; if(!t) return;
+  try{ await navigator.clipboard.writeText(t); $('coachMsg').className = 'ai-msg'; $('coachMsg').textContent = '📋 បានចម្លង / Copied'; }
+  catch(e){ const r = document.createRange(); r.selectNodeContents($('coachText')); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); }
 });
-$('coachLang').value = langMode();
+coachSyncLang();
