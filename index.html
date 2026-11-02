@@ -122,7 +122,23 @@
       <details class="hint-toggle"><summary></summary><div class="hint">ប្រើ "Large" ពេលព័ត៌មានតិច ឬ "Small" ពេលចង់ដាក់អោយសមក្នុងទំព័រតែមួយ / Use "Large" to fill the page when you have little content, or "Small" to fit more onto one page.</div></details>
     </div>
 
-    <button class="print-btn" id="printBtn" type="button">ទាញយកជា PDF / Download as PDF</button>
+    <div class="act-row" id="actRow">
+      <button class="act-btn act-dl" id="printBtn" type="button" title="ទាញយកជា PDF / Download as PDF"><span class="act-ico">⬇️</span><span class="act-lbl">ទាញយក PDF</span></button>
+      <button class="act-btn cv-only" id="coachCheckBtn" type="button" title="ពិនិត្យព័ត៌មានខ្វះខាត / Check my CV"><span class="act-ico">🔍</span><span class="act-lbl">ពិនិត្យ CV</span></button>
+      <button class="act-btn cv-only" id="coachGapsBtn" type="button" title="AI សួរសំណួរដើម្បីបន្ថែមព័ត៌មាន / AI: what should I add?"><span class="act-ico">🤖</span><span class="act-lbl">AI សួរ</span></button>
+      <button class="act-btn cv-only" id="coachInterviewBtn" type="button" title="សំណួរត្រៀមសម្ភាសន៍ / Interview questions"><span class="act-ico">🎤</span><span class="act-lbl">សម្ភាសន៍</span></button>
+      <button class="act-btn act-lang cv-only" id="coachLangBtn" type="button" title="ភាសាសម្រាប់ AI សួរ និងសម្ភាសន៍ — ចុចដើម្បីប្តូរ / Language for AI questions &amp; interview — click to switch"><span class="lang-opt" data-l="km">ខ្មែរ</span><span class="lang-opt" data-l="en">English</span></button>
+    </div>
+    <div class="coach-card" id="coachCard" style="display:none;">
+      <div class="coach-card-head">
+        <span id="coachCardTitle"></span>
+        <span><button type="button" id="coachCopyBtn" class="coach-x" style="display:none;" title="ចម្លង / Copy">📋</button><button type="button" id="coachCloseBtn" class="coach-x" title="បិទ / Close">✕</button></span>
+      </div>
+      <div id="coachCheckOut"></div>
+      <div id="coachText" class="coach-result" style="display:none;"></div>
+      <div class="ai-msg" id="coachMsg"></div>
+      <div class="hint" id="coachHint" style="display:none;">ព័ត៌មានទំនាក់ទំនង (ឈ្មោះ អ៊ីមែល ទូរស័ព្ទ) មិនត្រូវបានផ្ញើទៅ AI ទេ។ ត្រូវ Unlock ហើយរាល់ការប្រើរាប់ក្នុងកម្រិត AI / Contact details are never sent to the AI. Needs Unlock; each use counts toward your AI limit.</div>
+    </div>
     <details class="hint-toggle"><summary></summary><div class="hint">ប្រើ Print dialog របស់ Browser — ជ្រើសរើស "Save as PDF" ជាទិសដៅ / Uses your browser's print dialog — choose "Save as PDF" as the destination.</div></details>
     <details class="hint-toggle"><summary></summary><div class="hint">Your info is auto-saved in this browser, so it's still here next time you open this page. <a href="#" id="clearDataBtn" style="color:var(--accent);">សម្អាតទិន្នន័យ / Clear saved data</a></div></details>
 
@@ -231,29 +247,6 @@
       <div class="acc-body">
         <div id="refList"></div>
         <button class="add-btn" id="addRef" type="button">+ បន្ថែមអ្នកយោង / Add reference</button>
-      </div>
-    </div>
-
-    <div class="acc-item cv-only" data-acc="coach" id="coachPanel">
-      <button type="button" class="acc-header"><span>✨ ពិនិត្យ CV និងត្រៀមសម្ភាសន៍ / CV Check &amp; Interview Prep</span><span class="acc-caret">▾</span></button>
-      <div class="acc-body">
-        <div class="coach-title">១) ពិនិត្យព័ត៌មានខ្វះខាត / Check for missing info <span class="coach-free">ឥតគិតថ្លៃ / free</span></div>
-        <button type="button" class="add-btn" id="coachCheckBtn">🔍 ពិនិត្យ CV / Check my CV</button>
-        <div id="coachCheckOut"></div>
-        <button type="button" class="add-btn" id="coachGapsBtn">🤖 AI សួរសំណួរដើម្បីបន្ថែមព័ត៌មាន / AI: what should I add?</button>
-        <div id="coachGapsOut" class="coach-result" style="display:none;"></div>
-        <div class="hint">AI គ្រាន់តែសួរសំណួរ — អ្នកជាអ្នកឆ្លើយ ហើយបន្ថែមក្នុង CV ដោយខ្លួនឯង / The AI only asks questions — you answer them and add the real details yourself.</div>
-
-        <div class="coach-title" style="margin-top:18px;">២) ត្រៀមសម្ភាសន៍ / Interview prep</div>
-        <label class="coach-label" for="coachPosition">តួនាទីដែលចង់ដាក់ពាក្យ / Position you apply for</label>
-        <input type="text" id="coachPosition" placeholder="Digital Marketing Manager">
-        <label class="coach-label" for="coachLang">ភាសា / Language</label>
-        <select id="coachLang"><option value="km">ខ្មែរ</option><option value="en">English</option></select>
-        <button type="button" class="add-btn" id="coachInterviewBtn">🎤 បង្កើតសំណួរសម្ភាសន៍ / Generate interview questions</button>
-        <div id="coachInterviewOut" class="coach-result" style="display:none;"></div>
-        <button type="button" class="add-btn" id="coachCopyBtn" style="display:none;">📋 ចម្លង / Copy</button>
-        <div class="ai-msg" id="coachMsg"></div>
-        <div class="hint">ព័ត៌មានទំនាក់ទំនង (ឈ្មោះ អ៊ីមែល ទូរស័ព្ទ) មិនត្រូវបានផ្ញើទៅ AI ទេ / Your contact details are never sent to the AI. Needs Unlock; each use counts toward your AI limit.</div>
       </div>
     </div>
 
