@@ -138,15 +138,15 @@ async function coachAi(action, extra){
       body: JSON.stringify(Object.assign({code: d.code, fullName: d.name, action, text: coachCvText()}, extra))
     });
     const data = await res.json().catch(() => ({}));
-    if(!res.ok || !data.text){ if(data.error === 'unlock_required') showPayModal(); return {error: data.error || 'unknown'}; }
+    if(!res.ok || !data.text){ if(data.error === 'unlock_required') showPayModal(); return {error: data.error || 'unknown', status: data.status}; }
     return {text: data.text, remaining: data.remaining};
   }catch(e){ return {error:'network'}; }
   finally{ clearTimeout(timer); }
 }
-function coachErr(code){
+function coachErr(code, status){
   if(code === 'cv_empty') return 'សូមបំពេញ CV បន្តិចជាមុន (បទពិសោធន៍ ឬសេចក្តីសង្ខេប) / Fill in some of your CV first (experience or summary)';
   if(code === 'network') return 'មានបញ្ហាតភ្ជាប់ / Connection error';
-  return (typeof AI_ERRORS !== 'undefined' && AI_ERRORS[code]) || 'មានបញ្ហា / Something went wrong';
+  return ((typeof AI_ERRORS !== 'undefined' && AI_ERRORS[code]) || 'មានបញ្ហា / Something went wrong') + (status ? ' [HTTP ' + status + ']' : '');
 }
 async function coachRun(btnId, action, extra, title){
   coachOpen(title, btnId);
@@ -156,7 +156,7 @@ async function coachRun(btnId, action, extra, title){
   msg.textContent = 'កំពុងដំណើរការ… / Working…';
   const r = await coachAi(action, extra);
   btns.forEach(b => b.disabled = false);
-  if(r.error){ msg.className = 'ai-msg err'; msg.textContent = coachErr(r.error); return; }
+  if(r.error){ msg.className = 'ai-msg err'; msg.textContent = coachErr(r.error, r.status); return; }
   $('coachText').textContent = r.text;             // textContent: AI output is never inserted as HTML
   $('coachText').style.display = 'block';
   $('coachCopyBtn').style.display = '';

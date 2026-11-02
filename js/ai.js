@@ -56,7 +56,7 @@ async function runAi(bar, btn){
     const data = await res.json().catch(() => ({}));
     if(!res.ok || !data.text){
       if(data.error === 'unlock_required') showPayModal();
-      setMsg(AI_ERRORS[data.error] || 'មានបញ្ហា / Something went wrong', true);
+      setMsg((AI_ERRORS[data.error] || 'មានបញ្ហា / Something went wrong') + (data.status ? ' [HTTP ' + data.status + ']' : ''), true);
     } else {
       aiPrev.set(ta, ta.value);
       ta.value = data.text;
