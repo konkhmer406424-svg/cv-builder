@@ -92,6 +92,21 @@
   .templates::-webkit-scrollbar{height:6px;}
   .templates::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px;}
   .templates::-webkit-scrollbar-thumb:hover{background:var(--accent);}
+  /* Template picker: 4 blocks x 5 templates, no horizontal scrolling */
+  .tpl-group-label{
+    font-family:-apple-system,'Noto Sans Khmer',sans-serif;
+    font-size:11.5px;
+    font-weight:700;
+    color:var(--ink);
+    margin:12px 0 6px;
+  }
+  .tpl-group-label:first-child{margin-top:0;}
+  .tpl-grid{
+    display:grid;
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:6px;
+  }
+  .tpl-grid .tpl-swatch{flex:none;min-width:0;overflow-wrap:anywhere;}
   .tpl-swatch{
     cursor:pointer;
     border:2px solid var(--line);

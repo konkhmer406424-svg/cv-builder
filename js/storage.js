@@ -49,8 +49,6 @@ function populateFormFromState(){
   document.querySelectorAll('.tpl-swatch').forEach(s=>{
     s.classList.toggle('active', s.dataset.tpl === state.tpl);
   });
-  const activeSwatch = document.querySelector('.tpl-swatch.active');
-  if(activeSwatch) activeSwatch.scrollIntoView({block:'nearest', inline:'center'});
   document.querySelectorAll('.scale-btn').forEach(s=>{
     s.classList.toggle('active', parseFloat(s.dataset.scale) === state.scale);
   });
