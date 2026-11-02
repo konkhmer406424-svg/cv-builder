@@ -90,7 +90,16 @@
     .preview-wrap{padding:0;display:block;max-height:none;overflow:visible;}
     #resume{
       box-shadow:none; width:auto; min-height:0;
-      margin:0; padding:0 !important;
+      margin:0;
+    }
+    /* SIDE-MARGIN FIX: @page has 0 left/right margin (needed for full-bleed colour headers/sidebars),
+       and the old rule forced #resume padding to 0 for ALL templates. Templates with no padding of
+       their own (t1,t6,t10,t12,t13,t16,t18 and cover letters cl1-cl5) printed with text touching the
+       paper edge. Give them their on-screen left/right padding back. Top padding only matters on
+       page 1 (@page :first has margin-top:0); later pages get 12mm from @page. */
+    #resume.t1, #resume.t6, #resume.t10, #resume.t12, #resume.t13, #resume.t16, #resume.t18,
+    #resume.cl1, #resume.cl2, #resume.cl3, #resume.cl4, #resume.cl5{
+      padding:34px 40px 0 !important;
     }
     /* Plain float, no forced full-page min-height. The earlier float+min-height(297mm)
        combo pushed the whole sidebar onto a blank next page the instant it overflowed
